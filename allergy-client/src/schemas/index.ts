@@ -31,18 +31,18 @@ export const SeverityLabel: Record<SeverityRatingType, string> = {
   [SeverityRating.Severe]: 'Severe',
 };
 
-export const SymptomSchema = z.enum(['eyes', 'nose', 'throat', 'low energy', 'headache']);
+export const SymptomSchema = z.enum(['eyes', 'nose', 'throat', 'energy', 'headache']);
 export type Symptom = z.infer<typeof SymptomSchema>;
 export const symptomOptions = SymptomSchema.options;
 
 export const EntrySchema = z.object({
   id:         z.uuid().optional(),
   user_id:    z.uuid().optional(),
-  date:       z.iso.date(), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
-  severity:   z.enum(SeverityRating),
+  date:       z.iso.datetime(), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
+  severity:   SeveritySchema,
   symptoms:   z.array(SymptomSchema).default([]),
   notes:      z.string().default(''),
-  created_at: z.iso.date().optional(),
+  created_at: z.iso.datetime().optional(),
 })
 
 export type Entry = z.infer<typeof EntrySchema>
