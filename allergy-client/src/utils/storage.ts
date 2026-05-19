@@ -1,9 +1,9 @@
 /**
- * Storage utilities for allergy tracker entries.
+ * Persistent storage helpers for allergy tracker data.
  *
- * This module handles save / load operations using browser localStorage.
- * Entries are stored as JSON strings under a key formed from a fixed prefix
- * and the entry date, so each date maps to one saved allergy entry.
+ * This module abstracts access to browser localStorage for allergy entries.
+ * It provides functions to read and write entries by date, validate data with
+ * Zod, query ranges, delete entries, and reset stored data.
  */
 import { EntrySchema, type Entry } from '../schemas'
 
