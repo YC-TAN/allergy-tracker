@@ -1,13 +1,13 @@
-import { createTheme } from '@mui/material/styles'
-
 /**
- * MUI theme — forest green palette.
+ * Application theme configuration for MUI.
  *
- * Usage with Tailwind:
- *   - MUI theme tokens  → component-level styling (sx prop, styled())
- *   - Tailwind classes  → layout and spacing only (flex, gap-4, mt-6, w-full)
- *   - Never use Tailwind to restyle MUI component internals
+ * Defines the color palette, typography, component shape, and style overrides
+ * used throughout the application. This centralized theme ensures
+ * consistent branding, spacing, and interaction styles across Material UI
+ * components.
  */
+
+import { createTheme } from '@mui/material/styles'
 
 export const theme = createTheme({
   palette: {
