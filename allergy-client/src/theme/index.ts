@@ -12,9 +12,9 @@ import { createTheme } from '@mui/material/styles'
 export const theme = createTheme({
   palette: {
     primary: {
-      light:        '#4caf50', // green-400
-      main:         '#2e7d32', // green-600
-      dark:         '#1b5e20', // green-700
+      light:        '#4caf50', // green-500
+      main:         '#2e7d32', // green-800
+      dark:         '#1b5e20', // green-900
       contrastText: '#ffffff',
     },
     secondary: {
