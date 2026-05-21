@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { useTheme,
+import {
+    Box,
     AppBar,
     Toolbar,
     Typography,
@@ -13,11 +14,10 @@ import {
 } from "@mui/icons-material";
 
 const Shell = () => {
-  const theme = useTheme();
   return (
-    <div
+    <Box
       className="flex flex-col mx-auto h-dvh max-w-97.5" // 97.5 = 390px
-      style={{ backgroundColor: theme.palette.background.default }}
+      sx={{ bgcolor: 'background.default' }}
     >
       <AppBar position="static">
         <Toolbar>
@@ -34,7 +34,7 @@ const Shell = () => {
         <BottomNavigationAction label="Trends" icon={<BarChart />} />
         <BottomNavigationAction label="Settings" icon={<Settings />} />
       </BottomNavigation>
-    </div>
+    </Box>
   );
 };
 
