@@ -23,9 +23,9 @@ export const SeveritySchema = z.union([
 
 export type SeverityRatingType = z.infer<typeof SeveritySchema>;
 
-export const SymptomSchema = z.enum(['eyes', 'nose', 'throat', 'energy', 'headache']);
+export const SymptomSchema = z.enum(['eyes', 'nose', 'throat', 'energy', 'headache', 'other']);
 export type Symptom = z.infer<typeof SymptomSchema>;
-export const symptomOptions = SymptomSchema.options;
+
 
 export const EntrySchema = z.object({
   id:         z.uuid().optional(),
