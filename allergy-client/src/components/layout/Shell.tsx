@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import {
     Box,
     AppBar,
@@ -30,9 +30,9 @@ const Shell = () => {
       </main>
       
       <BottomNavigation>
-        <BottomNavigationAction label="Home" icon={<Home />} />
-        <BottomNavigationAction label="Trends" icon={<BarChart />} />
-        <BottomNavigationAction label="Settings" icon={<Settings />} />
+        <BottomNavigationAction label="Home" icon={<Home />} component={Link} to="/" />
+        <BottomNavigationAction label="Trends" icon={<BarChart />} component={Link} to="/trends" />
+        <BottomNavigationAction label="Settings" icon={<Settings />} component={Link} to="/settings" />
       </BottomNavigation>
     </Box>
   );
