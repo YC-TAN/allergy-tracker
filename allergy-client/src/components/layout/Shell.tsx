@@ -1,3 +1,11 @@
+/**
+ * Main application shell and navigation layout.
+ *
+ * Provides the top app bar, bottom navigation, and a router outlet for
+ * rendering page content. This wrapper defines the primary page structure
+ * used across the application.
+ */
+
 import { Outlet, Link } from "react-router-dom";
 import {
     Box,
@@ -8,9 +16,9 @@ import {
     BottomNavigationAction,
  } from "@mui/material";
 import {
-    Home,
-    BarChart,
-    Settings,
+    HomeOutlined,
+    BarChartOutlined,
+    SettingsOutlined,
 } from "@mui/icons-material";
 
 const Shell = () => {
@@ -30,9 +38,9 @@ const Shell = () => {
       </main>
       
       <BottomNavigation>
-        <BottomNavigationAction label="Home" icon={<Home />} component={Link} to="/" />
-        <BottomNavigationAction label="Trends" icon={<BarChart />} component={Link} to="/trends" />
-        <BottomNavigationAction label="Settings" icon={<Settings />} component={Link} to="/settings" />
+        <BottomNavigationAction label="Home" icon={<HomeOutlined />} component={Link} to="/" />
+        <BottomNavigationAction label="Trends" icon={<BarChartOutlined />} component={Link} to="/trends" />
+        <BottomNavigationAction label="Settings" icon={<SettingsOutlined />} component={Link} to="/settings" />
       </BottomNavigation>
     </Box>
   );
