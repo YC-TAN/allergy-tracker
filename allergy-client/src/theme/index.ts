@@ -9,12 +9,16 @@
 
 import { createTheme } from '@mui/material/styles'
 
+const darkGreen = '#1b5e20'; // green-900
+const green = '#2e7d32' // green-800
+const lightGreen = '#4caf50'; // green-500
+
 export const theme = createTheme({
   palette: {
     primary: {
-      light:        '#4caf50', // green-500
-      main:         '#2e7d32', // green-800
-      dark:         '#1b5e20', // green-900
+      light:        lightGreen, 
+      main:         green, 
+      dark:         darkGreen, 
       contrastText: '#ffffff',
     },
     secondary: {
@@ -28,7 +32,7 @@ export const theme = createTheme({
       main: '#f59e0b',
     },
     success: {
-      main: '#2e7d32',
+      main: green,
     },
     background: {
       default: '#f8faf8', // surface2
@@ -49,12 +53,12 @@ export const theme = createTheme({
     h4: {
       fontFamily:  '"DM Serif Display", serif',
       fontWeight:  400,
-      color:       '#1b5e20',
+      color:       darkGreen,
     },
     h5: {
       fontFamily:  '"DM Serif Display", serif',
       fontWeight:  400,
-      color:       '#1b5e20',
+      color:       darkGreen,
     },
     h6: {
       fontWeight: 500,
