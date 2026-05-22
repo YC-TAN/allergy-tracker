@@ -9,7 +9,7 @@ const SymptomLabel: Record<Symptom, { label: string; icon?: string }> = {
   eyes: { label: "Eyes" },
   nose: { label: "Nose" },
   throat: { label: "Throat" },
-  energy: { label: "Energy" },
+  energy: { label: "Low Energy" },
   headache: { label: "Headache" },
   other: {label: "Other (Please specify in Notes)"}
 };
