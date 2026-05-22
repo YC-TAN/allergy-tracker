@@ -17,6 +17,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { theme } from "./theme/index";
 import HomePage from "./pages/HomePage";
 import TrendsPage from "./pages/TrendsPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import SettingsPage from "./pages/SettingsPage";
 import Shell from "./components/layout/Shell";
 
 export default function App() {
@@ -27,8 +29,9 @@ export default function App() {
           <Routes>
             <Route element={<Shell />}>
               <Route index element={<HomePage />} />
-              <Route path="trends" element={<TrendsPage />} />
-              {/* <Route path="/*" element={<NotFound />} /> */}
+              <Route path="/trends" element={<TrendsPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/*" element={<NotFoundPage />} />
             </Route>
           </Routes>
         </Router>
