@@ -21,7 +21,7 @@ const LogForm = () => {
   return (
     <div className="flex flex-col px-5 pb-6">
         <div className="flex items-center gap-2 py-4">
-        <Typography variant="h6" className="w-100 text-center">Log Symptoms</Typography>
+        <Typography variant="h5" className="w-100 text-center">Log Symptoms</Typography>
       </div>
       <SeverityCard severity={severity} setSeverity={setSeverity} />
       <SymptomCard symptoms={symptoms} setSymptoms={setSymptoms} />
