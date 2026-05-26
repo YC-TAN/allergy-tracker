@@ -1,5 +1,5 @@
 import { Card, CardContent, Button, Typography } from "@mui/material";
-import { ThumbUpOutlined, EditOutlined } from "@mui/icons-material";
+import { ThumbUpOutlined, AddOutlined } from "@mui/icons-material";
 
 interface CheckInProps {
   onAllGood: () => void;
@@ -42,7 +42,7 @@ const CheckIn = ({ onAllGood, onLogSymptoms }: CheckInProps) => {
             variant="contained"
             color="primary"
             fullWidth
-            startIcon={<EditOutlined />}
+            startIcon={<AddOutlined />}
             onClick={onLogSymptoms}
           >
             Log my symptoms
