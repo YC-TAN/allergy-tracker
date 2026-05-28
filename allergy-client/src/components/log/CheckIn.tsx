@@ -1,12 +1,21 @@
 import { Card, CardContent, Button, Typography } from "@mui/material";
 import { ThumbUpOutlined, AddOutlined } from "@mui/icons-material";
+import { useNavigate, Link } from "react-router-dom";
+import { useEntry } from "../../hooks/useEntry";
+import { SeverityRating } from "../../schemas";
 
-interface CheckInProps {
-  onAllGood: () => void;
-  onLogSymptoms: () => void;
-}
+const CheckIn = () => {
 
-const CheckIn = ({ onAllGood, onLogSymptoms }: CheckInProps) => {
+  const {create} = useEntry();
+  const nav = useNavigate();
+
+  const handleAllGood = () => {
+    const entry = {
+      severity: SeverityRating.NoSymptom,      
+    }
+    create(entry);
+    nav('/');
+  }
   return (
     <div className="flex flex-col items-center px-5 pt-8 pb-6">
       {/* Headline */}
@@ -32,7 +41,7 @@ const CheckIn = ({ onAllGood, onLogSymptoms }: CheckInProps) => {
             color="primary"
             fullWidth
             startIcon={<ThumbUpOutlined />}
-            onClick={onAllGood}
+            onClick={handleAllGood}
           >
             All good — no symptoms
           </Button>
@@ -43,7 +52,8 @@ const CheckIn = ({ onAllGood, onLogSymptoms }: CheckInProps) => {
             color="primary"
             fullWidth
             startIcon={<AddOutlined />}
-            onClick={onLogSymptoms}
+            component={Link}
+            to="/log"
           >
             Log my symptoms
           </Button>
