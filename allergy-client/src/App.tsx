@@ -20,6 +20,7 @@ import TrendsPage from "./pages/TrendsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SettingsPage from "./pages/SettingsPage";
 import Shell from "./components/layout/Shell";
+import EntryForm from "./components/log/EntryForm";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
           <Routes>
             <Route element={<Shell />}>
               <Route index element={<HomePage />} />
+              <Route path="/log" element={<EntryForm />} />
               <Route path="/trends" element={<TrendsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/*" element={<NotFoundPage />} />
