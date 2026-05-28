@@ -6,7 +6,8 @@
  * Zod is preferred because TypeScript doesn't exist at runtime.
  */
 
-import { z } from 'zod'
+import { z } from 'zod';
+import { getTodayDate } from '../utils/storage';
 
 export const SeverityRating = {
   NoSymptom: 0,
@@ -35,11 +36,13 @@ export type Symptom = z.infer<typeof SymptomSchema>;
 export const EntrySchema = z.object({
   id:         z.uuid().optional(),
   user_id:    z.uuid().optional(),
-  date:       z.iso.date(), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
+  // use arrow function getTodayDate so that it is called fresh each time
+  date:       z.iso.date().default(() => getTodayDate()), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
   severity:   SeveritySchema,
   symptoms:   z.array(SymptomSchema).default([]),
   notes:      z.string().default(''),
   created_at: z.iso.datetime().optional(),
 })
 
-export type Entry = z.infer<typeof EntrySchema>
+export type Entry = z.infer<typeof EntrySchema>;
+export type EntryInput = z.input<typeof EntrySchema>;
