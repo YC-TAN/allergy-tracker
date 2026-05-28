@@ -20,7 +20,7 @@ import TrendsPage from "./pages/TrendsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SettingsPage from "./pages/SettingsPage";
 import Shell from "./components/layout/Shell";
-import EntryForm from "./components/log/EntryForm";
+import EntryForm from "./components/entry/EntryForm";
 
 export default function App() {
   return (
