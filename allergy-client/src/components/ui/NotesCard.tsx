@@ -2,8 +2,8 @@ import { Box, Card, CardContent, Typography, TextField } from "@mui/material";
 import type React from "react";
 
 interface NotesProps {
-  notes: string | null;
-  setNotes: React.Dispatch<React.SetStateAction<string | null>>;
+  notes: string;
+  setNotes: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const NotesCard = ({ notes, setNotes }: NotesProps) => {
@@ -38,7 +38,7 @@ const NotesCard = ({ notes, setNotes }: NotesProps) => {
           rows={3}
           fullWidth
           placeholder="e.g. took antihistamine, windows open all day…"
-          value={notes ?? ""}
+          value={notes}
           onChange={(e) => setNotes(e.target.value)}
           slotProps={{
             input: { inputProps: { "aria-label": "Additional notes" } },
