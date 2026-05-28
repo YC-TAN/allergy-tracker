@@ -1,14 +1,13 @@
-import { useQueryClient, useQuery } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { getEntry, getTodayDate } from "../utils/storage";
 
 const today = getTodayDate();
 
-export const useEntry = () => {
-    const queryClient = useQueryClient();
+export const useEntry = (date: string = today) => {
 
     const result = useQuery({
-        queryKey: ['entry', today],
-        queryFn: () => getEntry(today)
+        queryKey: ['entry', date],
+        queryFn: () => getEntry(date)
     })
     
     return {
