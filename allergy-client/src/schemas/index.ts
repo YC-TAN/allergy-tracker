@@ -30,7 +30,7 @@ export type Symptom = z.infer<typeof SymptomSchema>;
 export const EntrySchema = z.object({
   id:         z.uuid().optional(),
   user_id:    z.uuid().optional(),
-  date:       z.iso.datetime(), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
+  date:       z.iso.date(), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
   severity:   SeveritySchema,
   symptoms:   z.array(SymptomSchema).default([]),
   notes:      z.string().default(''),
