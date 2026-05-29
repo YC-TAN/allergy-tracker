@@ -1,29 +1,17 @@
 import { useEntry } from "../hooks/useEntry";
-import { getTodayDate } from "../utils/storage";
 
 import CheckIn from "../components/entry/CheckIn";
 import DailyLog from "../components/entry/DailyLog"
 
 const HomePage = () => {
-  const today = getTodayDate();
-  const { entry, isPending } = useEntry(today);
+  const { entry, isPending } = useEntry();
 
-  const handleLogSymptoms = () => {
-    
-  }
-
-  const handleEditEntry = () => {
-    
-  }
-
-    if (isPending) return <div>loading...</div>
-    console.log(entry);
-
-  if (entry) return <DailyLog onEditEntry={handleEditEntry} />
+  if (isPending) return <div>loading...</div>
+  if (entry) return <DailyLog />
 
   return (
     <div>
-      <CheckIn onLogSymptoms={handleLogSymptoms}/>
+      <CheckIn />
     </div>
   )
 }

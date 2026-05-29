@@ -11,35 +11,65 @@ import SeverityCard from "../ui/SeverityCard";
 import NotesCard from "../ui/NotesCard";
 import SymptomCard from "../ui/SymptomCard";
 import { useNavigate } from "react-router-dom";
+import type { Entry } from "../../schemas";
 
-const EntryForm = () => {
+interface EntryFormProps {
+  existing?: Entry | null;
+}
 
-  const {create} = useEntry();
+const EntryForm = ({ existing }: EntryFormProps) => {
+  const { save } = useEntry();
   const navigate = useNavigate();
+
   const [severity, setSeverity] = useState<SeverityRatingType>(
-    SeverityRating.Mild,
+    existing?.severity ?? SeverityRating.Mild,
   );
-  const [symptoms, setSymptoms] = useState<Symptom[]>([]);
-  const [notes, setNotes] = useState<string>('');
+  const [symptoms, setSymptoms] = useState<Symptom[]>(existing?.symptoms ?? []);
+  const [notes, setNotes] = useState<string>(existing?.notes ?? "");
 
   const handleSubmit = () => {
-    const newEntry = {
+    const entry = {
+      ...existing,
       severity,
       symptoms,
-      notes
-    }
-    create(newEntry);
-    navigate('/');
+      notes,
+    };
+    save(entry);
+    navigate("/");
   };
-  
+
+  const handleNoSymptoms = () => {
+    const entry = {
+      ...existing,
+      severity: SeverityRating.NoSymptom,
+      symptoms: [],
+      notes: "",
+    }
+    save(entry);
+    navigate("/");
+  }
+
   return (
     <div className="flex flex-col px-5 pb-6">
-        <div className="flex items-center gap-2 py-4">
-        <Typography variant="h5" className="w-100 text-center">Log Symptoms</Typography>
+      <div className="flex items-center gap-2 py-4">
+        <Typography variant="h5" className="w-100 text-center">
+          Log Symptoms
+        </Typography>
       </div>
       <SeverityCard severity={severity} setSeverity={setSeverity} />
       <SymptomCard symptoms={symptoms} setSymptoms={setSymptoms} />
       <NotesCard notes={notes} setNotes={setNotes} />
+      {existing && (
+        <Button
+          variant="contained"
+          color="secondary"
+          className="mb-4"
+          fullWidth
+          onClick={handleNoSymptoms}
+        >
+          Actually, no symptoms today
+        </Button>
+      )}
       <Button
         variant="contained"
         color="primary"

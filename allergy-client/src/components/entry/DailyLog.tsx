@@ -2,12 +2,9 @@ import { Button, Typography } from "@mui/material";
 import { EditOutlined } from "@mui/icons-material";
 import { useEntry } from "../../hooks/useEntry";
 import { SeverityLabel } from "../../schemas/labels";
+import { Link } from "react-router-dom";
 
-interface DailyLogProps {
-  onEditEntry: () => void;
-}
-
-const DailyLog = ({ onEditEntry }: DailyLogProps) => {
+const DailyLog = () => {
   const { entry, isPending } = useEntry();
   
   if (isPending) return <div>loading...</div>;
@@ -32,8 +29,8 @@ const DailyLog = ({ onEditEntry }: DailyLogProps) => {
             margin: "0 auto 1.25rem",
           }}
         >
-          {/* 🌿 */}
-          😃
+          🌿
+          {/* 😃 */}
         </div>
         {entry?.severity === 0 ? (
           <>
@@ -55,13 +52,14 @@ const DailyLog = ({ onEditEntry }: DailyLogProps) => {
           </>
         )}
       </div>
-      {/* Edit entry — goes back to CheckInPrompt */}
+      {/* Edit entry */}
       <Button
         variant="outlined"
         color="primary"
         fullWidth
         startIcon={<EditOutlined />}
-        onClick={onEditEntry}
+        component={Link}
+        to={`/log/${entry.date}`}
       >
         Edit Log
       </Button>

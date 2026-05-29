@@ -16,18 +16,14 @@ export const SeverityRating = {
   Severe: 3,
 } as const;
 
-export const SeverityInputSchema = z.union([
+export const SeveritySchema = z.union([
+  z.literal(SeverityRating.NoSymptom),
   z.literal(SeverityRating.Mild),
   z.literal(SeverityRating.Moderate),
   z.literal(SeverityRating.Severe),
 ]);
 
-export type SeverityRatingType = z.infer<typeof SeverityInputSchema>;
-
-export const SeveritySchema = z.union([
-  ...SeverityInputSchema.options,
-  z.literal(SeverityRating.NoSymptom)
-])
+export type SeverityRatingType = z.infer<typeof SeveritySchema>;
 
 export const SymptomSchema = z.enum(['eyes', 'nose', 'throat', 'energy', 'headache', 'other']);
 export type Symptom = z.infer<typeof SymptomSchema>;

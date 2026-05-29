@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { getEntry, getTodayDate, saveEntry } from "../utils/storage";
-import type { Entry, EntryInput } from "../schemas";
+import type { EntryInput } from "../schemas";
 
 const today = getTodayDate();
 
@@ -13,16 +13,24 @@ export const useEntry = (date: string = today) => {
         queryFn: () => getEntry(date)
     })
 
-    const newEntry = useMutation({
+    const saveMutation = useMutation({
         mutationFn: (entry: EntryInput) => Promise.resolve(saveEntry(entry)),
         onSuccess: (saved) => {
             queryClient.setQueryData(['entry', saved.date], saved)
         }
     })
+
+    // const updateMutation = useMutation({
+    //     mutationFn: (entry: Entry) => Promise.resolve(updateEntry(entry)),
+    //     onSuccess: (saved) => {
+    //         queryClient.setQueryData(['entry', saved.date], saved)
+    //     }
+    // })
     
     return {
         entry: result.data,
         isPending: result.isPending,
-        create: (entry: EntryInput) => newEntry.mutate(entry),        
+        save: (entry: EntryInput) => saveMutation.mutate(entry),
+        // update: (entry: Entry) => updateMutation.mutate(entry)        
     }
 }
