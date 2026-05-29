@@ -6,14 +6,14 @@ import { SeverityRating } from "../../schemas";
 
 const CheckIn = () => {
 
-  const {create} = useEntry();
+  const {save} = useEntry();
   const nav = useNavigate();
 
   const handleAllGood = () => {
     const entry = {
       severity: SeverityRating.NoSymptom,      
     }
-    create(entry);
+    save(entry);
     nav('/');
   }
   return (
