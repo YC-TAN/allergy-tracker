@@ -5,13 +5,13 @@
  * It provides functions to read and write entries by date, validate data with
  * Zod, query ranges, delete entries, and reset stored data.
  */
-import { EntrySchema, type Entry } from '../schemas'
+import { EntrySchema, type Entry, type EntryInput } from '../schemas'
 
 // Prefix used for localStorage keys
 const ENTRIES_KEY = 'allergy_entries'
 
 // Returns all entries from localStorage, or empty object if none
-function loadAll(): Record<string, Entry> {
+const loadAll = (): Record<string, Entry>  => {
   try {
     const raw = localStorage.getItem(ENTRIES_KEY)
     return raw ? JSON.parse(raw) : {}
@@ -33,9 +33,12 @@ export function getEntry(date: string): Entry | null {
 
 // Save or overwrite an entry for its date
 // Validates with Zod before saving — throws if invalid
-export function saveEntry(entry: Entry): Entry {
+export function saveEntry(entry: EntryInput): Entry {
   const parsed = EntrySchema.parse(entry)
   const entries = loadAll()
+  if (entries[parsed.date]) {
+    throw new Error(`Entry for ${parsed.date} already exists`)
+  }
   entries[parsed.date] = parsed
   saveAll(entries)
   return parsed
@@ -61,6 +64,10 @@ export function clearAllEntries(): void {
   localStorage.removeItem(ENTRIES_KEY)
 }
 
-export function getTodayDate(): string {
-  return new Date().toISOString().split('T')[0]
+export const getTodayDate = (): string => {
+  const d = new Date()
+  const year  = d.getFullYear()
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const day   = String(d.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }

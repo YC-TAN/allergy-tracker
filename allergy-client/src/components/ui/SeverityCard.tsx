@@ -1,6 +1,7 @@
 import { Box, ButtonBase, Card, CardContent, Typography } from "@mui/material";
 
 import { SeverityRating, type SeverityRatingType } from "../../schemas";
+import { SeverityLabel } from "../../schemas/labels";
 
 const SEVERITY_OPTIONS: {
   value: SeverityRatingType;
@@ -27,12 +28,6 @@ const SEVERITY_OPTIONS: {
     activeBg: "#fff5f5",
   },
 ];
-
-const SeverityLabel: Record<SeverityRatingType, string> = {
-  [SeverityRating.Mild]: "Mild",
-  [SeverityRating.Moderate]: "Moderate",
-  [SeverityRating.Severe]: "Severe",
-};
 
 interface ButtonProps {
   value: SeverityRatingType;

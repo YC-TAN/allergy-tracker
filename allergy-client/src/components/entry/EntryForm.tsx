@@ -6,18 +6,32 @@ import {
   type SeverityRatingType,
   type Symptom,
 } from "../../schemas";
+import { useEntry } from "../../hooks/useEntry";
 import SeverityCard from "../ui/SeverityCard";
 import NotesCard from "../ui/NotesCard";
 import SymptomCard from "../ui/SymptomCard";
+import { useNavigate } from "react-router-dom";
 
-const LogForm = () => {
+const EntryForm = () => {
+
+  const {create} = useEntry();
+  const navigate = useNavigate();
   const [severity, setSeverity] = useState<SeverityRatingType>(
     SeverityRating.Mild,
   );
   const [symptoms, setSymptoms] = useState<Symptom[]>([]);
-  const [notes, setNotes] = useState<string | null>(null);
+  const [notes, setNotes] = useState<string>('');
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    const newEntry = {
+      severity,
+      symptoms,
+      notes
+    }
+    create(newEntry);
+    navigate('/');
+  };
+  
   return (
     <div className="flex flex-col px-5 pb-6">
         <div className="flex items-center gap-2 py-4">
@@ -38,4 +52,4 @@ const LogForm = () => {
   );
 };
 
-export default LogForm;
+export default EntryForm;

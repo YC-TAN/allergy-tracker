@@ -1,12 +1,12 @@
-import LogForm from "../components/log/LogForm";
-import CheckIn from "../components/log/CheckIn";
-import DailyLog from "../components/log/DailyLog"
+import { useEntry } from "../hooks/useEntry";
+import { getTodayDate } from "../utils/storage";
+
+import CheckIn from "../components/entry/CheckIn";
+import DailyLog from "../components/entry/DailyLog"
 
 const HomePage = () => {
-
-  const handleAllGood = () => {
-
-  }
+  const today = getTodayDate();
+  const { entry, isPending } = useEntry(today);
 
   const handleLogSymptoms = () => {
     
@@ -16,12 +16,14 @@ const HomePage = () => {
     
   }
 
+    if (isPending) return <div>loading...</div>
+    console.log(entry);
+
+  if (entry) return <DailyLog onEditEntry={handleEditEntry} />
 
   return (
     <div>
-      <DailyLog onEditEntry={handleEditEntry}/>
-      <CheckIn onAllGood={handleAllGood} onLogSymptoms={handleLogSymptoms}/>
-      <LogForm />
+      <CheckIn onLogSymptoms={handleLogSymptoms}/>
     </div>
   )
 }
