@@ -36,13 +36,26 @@ export function getEntry(date: string): Entry | null {
 export function saveEntry(entry: EntryInput): Entry {
   const parsed = EntrySchema.parse(entry)
   const entries = loadAll()
-  if (entries[parsed.date]) {
-    throw new Error(`Entry for ${parsed.date} already exists`)
-  }
+  // if (entries[parsed.date]) {
+  //   throw new Error(`Entry for ${parsed.date} already exists`)
+  // }
   entries[parsed.date] = parsed
   saveAll(entries)
   return parsed
 }
+
+// export function updateEntry(entry: Entry): Entry {
+//   const parsed = EntrySchema.parse(entry)
+//   const entries = loadAll()
+
+//   if (!entries[parsed.date]) {
+//     throw new Error(`No entry found for ${parsed.date}`)
+//   }
+
+//   entries[parsed.date] = parsed
+//   saveAll(entries)
+//   return parsed
+// }
 
 // Get entries for a date range (inclusive), sorted oldest → newest
 export function getEntriesInRange(from: string, to: string): Entry[] {
@@ -60,8 +73,8 @@ export function deleteEntry(date: string): void {
 }
 
 // Clear everything — useful for testing / logout
-export function clearAllEntries(): void {
-  localStorage.removeItem(ENTRIES_KEY)
+export function clearAllEntries(key: string = ENTRIES_KEY): void {
+  localStorage.removeItem(key)
 }
 
 export const getTodayDate = (): string => {
