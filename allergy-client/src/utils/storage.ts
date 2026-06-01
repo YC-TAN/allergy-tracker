@@ -11,9 +11,9 @@ import { EntrySchema, type Entry, type EntryInput } from '../schemas'
 const ENTRIES_KEY = 'allergy_entries'
 
 // Returns all entries from localStorage, or empty object if none
-const loadAll = (): Record<string, Entry>  => {
+const loadAll = (key: string = ENTRIES_KEY): Record<string, Entry>  => {
   try {
-    const raw = localStorage.getItem(ENTRIES_KEY)
+    const raw = localStorage.getItem(key)
     return raw ? JSON.parse(raw) : {}
   } catch {
     return {}
@@ -21,30 +21,30 @@ const loadAll = (): Record<string, Entry>  => {
 }
 
 // Saves the full entries map back to localStorage
-function saveAll(entries: Record<string, Entry>): void {
-  localStorage.setItem(ENTRIES_KEY, JSON.stringify(entries))
+const saveAll = (entries: Record<string, Entry>, key: string = ENTRIES_KEY): void => {
+  localStorage.setItem(key, JSON.stringify(entries))
 }
 
 // Get a single entry by ISO date string ('YYYY-MM-DD')
-export function getEntry(date: string): Entry | null {
-  const entries = loadAll()
+export const getEntry = (date: string, key: string = ENTRIES_KEY): Entry | null => {
+  const entries = loadAll(key)
   return entries[date] ?? null
 }
 
 // Save or overwrite an entry for its date
 // Validates with Zod before saving — throws if invalid
-export function saveEntry(entry: EntryInput): Entry {
+export const saveEntry = (entry: EntryInput, key: string = ENTRIES_KEY): Entry => {
   const parsed = EntrySchema.parse(entry)
-  const entries = loadAll()
+  const entries = loadAll(key)
   // if (entries[parsed.date]) {
   //   throw new Error(`Entry for ${parsed.date} already exists`)
   // }
   entries[parsed.date] = parsed
-  saveAll(entries)
+  saveAll(entries, key)
   return parsed
 }
 
-// export function updateEntry(entry: Entry): Entry {
+// export const updateEntry(entry: Entry): Entry {
 //   const parsed = EntrySchema.parse(entry)
 //   const entries = loadAll()
 
