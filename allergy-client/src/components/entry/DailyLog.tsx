@@ -35,14 +35,14 @@ const DailyLog = () => {
         {entry?.severity === 0 ? (
           <>
             <Typography variant="h5" gutterBottom>
-              A good day recorded!
+              No hay fever today.
             </Typography>
             <Typography variant="body2">Logged as no symptoms.</Typography>
           </>
         ) : (
           <>
             <Typography variant="h5" gutterBottom>
-              Severity: {entry?.severity && SeverityLabel[entry.severity]}
+              Symptoms: {entry?.severity && SeverityLabel[entry.severity]}
             </Typography>
             <Typography variant="body2">
               {entry?.symptoms?.length > 0 && entry?.symptoms.join(", ")}              
