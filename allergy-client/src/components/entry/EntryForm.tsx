@@ -1,8 +1,8 @@
 /**
  * Entry form component for logging allergy data.
- *
  * Renders severity, symptom, and notes inputs.
  * Handles both creation and update. 
+ * 
  * This component manages local form state and delegates
  * persistence through the useEntry hook.
  */

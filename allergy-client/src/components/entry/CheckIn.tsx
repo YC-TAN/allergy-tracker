@@ -1,3 +1,8 @@
+/**
+ * CheckIn renders the quick daily check-in card shown on the Homepage.
+ * 
+ * Users can mark today as symptom-free or navigate to the symptom entry form.
+ */
 import { Card, CardContent, Button, Typography } from "@mui/material";
 import { ThumbUpOutlined, AddOutlined } from "@mui/icons-material";
 import { useNavigate, Link } from "react-router-dom";

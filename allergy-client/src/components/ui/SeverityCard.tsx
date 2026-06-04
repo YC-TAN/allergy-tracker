@@ -1,3 +1,8 @@
+/**
+ * SeverityCard shows three severity selections used in the symptom entry form.
+ * 
+ * It lets users choose the allergy severity level for today's log and updates parent form state.
+ */
 import { Box, ButtonBase, Card, CardContent, Typography } from "@mui/material";
 
 import { SeverityRating, type SeverityRatingType } from "../../schemas";

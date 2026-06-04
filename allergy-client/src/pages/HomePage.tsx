@@ -1,3 +1,9 @@
+/**
+ * HomePage the app's main landing page.
+ * 
+ * It shows DailyLog when today's entry exists, and CheckIn otherwise.
+ */
+
 import { useEntry } from "../hooks/useEntry";
 
 import CheckIn from "../components/entry/CheckIn";

@@ -1,3 +1,10 @@
+/**
+ * DailyLog displays today's saved symptom entry on the Homepage.
+ * 
+ * It shows either a symptom-free summary or the recorded severity, symptoms,
+ * notes, and allows the user to edit the existing log.
+ */
+
 import { Button, Typography } from "@mui/material";
 import { EditOutlined } from "@mui/icons-material";
 import { useEntry } from "../../hooks/useEntry";

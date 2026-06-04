@@ -1,3 +1,8 @@
+/**
+ * NotesCard renders an optional notes input field used in the symptom entry form.
+ * 
+ * It captures extra details for today's log and updates parent form state.
+ */
 import { Box, Card, CardContent, Typography, TextField } from "@mui/material";
 import type React from "react";
 

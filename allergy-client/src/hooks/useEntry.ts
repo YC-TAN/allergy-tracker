@@ -1,3 +1,9 @@
+/**
+ * useEntry is a shared hook for loading and saving daily entry.
+ * 
+ * To be updated with api endpoints.
+ */
+
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { getEntry, getTodayDate, saveEntry } from "../utils/storage";
 import type { EntryInput } from "../schemas";

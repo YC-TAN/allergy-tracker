@@ -1,3 +1,8 @@
+/**
+ * SymptomCard renders selectable symptom chips used in the symptom entry form.
+ * 
+ * It captures allergy symptoms occurred today.
+ */
 import { Box, Card, CardContent, Chip, Typography } from "@mui/material";
 
 import { SymptomSchema, type Symptom } from "../../schemas";
