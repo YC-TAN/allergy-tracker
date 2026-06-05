@@ -1,3 +1,9 @@
+/**
+ * Application entry point — mounts the React app into the DOM.
+ *
+ * Sets up global providers (React Query, MUI styling) and renders `App`.
+ */
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { StyledEngineProvider } from "@mui/material/styles";

@@ -25,6 +25,9 @@ export const SeveritySchema = z.union([
 
 export type SeverityRatingType = z.infer<typeof SeveritySchema>;
 
+// export const FormSeveritySchema = z.exclude(SeveritySchema, z.literal(0));
+// export type FormSeverityType = z.infer<typeof FormSeveritySchema>;
+
 export const SymptomSchema = z.enum(['eyes', 'nose', 'throat', 'energy', 'headache', 'other']);
 export type Symptom = z.infer<typeof SymptomSchema>;
 
