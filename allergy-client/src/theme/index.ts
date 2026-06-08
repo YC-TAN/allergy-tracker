@@ -7,7 +7,8 @@
  * components.
  */
 
-import { createTheme } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles';
+import type {} from '@mui/x-charts/themeAugmentation';
 
 const darkGreen = '#1b5e20'; // green-900
 const green = '#2e7d32' // green-800
@@ -135,6 +136,15 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: 'none',
+        },
+      },
+    },
+    MuiChartsAxis: {
+      styleOverrides: {
+        root: {
+          '& .MuiChartsAxis-tick': {
+            stroke: '#006BD6',
+          },
         },
       },
     },
