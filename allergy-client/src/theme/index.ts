@@ -143,7 +143,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiChartsAxis-tick': {
-            stroke: '#006BD6',
+            stroke: darkGreen,
           },
         },
       },
