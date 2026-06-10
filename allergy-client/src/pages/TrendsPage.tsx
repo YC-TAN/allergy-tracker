@@ -3,9 +3,12 @@
  * 
  * It is used by the /trends route in the app router.
  */
+
+import WeekChart from "../components/trends/WeekChart";
+
 const TrendsPage = () => {
   return (
-    <div>TrendsPage</div>
+    <WeekChart/>
   )
 }
 
