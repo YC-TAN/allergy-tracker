@@ -1,7 +1,7 @@
 # Virtual environment
 .venv/
 
-# Environment variables — never commit secrets
+# Environment variables
 .env
 .env.local
 
