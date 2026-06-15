@@ -9,6 +9,8 @@ dependencies = [
     "numpy>=2.4.6",
     "openmeteo-requests>=1.7.5",
     "pandas>=3.0.3",
+    "python-dotenv>=1.2.2",
+    "requests>=2.34.2",
     "requests-cache>=1.3.2",
     "retry-requests>=2.0.0",
 ]
