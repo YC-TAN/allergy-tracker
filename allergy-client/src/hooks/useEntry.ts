@@ -5,7 +5,8 @@
  */
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { getEntry, getTodayDate, saveEntry } from "../utils/storage";
+import { getEntry, saveEntry } from "../utils/storage";
+import { getTodayDate } from "../utils/dates";
 import type { EntryInput } from "../schemas";
 
 const today = getTodayDate();

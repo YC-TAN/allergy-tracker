@@ -7,14 +7,14 @@
  */
 
 import { z } from 'zod';
-import { getTodayDate } from '../utils/storage';
+import { getTodayDate } from '../utils/dates';
 
 export const SeverityRating = {
   NoSymptom: 0,
   Mild: 1,
   Moderate: 2,
   Severe: 3,
-} as const;
+} as const; 
 
 export const SeveritySchema = z.union([
   z.literal(SeverityRating.NoSymptom),
@@ -25,12 +25,8 @@ export const SeveritySchema = z.union([
 
 export type SeverityRatingType = z.infer<typeof SeveritySchema>;
 
-// export const FormSeveritySchema = z.exclude(SeveritySchema, z.literal(0));
-// export type FormSeverityType = z.infer<typeof FormSeveritySchema>;
-
 export const SymptomSchema = z.enum(['eyes', 'nose', 'throat', 'energy', 'headache', 'other']);
 export type Symptom = z.infer<typeof SymptomSchema>;
-
 
 export const EntrySchema = z.object({
   id:         z.uuid().optional(),
@@ -44,4 +40,9 @@ export const EntrySchema = z.object({
 })
 
 export type Entry = z.infer<typeof EntrySchema>;
+// To allow fields with default value to be optional in forms, can be omitted before parsing 
 export type EntryInput = z.input<typeof EntrySchema>;
+
+
+// export const FormSeveritySchema = z.exclude(SeveritySchema, z.literal(0));
+// export type FormSeverityType = z.infer<typeof FormSeveritySchema>;
