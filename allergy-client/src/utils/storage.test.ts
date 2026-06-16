@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { getEntry, saveEntry, clearAllEntries, getTodayDate } from './storage'
+import { getEntry, saveEntry, clearAllEntries } from './storage'
+import { getTodayDate } from './dates';
 import type { Entry } from '../schemas'
 
 const today: string = getTodayDate();

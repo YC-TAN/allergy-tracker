@@ -11,7 +11,7 @@ import { EntrySchema, type Entry, type EntryInput } from '../schemas'
 const ENTRIES_KEY = 'allergy_entries'
 
 // Returns all entries from localStorage, or empty object if none
-const loadAll = (key: string = ENTRIES_KEY): Record<string, Entry>  => {
+export const loadAll = (key: string = ENTRIES_KEY): Record<string, Entry>  => {
   try {
     const raw = localStorage.getItem(key)
     return raw ? JSON.parse(raw) : {}
@@ -21,7 +21,7 @@ const loadAll = (key: string = ENTRIES_KEY): Record<string, Entry>  => {
 }
 
 // Saves the full entries map back to localStorage
-const saveAll = (entries: Record<string, Entry>, key: string = ENTRIES_KEY): void => {
+export const saveAll = (entries: Record<string, Entry>, key: string = ENTRIES_KEY): void => {
   localStorage.setItem(key, JSON.stringify(entries))
 }
 
@@ -75,12 +75,4 @@ export function deleteEntry(date: string): void {
 // Clear everything — useful for testing / logout
 export function clearAllEntries(key: string = ENTRIES_KEY): void {
   localStorage.removeItem(key)
-}
-
-export const getTodayDate = (): string => {
-  const d = new Date()
-  const year  = d.getFullYear()
-  const month = String(d.getMonth() + 1).padStart(2, '0')
-  const day   = String(d.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
 }
