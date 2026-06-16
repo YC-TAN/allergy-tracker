@@ -1,35 +1,48 @@
-import Box from "@mui/material/Box";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { SeverityLabel } from "../../schemas/labels";
 import type { SeverityRatingType } from "../../schemas";
+import { loadAll } from "../../utils/storage";
+import { getLast7Days } from "../../utils/dates";
 
 const WeekChart = () => {
-  const margin={ left: 0, top: 30, bottom: 0 }
-  const pData = [0, 0, 3, 2, 0, 0, 1];
-  const xLabels = [
-    "2026-06-03",
-    "2026-06-04",
-    "2026-06-05",
-    "2026-06-06",
-    "2026-06-07",
-    "2026-06-08",
-    "2026-06-09",
-  ];
+  const allEntries = loadAll();
+  const sevenDayEntries = getLast7Days().map((date) => ({
+    date,
+    severity: allEntries[date]?.severity ?? null,
+  }));
 
   return (
-    <Box className="w-full h-[75dvh]">
+    <div className="w-full h-[40dvh] mt-4">
       <LineChart
-        series={[{ data: pData, label: "symptom", showMark: true }]}
+        dataset={sevenDayEntries}
+        series={[
+          {
+            dataKey: "severity",
+            label: "Severity",
+            showMark: true,
+            connectNulls: false,
+            curve: "monotoneX",
+            valueFormatter: (v: number | null) => {
+              if (v === null) return "No entry";
+              return SeverityLabel[v as SeverityRatingType] ?? "";
+            },
+          },
+        ]}
         xAxis={[
           {
             scaleType: "point",
-            data: xLabels,
+            dataKey: "date",
+            valueFormatter: (dateStr: string) =>
+              new Date(dateStr).toLocaleDateString("en-NZ", {
+                day: "numeric",
+                month: "short", // '16 Jun'
+              }),
             tickLabelStyle: {
-              angle: -45,
+              angle: -90,
               textAnchor: "end",
               dominantBaseline: "central",
             },
-            height: 100,
+            height: "auto",
           },
         ]}
         yAxis={[
@@ -38,19 +51,20 @@ const WeekChart = () => {
             max: 3,
             tickNumber: 4,
             // Replace numeric ticks with severity labels
-            valueFormatter: (value: SeverityRatingType) => SeverityLabel[value] ?? "",
-            // tickLabelStyle: {
-            //   angle: -25,
-            //   textAnchor: "end",
-            //   dominantBaseline: "central",
-            // },
-            width: 100,
+            valueFormatter: (value: SeverityRatingType) =>
+              SeverityLabel[value] ?? "",
+            tickLabelStyle: {
+              angle: -45,
+              textAnchor: "end",
+              dominantBaseline: "central",
+            },
+            width: 80,
           },
         ]}
-        margin={margin}
+        grid={{ horizontal: true }}
         hideLegend
       />
-    </Box>
+    </div>
   );
 };
 
