@@ -2,19 +2,28 @@
  * This file defines the data schemas and types for the allergy tracking application.
  * It includes definitions for symptom severity ratings, symptom types, and the structure
  * of allergy entries. These schemas are used for data validation and type safety
- * throughout the application, leveraging Zod for runtime validation. 
+ * throughout the application, leveraging Zod for runtime validation.
  * Zod is preferred because TypeScript doesn't exist at runtime.
+ * 
+ * 18/06/2026 Added PollenDataSchema, 
+ * Uses overall pollen level considering it's level is a prediction based on historical data and 
+ * it is highly dependant on weather (rain, wind, temperature)
+ * 
+ * How weather affect pollen level: 
+ * - Warm, sunny, dry: high pollen count
+ * - Rain: lower pollen count
+ * - Wind: disperses pollen over long distances
  */
 
-import { z } from 'zod';
-import { getTodayDate } from '../utils/dates';
+import { z } from "zod";
+import { getTodayDate } from "../utils/dates";
 
 export const SeverityRating = {
   NoSymptom: 0,
   Mild: 1,
   Moderate: 2,
   Severe: 3,
-} as const; 
+} as const;
 
 export const SeveritySchema = z.union([
   z.literal(SeverityRating.NoSymptom),
@@ -25,48 +34,52 @@ export const SeveritySchema = z.union([
 
 export type SeverityRatingType = z.infer<typeof SeveritySchema>;
 
-export const SymptomSchema = z.enum(['eyes', 'nose', 'throat', 'energy', 'headache', 'other']);
+export const SymptomSchema = z.enum([
+  "eyes",
+  "nose",
+  "throat",
+  "energy",
+  "headache",
+  "other",
+]);
 export type Symptom = z.infer<typeof SymptomSchema>;
 
 export const EntrySchema = z.object({
-  id:         z.uuid().optional(),
-  user_id:    z.uuid().optional(),
+  id: z.uuid().optional(),
+  user_id: z.uuid().optional(),
   // use arrow function getTodayDate so that it is called fresh each time
-  date:       z.iso.date().default(() => getTodayDate()), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
-  severity:   SeveritySchema,
-  symptoms:   z.array(SymptomSchema).default([]),
-  notes:      z.string().default(''),
+  date: z.iso.date().default(() => getTodayDate()), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
+  severity: SeveritySchema,
+  symptoms: z.array(SymptomSchema).default([]),
+  notes: z.string().default(""),
   created_at: z.iso.datetime().optional(),
-})
+});
 
 export type Entry = z.infer<typeof EntrySchema>;
-// To allow fields with default value to be optional in forms, can be omitted before parsing 
+// To allow fields with default value to be optional in forms, can be omitted before parsing
 export type EntryInput = z.input<typeof EntrySchema>;
-
 
 // ---- Pollen schema and type
 export const PollenLevel = {
   unknown: 0,
-  low: 1,
-  moderate: 2,
-  high: 3,
-  imminent: 4,
+  imminent: 1,
+  low: 2,
+  moderate: 3,
+  high: 4,
 } as const;
 
 export const PollenLevelSchema = z.union([
   z.literal(PollenLevel.unknown),
+  z.literal(PollenLevel.imminent),
   z.literal(PollenLevel.low),
   z.literal(PollenLevel.moderate),
   z.literal(PollenLevel.high),
-  z.literal(PollenLevel.imminent)
-])
+]);
 
 export type PollenLevelType = z.infer<typeof PollenLevelSchema>;
 
 export const PollenDataSchema = z.object({
-  grass: PollenLevelSchema,
-  trees: PollenLevelSchema,
-  weeds: PollenLevelSchema,
+  overallPollenLevel: PollenLevelSchema,
   location: z.string(),
   date: z.iso.date(),
 });
