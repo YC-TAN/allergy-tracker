@@ -44,5 +44,21 @@ export type Entry = z.infer<typeof EntrySchema>;
 export type EntryInput = z.input<typeof EntrySchema>;
 
 
-// export const FormSeveritySchema = z.exclude(SeveritySchema, z.literal(0));
-// export type FormSeverityType = z.infer<typeof FormSeveritySchema>;
+// ---- Pollen schema and type
+export const PollenLevel = {
+  unknown: 0,
+  low: 1,
+  moderate: 2,
+  high: 3,
+  imminent: 4,
+} as const;
+
+export const PollenLevelSchema = z.union([
+  z.literal(PollenLevel.unknown),
+  z.literal(PollenLevel.low),
+  z.literal(PollenLevel.moderate),
+  z.literal(PollenLevel.high),
+  z.literal(PollenLevel.imminent)
+])
+
+export type PollenLevelType = z.infer<typeof PollenLevelSchema>;
