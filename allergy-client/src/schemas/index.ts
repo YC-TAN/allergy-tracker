@@ -62,3 +62,13 @@ export const PollenLevelSchema = z.union([
 ])
 
 export type PollenLevelType = z.infer<typeof PollenLevelSchema>;
+
+export const PollenDataSchema = z.object({
+  grass: PollenLevelSchema,
+  trees: PollenLevelSchema,
+  weeds: PollenLevelSchema,
+  location: z.string(),
+  date: z.iso.date(),
+});
+
+export type PollenData = z.infer<typeof PollenDataSchema>;
