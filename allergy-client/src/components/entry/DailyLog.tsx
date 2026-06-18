@@ -18,7 +18,8 @@ const DailyLog = () => {
   if (!entry) return null
 
   return (
-    <div className="flex flex-col items-center px-5 pt-8 pb-6">
+    // <div className="flex flex-col items-center px-5 pt-8 pb-6">
+      <>
       <div className="text-center mb-6 flex-1">
         <div
           aria-hidden="true"
@@ -61,6 +62,7 @@ const DailyLog = () => {
       </div>
       {/* Edit entry */}
       <Button
+      className="mb-6"
         variant="outlined"
         color="primary"
         fullWidth
@@ -70,7 +72,7 @@ const DailyLog = () => {
       >
         Edit Log
       </Button>
-    </div>
+    </>
   );
 };
 
