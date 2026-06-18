@@ -1,8 +1,8 @@
 /**
  * Entry form component for logging allergy data.
  * Renders severity, symptom, and notes inputs.
- * Handles both creation and update. 
- * 
+ * Handles both creation and update.
+ *
  * This component manages local form state and delegates
  * persistence through the useEntry hook.
  */
@@ -53,10 +53,10 @@ const EntryForm = ({ existing }: EntryFormProps) => {
       severity: SeverityRating.NoSymptom,
       symptoms: [],
       notes: "",
-    }
+    };
     save(entry);
     navigate("/");
-  }
+  };
 
   return (
     <div className="flex flex-col px-5 pb-6">
@@ -68,17 +68,17 @@ const EntryForm = ({ existing }: EntryFormProps) => {
       <SeverityCard severity={severity} setSeverity={setSeverity} />
       <SymptomCard symptoms={symptoms} setSymptoms={setSymptoms} />
       <NotesCard notes={notes} setNotes={setNotes} />
-      {existing && (
-        <Button
-          variant="contained"
-          color="secondary"
-          className="mb-4"
-          fullWidth
-          onClick={handleNoSymptoms}
-        >
-          Actually, no symptoms today
-        </Button>
-      )}
+
+      <Button
+        variant="outlined"
+        color="secondary"
+        className="mb-4"
+        fullWidth
+        onClick={handleNoSymptoms}
+      >
+        Actually, no symptoms today
+      </Button>
+
       <Button
         variant="contained"
         color="primary"
