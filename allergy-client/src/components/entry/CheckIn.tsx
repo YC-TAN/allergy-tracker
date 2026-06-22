@@ -24,7 +24,7 @@ const CheckIn = () => {
   return (
     <>
       {/* Headline */}
-      <div className="text-center mb-6">
+      <div className="text-center flex-1 mb-6">
         <Typography variant="h5" gutterBottom>
           How's the pollen
           <br />
