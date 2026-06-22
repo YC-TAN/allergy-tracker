@@ -3,8 +3,6 @@ from app.config import Settings, get_settings
 
 app = FastAPI()
 
-# router = APIRouter()
-
 def main():
     print("Hello from backend!")
 
