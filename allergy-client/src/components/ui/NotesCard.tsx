@@ -42,7 +42,7 @@ const NotesCard = ({ notes, setNotes }: NotesProps) => {
           multiline
           rows={3}
           fullWidth
-          placeholder="e.g. took antihistamine, windows open all day…"
+          placeholder="e.g. took antihistamine, windows open all day, pets, indoor drying, air purifier…"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           slotProps={{
