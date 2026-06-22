@@ -22,7 +22,7 @@ const CheckIn = () => {
     nav('/');
   }
   return (
-    <div className="flex flex-col items-center px-5 pt-8 pb-6">
+    <>
       {/* Headline */}
       <div className="text-center mb-6">
         <Typography variant="h5" gutterBottom>
@@ -33,7 +33,7 @@ const CheckIn = () => {
       </div>
 
       {/* CTA card */}
-      <Card className="w-full">
+      <Card className="w-full mb-6">
         <CardContent className="flex flex-col gap-3 p-5">
           <Typography variant="body2" className="mb-4">
             Tap below to record today's symptoms, or mark it as a symptom-free
@@ -64,7 +64,7 @@ const CheckIn = () => {
           </Button>
         </CardContent>
       </Card>
-    </div>
+    </>
   );
 };
 
