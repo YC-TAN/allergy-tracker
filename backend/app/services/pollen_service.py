@@ -1,6 +1,7 @@
 import requests
 
-allergen_url = "https://www.metservice.com/publicData/webdata/towns-cities/regions/christchurch/locations/christchurch/airborne-allergens"
+location = "christchurch"
+allergen_url = f"https://www.metservice.com/publicData/webdata/towns-cities/regions/{location}/locations/{location}/airborne-allergens"
 
 result = requests.get(allergen_url)
 parsed_result = result.json()
