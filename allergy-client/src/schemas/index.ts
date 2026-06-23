@@ -13,6 +13,11 @@
  * - Warm, sunny, dry: high pollen count
  * - Rain: lower pollen count
  * - Wind: disperses pollen over long distances
+ * 
+ * 23/06/2026 Update EntrySchema
+ * Add fields: 
+ * - _v: track schema version
+ * - _synced: true if synced with server, default false 
  */
 
 import { z } from "zod";
@@ -44,15 +49,19 @@ export const SymptomSchema = z.enum([
 ]);
 export type Symptom = z.infer<typeof SymptomSchema>;
 
+const ENTRY_SCHEMA_VERSION = 1;
+
 export const EntrySchema = z.object({
-  id: z.uuid().optional(),
+  id: z.uuid().default(() => crypto.randomUUID()),
   user_id: z.uuid().optional(),
   // use arrow function getTodayDate so that it is called fresh each time
   date: z.iso.date().default(() => getTodayDate()), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
   severity: SeveritySchema,
   symptoms: z.array(SymptomSchema).default([]),
   notes: z.string().default(""),
-  created_at: z.iso.datetime().optional(),
+  created_at: z.iso.datetime().default(() => new Date().toISOString()),
+  _synced: z.boolean().default(false),
+  _v: z.int().default(ENTRY_SCHEMA_VERSION),
 });
 
 export type Entry = z.infer<typeof EntrySchema>;
