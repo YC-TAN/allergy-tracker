@@ -68,6 +68,11 @@ export type Entry = z.infer<typeof EntrySchema>;
 // To allow fields with default value to be optional in forms, can be omitted before parsing
 export type EntryInput = z.input<typeof EntrySchema>;
 
+// ---- Settings
+export const SettingsSchema = z.object({
+  notify_time: z.string().regex(/^\d{2}:\d{2}$/), // HH:MM
+});
+
 // ---- Pollen schema and type
 export const PollenLevel = {
   unknown: 0,
