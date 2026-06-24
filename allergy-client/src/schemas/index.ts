@@ -61,7 +61,7 @@ export const EntrySchema = z.object({
   notes: z.string().default(""),
   created_at: z.iso.datetime().default(() => new Date().toISOString()),
   _synced: z.boolean().default(false),
-  _v: z.int().default(ENTRY_SCHEMA_VERSION),
+  _v: z.literal(ENTRY_SCHEMA_VERSION).default(ENTRY_SCHEMA_VERSION),
 });
 
 export type Entry = z.infer<typeof EntrySchema>;
