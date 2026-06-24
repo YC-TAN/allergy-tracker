@@ -70,8 +70,11 @@ export type EntryInput = z.input<typeof EntrySchema>;
 
 // ---- Settings
 export const SettingsSchema = z.object({
-  notify_time: z.string().regex(/^\d{2}:\d{2}$/), // HH:MM
+  notify_time: z.string().regex(/^\d{2}:\d{2}$/).default('20:00'), // HH:MM, 8pm
+  notify: z.boolean().default(true)
 });
+
+export type Settings = z.infer<typeof SettingsSchema>;
 
 // ---- Pollen schema and type
 export const PollenLevel = {
