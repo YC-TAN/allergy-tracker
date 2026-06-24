@@ -5,12 +5,12 @@
  * It provides functions to read and write entries by date, validate data with
  * Zod, query ranges, delete entries, and reset stored data.
  */
-import { EntrySchema, type Entry, type EntryInput } from '../schemas'
+import { EntrySchema, SettingsSchema, type Entry, type EntryInput, type Settings } from '../schemas'
 
 // Prefix used for localStorage keys
 const KEYS = {
   entry: 'allergy_entries',
-  notifyTime: 'allergy_notify_time'
+  settings: 'allergy_settings'
 } as const;
 
 // Returns all entries from localStorage, or empty object if none
@@ -76,15 +76,22 @@ export function deleteEntry(date: string): void {
 }
 
 // Clear everything — useful for testing / logout
-export function clearAllEntries(key: string = KEYS.entry): void {
+export const clearAllEntries = (key: string = KEYS.entry): void  => {
   localStorage.removeItem(key)
 }
 
 // Notification 
-export function getNotifyTime(): string {
-  return localStorage.getItem(KEYS.notifyTime) ?? '20:00';
+export const getSettings = (): Settings => {
+  try {
+    const raw = localStorage.getItem(KEYS.settings);
+    return raw ? SettingsSchema.parse(JSON.parse(raw)): SettingsSchema.parse({});
+  } catch {
+    return SettingsSchema.parse({});
+  }
 }
 
-export function setNotifyTime(time: string): void {
-  localStorage.setItem(KEYS.notifyTime, time);
+export const setSettings = (settings: Settings): Settings => {
+  const parsed = SettingsSchema.parse(settings);
+  localStorage.setItem(KEYS.settings, JSON.stringify(parsed));
+  return parsed
 }
