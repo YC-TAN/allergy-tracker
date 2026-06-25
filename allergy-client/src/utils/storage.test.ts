@@ -1,12 +1,11 @@
-import { describe, it, expect, beforeEach } from 'vitest'
 import { getEntry, saveEntry, clearAllEntries } from './storage'
 import { getTodayDate } from './dates';
-import type { Entry } from '../schemas'
+import { type EntryInput } from '../schemas'
 
 const today: string = getTodayDate();
-const key = 'test_allergy_entries'
+const key: string = 'test_allergy_entries';
 
-const mockEntry: Entry = {
+const mockEntry: EntryInput = {
   date: today,
   severity: 2,
   symptoms: ['nose', 'eyes'],
@@ -23,8 +22,8 @@ describe('getEntry', () => {
   })
 
   it('returns the entry after saving', () => {
-    saveEntry(mockEntry, key)
-    expect(getEntry(today, key)).toEqual(mockEntry)
+    const parsed = saveEntry(mockEntry, key)
+    expect(getEntry(today, key)).toEqual(parsed);
   })
 })
 
