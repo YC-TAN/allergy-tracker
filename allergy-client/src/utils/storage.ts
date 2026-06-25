@@ -81,17 +81,27 @@ export const clearAllEntries = (key: string = KEYS.entry): void  => {
 }
 
 // Notification 
-export const getSettings = (): Settings => {
+export const getSettings = (key: string = KEYS.settings): Settings => {
   try {
-    const raw = localStorage.getItem(KEYS.settings);
-    return raw ? SettingsSchema.parse(JSON.parse(raw)): SettingsSchema.parse({});
+    const raw = localStorage.getItem(key);
+    if (raw) return SettingsSchema.parse(JSON.parse(raw));
+    
+    // First run — write defaults to localStorage
+    const defaults = SettingsSchema.parse({});
+    localStorage.setItem(KEYS.settings, JSON.stringify(defaults));
+    return defaults;
   } catch {
     return SettingsSchema.parse({});
   }
 }
 
-export const setSettings = (settings: Settings): Settings => {
+export const setSettings = (settings: Settings, key: string = KEYS.settings): Settings => {
   const parsed = SettingsSchema.parse(settings);
-  localStorage.setItem(KEYS.settings, JSON.stringify(parsed));
+  localStorage.setItem(key, JSON.stringify(parsed));
   return parsed
+}
+
+
+export const clearSettings = (key: string = KEYS.settings): void => {
+  localStorage.removeItem(key);
 }
