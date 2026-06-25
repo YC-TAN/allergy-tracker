@@ -9,9 +9,7 @@ import { getEntry, saveEntry } from "../utils/storage";
 import { getTodayDate } from "../utils/dates";
 import type { EntryInput } from "../schemas";
 
-const today = getTodayDate();
-
-export const useEntry = (date: string = today) => {
+export const useEntry = (date: string = getTodayDate()) => {
 
     const queryClient = useQueryClient()
 
