@@ -11,6 +11,15 @@ import GlobalStyles from "@mui/material/GlobalStyles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App.tsx";
 
+import { registerSW } from 'virtual:pwa-register'
+
+// Register the service worker
+registerSW({
+  onOfflineReady() {
+    console.log('App is fully cached and ready to work offline!')
+  },
+})
+
 import { seedMockEntries } from './utils/seedData'
 if (import.meta.env.DEV) {
   seedMockEntries()
