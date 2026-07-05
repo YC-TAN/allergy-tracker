@@ -28,6 +28,9 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
+    """Using @lru_cache to ensure Settings is only constructed exactly once - single, immutable source of truth. 
+    Any validation errors surface immediately on first use.    
+    """
     return Settings()
 
 # SUPABASE_URL: str = os.getenv("SUPABASE_URL")
