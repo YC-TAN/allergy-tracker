@@ -15,4 +15,6 @@ def get_supabase() -> Client:
     Secret key bypass the RLS, which is designed for server process.
     """
     settings = get_settings()
-    return create_client(settings.supabase_url, settings.supabase_key)
+    url = str(settings.supabase_url)
+    key = settings.supabase_key.get_secret_value()
+    return create_client(url, key)
