@@ -1,20 +1,23 @@
-from fastapi import FastAPI, Depends
-from app.config import Settings, get_settings
+from fastapi import FastAPI, Depends, HTTPException
+from supabase import Client
+from app.db import get_supabase
 
 app = FastAPI()
 
 def main():
     print("Hello from backend!")
 
-@app.get("/health")
-async def health(settings: Settings = Depends(get_settings)):
-    from supabase import create_client
-    client = create_client(
-        str(settings.supabase_url),
-        settings.supabase_key.get_secret_value()
-    )
-    # result = client.table("users").select("*").limit(1).execute()
-    return {"status": "ok", "url": str(settings.supabase_url)}
+@app.get("/")
+def read_root():
+    return {"message": "Hello from backend"}
+
+@app.get("/health/db")
+async def db_health(db: Client = Depends(get_supabase)):
+    try:
+        db.table("users").select("id").limit(1).execute()
+        return {"status": "ok"}
+    except Exception as e:
+        raise HTTPException(status_code=503, detail=f"Supabase unreachable: {e}")
 
 
 if __name__ == "__main__":
