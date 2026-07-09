@@ -1,13 +1,13 @@
 """
 06/Jul/26 
-Removed Path definition for .env.
+Removed Path definition for `.env`.
 Path should only be used for system variable, not configuration, doing so poses security risk.
-Pydantic automatically handle reading and parsing of .env
+Pydantic automatically handle reading and parsing of `.env`.
 """
 
 
 from functools import lru_cache
-from pydantic import AnyHttpUrl, SecretStr
+from pydantic import AnyHttpUrl, PostgresDsn, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Literal
 
@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     # Supabase
     supabase_url: AnyHttpUrl
     supabase_key: SecretStr 
+    database_url: PostgresDsn
 
     # App
     environment: Literal["development", "staging", "production"] = "development"
