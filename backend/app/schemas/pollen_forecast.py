@@ -8,16 +8,15 @@ Adopting ELT (Extract, Load, Transform), collect first, transform later
 
 from sqlmodel import SQLModel, Field
 from sqlalchemy import JSONB
-from typing import List
 from datetime import date as date_type, datetime, timezone
 from uuid import UUID, uuid4
 
 class PollenForecastBase(SQLModel):
     date: date_type
     location: str
-    imminent: List[str] = Field(default=[], sa_type=JSONB)
-    low: List[str] = Field(default=[], sa_type=JSONB)
-    high: List[str] = Field(default=[], sa_type=JSONB)
+    imminent: list[str] = Field(default=[], sa_type=JSONB)
+    low: list[str] = Field(default=[], sa_type=JSONB)
+    high: list[str] = Field(default=[], sa_type=JSONB)
 
 class PollenForecast(PollenForecastBase, table=True):
     __tablename__ = "daily_pollen_forecasts"
