@@ -27,7 +27,7 @@ def parse_allergen_data(html: str) -> dict:
     risk = risk_word.lower().strip()
     return {risk: [p.strip() for p in plants_str.split(",") if p.strip()]}
 
-async def extract_allergen_data(location_path: str) -> dict:
+async def extract_allergen_data(location_path: str) -> list[dict]:
     content = await fetch_allergen_data(location_path)
     allergens = [
         parse_allergen_data(item["html"])
