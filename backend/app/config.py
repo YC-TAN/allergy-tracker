@@ -12,10 +12,15 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Literal
 
 class Settings(BaseSettings):
+
     # Supabase
     supabase_url: AnyHttpUrl
     supabase_key: SecretStr 
     database_url: PostgresDsn
+
+    # Metservice API
+    metservice_base_url: AnyHttpUrl = "https://www.metservice.com"
+
 
     # App
     environment: Literal["development", "staging", "production"] = "development"
