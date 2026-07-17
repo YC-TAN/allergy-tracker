@@ -1,0 +1,2213 @@
+{
+    "_usage": "This data is restricted and may only be used with explicit permission from MetService NZ. Contact dataenquiries@metservice.com",
+    "adConfig": {
+        "ac": "9734223",
+        "banner": {
+            "id": "sc-tow-atf-ban-ad1"
+        },
+        "interstitial": {
+            "id": "sc-tow-atf-inst-ad1",
+            "layout": {
+                "hideWhen": [
+                    2,
+                    3
+                ]
+            }
+        },
+        "targeting": {
+            "dynamicDataUrl": "/publicData/webdata/dynamicTargeting/93781/93781/christchurch/null/christchurch/urban/christchurch",
+            "staticData": [
+                {
+                    "key": "apiKey",
+                    "value": "christchurch"
+                },
+                {
+                    "key": "type",
+                    "value": "urban"
+                },
+                {
+                    "key": "island",
+                    "value": "towns-south-island"
+                },
+                {
+                    "key": "location",
+                    "value": "towns-christchurch"
+                },
+                {
+                    "key": "page",
+                    "value": "towns-airborne-allergens"
+                },
+                {
+                    "key": "section",
+                    "value": "towns"
+                }
+            ]
+        }
+    },
+    "adDefinitions": {
+        "sc-rel-btf-wgt-ad1": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-rel-btf-wgt-ad1",
+                "id": "23347260918",
+                "name": "dsk-sc-rel-btf-wgt-ad1",
+                "sizes": [
+                    "fluid",
+                    [
+                        720,
+                        250
+                    ]
+                ]
+            },
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sc-rel-btf-wgt-ad1",
+                "id": "23347260027",
+                "name": "mob-sc-rel-btf-wgt-ad1",
+                "sizes": [
+                    "fluid",
+                    [
+                        300,
+                        250
+                    ]
+                ]
+            },
+            "tab-land": {
+                "def": "/ms/p/w/tab/tab-land-sc-rel-btf-wgt-ad1",
+                "id": "23347260921",
+                "name": "tab-land-sc-rel-btf-wgt-ad1",
+                "sizes": [
+                    "fluid",
+                    [
+                        740,
+                        250
+                    ]
+                ]
+            },
+            "tab-port": {
+                "def": "/ms/p/w/tab/tab-port-sc-rel-btf-wgt-ad1",
+                "id": "23347260924",
+                "name": "tab-port-sc-rel-btf-wgt-ad1",
+                "sizes": [
+                    "fluid",
+                    [
+                        736,
+                        250
+                    ]
+                ]
+            },
+            "wsc": {
+                "def": "/ms/p/w/dsk/wsc-sc-rel-btf-wgt-ad1",
+                "id": "23356267134",
+                "name": "wsc-sc-rel-btf-wgt-ad1",
+                "sizes": [
+                    "fluid",
+                    [
+                        908,
+                        250
+                    ]
+                ]
+            }
+        },
+        "sc-tow-atf-ban-ad1": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-tow-atf-ban-ad1",
+                "id": "23312634893",
+                "name": "dsk-sc-tow-atf-ban-ad-1",
+                "sizes": [
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        970,
+                        90
+                    ],
+                    [
+                        970,
+                        250
+                    ],
+                    [
+                        1024,
+                        250
+                    ],
+                    [
+                        1280,
+                        250
+                    ],
+                    [
+                        1600,
+                        250
+                    ]
+                ]
+            },
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sc-tow-atf-ban-ad1",
+                "id": "23311296159",
+                "name": "mob-sc-tow-atf-ban-ad1",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        300,
+                        600
+                    ],
+                    [
+                        336,
+                        280
+                    ]
+                ]
+            },
+            "tab-land": {
+                "def": "/ms/p/w/tab/tab-land-sc-tow-atf-ban-ad1",
+                "id": "23312470928",
+                "name": "tab-land-sc-tow-atf-ban-ad1",
+                "sizes": [
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        760,
+                        120
+                    ],
+                    [
+                        970,
+                        90
+                    ],
+                    [
+                        970,
+                        250
+                    ],
+                    [
+                        1024,
+                        250
+                    ]
+                ]
+            },
+            "tab-port": {
+                "def": "/ms/p/w/tab/tab-port-sc-tow-atf-ban-ad1",
+                "id": "23312470958",
+                "name": "tab-port-sc-tow-atf-ban-ad1",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        760,
+                        120
+                    ]
+                ]
+            }
+        },
+        "sc-tow-atf-ban-ad2": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-tow-atf-ban-ad2",
+                "id": "23312634689",
+                "name": "dsk-sc-tow-atf-ban-ad-2",
+                "showAdvertiseWithMS": true,
+                "sizes": [
+                    [
+                        160,
+                        600
+                    ],
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        300,
+                        600
+                    ]
+                ]
+            },
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sc-tow-atf-ban-ad2",
+                "id": "23312042896",
+                "name": "mob-sc-tow-atf-ban-ad2",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        300,
+                        600
+                    ],
+                    [
+                        336,
+                        280
+                    ]
+                ]
+            },
+            "tab-land": {
+                "def": "/ms/p/w/tab/tab-land-sc-tow-atf-ban-ad2",
+                "id": "23312471114",
+                "name": "tab-land-sc-tow-atf-ban-ad2",
+                "sizes": [
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        760,
+                        120
+                    ]
+                ]
+            },
+            "tab-port": {
+                "def": "/ms/p/w/tab/tab-port-sc-tow-atf-ban-ad2",
+                "id": "23312471156",
+                "name": "tab-port-sc-tow-atf-ban-ad2",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        760,
+                        120
+                    ]
+                ]
+            }
+        },
+        "sc-tow-atf-inst-ad1": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-tow-atf-inst-ad1",
+                "id": "23312622656",
+                "name": "dsk-sc-tow-atf-inst-ad-1",
+                "sizes": [
+                    [
+                        970,
+                        550
+                    ]
+                ]
+            },
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sc-tow-atf-inst-ad1",
+                "id": "23311296162",
+                "name": "mob-sc-tow-atf-inst-ad1",
+                "sizes": [
+                    [
+                        320,
+                        460
+                    ],
+                    [
+                        320,
+                        480
+                    ]
+                ]
+            }
+        },
+        "sc-tow-atf-nav-ad1": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-tow-atf-nav-ad-1",
+                "id": "23314869629",
+                "name": "dsk-sc-tow-atf-nav-ad-1",
+                "sizes": [
+                    "fluid",
+                    [
+                        616,
+                        240
+                    ],
+                    [
+                        776,
+                        240
+                    ]
+                ]
+            }
+        },
+        "sc-tow-atf-til-ad1": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-tow-atf-til-ad1",
+                "id": "23312634896",
+                "name": "dsk-sc-tow-atf-til-ad-1",
+                "sizes": [
+                    "fluid",
+                    [
+                        320,
+                        80
+                    ],
+                    [
+                        320,
+                        100
+                    ],
+                    [
+                        320,
+                        125
+                    ],
+                    [
+                        300,
+                        50
+                    ],
+                    [
+                        300,
+                        100
+                    ],
+                    [
+                        300,
+                        150
+                    ],
+                    [
+                        380,
+                        100
+                    ]
+                ]
+            }
+        },
+        "sc-tow-atf-til-ad4": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-tow-atf-til-ad4",
+                "id": "23312634692",
+                "name": "dsk-sc-tow-atf-til-ad-4",
+                "sizes": [
+                    "fluid",
+                    [
+                        320,
+                        80
+                    ],
+                    [
+                        320,
+                        100
+                    ],
+                    [
+                        320,
+                        125
+                    ],
+                    [
+                        300,
+                        50
+                    ],
+                    [
+                        300,
+                        100
+                    ],
+                    [
+                        300,
+                        150
+                    ],
+                    [
+                        380,
+                        100
+                    ]
+                ]
+            },
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sc-tow-atf-til-ad4",
+                "id": "23343157565",
+                "name": "mob-sc-tow-atf-til-ad-4",
+                "sizes": [
+                    "fluid",
+                    [
+                        320,
+                        80
+                    ]
+                ]
+            }
+        },
+        "sc-tow-atf-til-ad5": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-tow-atf-til-ad5",
+                "id": "23342740027",
+                "name": "dsk-sc-tow-atf-til-ad-5",
+                "sizes": [
+                    "fluid",
+                    [
+                        380,
+                        80
+                    ]
+                ]
+            }
+        },
+        "sc-tow-btf-ban-ad3": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-tow-btf-ban-ad3",
+                "id": "23311481271",
+                "name": "dsk-sc-tow-btf-ban-ad-3",
+                "sizes": [
+                    [
+                        160,
+                        600
+                    ],
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        300,
+                        600
+                    ]
+                ]
+            },
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sc-tow-btf-ban-ad3",
+                "id": "23312465069",
+                "name": "mob-sc-tow-btf-ban-ad3",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        300,
+                        600
+                    ],
+                    [
+                        336,
+                        280
+                    ]
+                ]
+            },
+            "tab-land": {
+                "def": "/ms/p/w/tab/tab-land-sc-tow-btf-ban-ad3",
+                "id": "23312471117",
+                "name": "tab-land-sc-tow-btf-ban-ad3",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        728,
+                        90
+                    ]
+                ]
+            },
+            "tab-port": {
+                "def": "/ms/p/w/tab/tab-port-sc-tow-btf-ban-ad3",
+                "id": "23312470961",
+                "name": "tab-port-sc-tow-btf-ban-ad3",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        760,
+                        120
+                    ]
+                ]
+            }
+        },
+        "sc-tow-btf-ban-ad4": {
+            "tab-port": {
+                "def": "/ms/p/w/tab/tab-port-sc-tow-btf-ban-ad4",
+                "id": "23312471159",
+                "name": "tab-port-sc-tow-btf-ban-ad4",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        760,
+                        120
+                    ]
+                ]
+            }
+        },
+        "sc-tow-btf-nav-ad1": {
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sc-tow-btf-nav-ad1",
+                "id": "23318716807",
+                "name": "mob-sc-tow-btf-nav-ad-1",
+                "sizes": [
+                    "fluid",
+                    [
+                        296,
+                        150
+                    ],
+                    [
+                        296,
+                        215
+                    ],
+                    [
+                        345,
+                        155
+                    ]
+                ]
+            },
+            "tab-land": {
+                "def": "/ms/p/w/tab/tab-land-sc-tow-btf-nav-ad1",
+                "id": "23319131486",
+                "name": "tab-land-sc-tow-btf-nav-ad-1",
+                "sizes": [
+                    "fluid",
+                    [
+                        656,
+                        240
+                    ]
+                ]
+            },
+            "tab-port": {
+                "def": "/ms/p/w/tab/tab-port-sc-tow-btf-nav-ad1",
+                "id": "23319131489",
+                "name": "tab-port-sc-tow-btf-nav-ad-1",
+                "sizes": [
+                    "fluid",
+                    [
+                        345,
+                        155
+                    ]
+                ]
+            }
+        },
+        "sc-tow-btf-til-ad1": {
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sc-tow-btf-til-ad1",
+                "id": "23311296165",
+                "name": "mob-sc-tow-btf-til-ad1",
+                "sizes": [
+                    "fluid",
+                    [
+                        320,
+                        80
+                    ],
+                    [
+                        320,
+                        100
+                    ],
+                    [
+                        320,
+                        125
+                    ],
+                    [
+                        300,
+                        50
+                    ],
+                    [
+                        300,
+                        100
+                    ],
+                    [
+                        300,
+                        150
+                    ],
+                    [
+                        380,
+                        100
+                    ]
+                ]
+            }
+        },
+        "sc-tow-btf-til-ad2": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-tow-btf-til-ad2",
+                "id": "23312634899",
+                "name": "dsk-sc-tow-btf-til-ad-2",
+                "sizes": [
+                    "fluid",
+                    [
+                        320,
+                        80
+                    ],
+                    [
+                        320,
+                        100
+                    ],
+                    [
+                        320,
+                        125
+                    ],
+                    [
+                        300,
+                        50
+                    ],
+                    [
+                        300,
+                        100
+                    ],
+                    [
+                        300,
+                        150
+                    ],
+                    [
+                        380,
+                        100
+                    ]
+                ]
+            },
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sc-tow-btf-til-ad2",
+                "id": "23311296168",
+                "name": "mob-sc-tow-btf-til-ad2",
+                "sizes": [
+                    "fluid",
+                    [
+                        320,
+                        80
+                    ],
+                    [
+                        320,
+                        100
+                    ],
+                    [
+                        320,
+                        125
+                    ],
+                    [
+                        300,
+                        50
+                    ],
+                    [
+                        300,
+                        100
+                    ],
+                    [
+                        300,
+                        150
+                    ],
+                    [
+                        380,
+                        100
+                    ]
+                ]
+            }
+        },
+        "sc-tow-btf-til-ad3": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sc-tow-btf-til-ad3",
+                "id": "23311481493",
+                "name": "dsk-sc-tow-btf-til-ad-3",
+                "sizes": [
+                    "fluid",
+                    [
+                        320,
+                        80
+                    ],
+                    [
+                        320,
+                        100
+                    ],
+                    [
+                        320,
+                        125
+                    ],
+                    [
+                        300,
+                        50
+                    ],
+                    [
+                        300,
+                        100
+                    ],
+                    [
+                        300,
+                        150
+                    ],
+                    [
+                        380,
+                        100
+                    ]
+                ]
+            },
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sc-tow-btf-til-ad3",
+                "id": "23311296171",
+                "name": "mob-sc-tow-btf-til-ad3",
+                "sizes": [
+                    "fluid",
+                    [
+                        320,
+                        80
+                    ],
+                    [
+                        320,
+                        100
+                    ],
+                    [
+                        320,
+                        125
+                    ],
+                    [
+                        300,
+                        50
+                    ],
+                    [
+                        300,
+                        100
+                    ],
+                    [
+                        300,
+                        150
+                    ],
+                    [
+                        380,
+                        100
+                    ]
+                ]
+            }
+        },
+        "sh-tow-atf-ban-ad1": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sh-tow-atf-ban-ad1",
+                "id": "23319129647",
+                "name": "dsk-sh-tow-atf-ban-ad-1",
+                "sizes": [
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        970,
+                        90
+                    ],
+                    [
+                        970,
+                        250
+                    ],
+                    [
+                        1024,
+                        250
+                    ],
+                    [
+                        1280,
+                        250
+                    ],
+                    [
+                        1600,
+                        250
+                    ]
+                ]
+            },
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sh-tow-atf-ban-ad1",
+                "id": "23311296222",
+                "name": "mob-sh-tow-atf-ban-ad1",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        300,
+                        600
+                    ],
+                    [
+                        336,
+                        280
+                    ]
+                ]
+            },
+            "tab-port": {
+                "def": "/ms/p/w/tab/tab-port-sh-tow-atf-ban-ad1",
+                "id": "23312471180",
+                "name": "tab-port-sh-tow-atf-ban-ad1",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        760,
+                        120
+                    ]
+                ]
+            }
+        },
+        "sh-tow-atf-ban-ad2": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sh-tow-atf-ban-ad2",
+                "id": "23319129443",
+                "name": "dsk-sh-tow-atf-ban-ad-2",
+                "showAdvertiseWithMS": true,
+                "sizes": [
+                    [
+                        160,
+                        600
+                    ],
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        300,
+                        600
+                    ]
+                ]
+            }
+        },
+        "sh-tow-atf-inst-ad1": {
+            "dsk": {
+                "def": "/ms/p/w/dsk/dsk-sh-tow-atf-inst-ad1",
+                "id": "23319129986",
+                "name": "dsk-sh-tow-atf-inst-ad-1",
+                "sizes": [
+                    [
+                        970,
+                        550
+                    ]
+                ]
+            },
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sh-tow-atf-inst-ad1",
+                "id": "23312465084",
+                "name": "mob-sh-tow-atf-inst-ad1",
+                "sizes": [
+                    [
+                        320,
+                        460
+                    ],
+                    [
+                        320,
+                        480
+                    ]
+                ]
+            }
+        },
+        "sh-tow-atf-til-ad1": {
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sh-tow-atf-til-ad1",
+                "id": "23311296225",
+                "name": "mob-sh-tow-atf-til-ad1",
+                "sizes": [
+                    "fluid",
+                    [
+                        320,
+                        80
+                    ],
+                    [
+                        320,
+                        100
+                    ],
+                    [
+                        320,
+                        125
+                    ],
+                    [
+                        300,
+                        50
+                    ],
+                    [
+                        300,
+                        100
+                    ],
+                    [
+                        300,
+                        150
+                    ],
+                    [
+                        380,
+                        100
+                    ]
+                ]
+            }
+        },
+        "sh-tow-btf-ban-ad1": {
+            "tab-land": {
+                "def": "/ms/p/w/tab/tab-land-sh-tow-btf-ban-ad1",
+                "id": "23312471135",
+                "name": "tab-land-sh-tow-btf-ban-ad1",
+                "sizes": [
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        760,
+                        120
+                    ],
+                    [
+                        970,
+                        90
+                    ],
+                    [
+                        970,
+                        250
+                    ],
+                    [
+                        1024,
+                        250
+                    ]
+                ]
+            }
+        },
+        "sh-tow-btf-ban-ad2": {
+            "mob": {
+                "def": "/ms/p/w/mob/mob-sh-tow-btf-ban-ad2",
+                "id": "23312042905",
+                "name": "mob-sh-tow-btf-ban-ad2",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        300,
+                        600
+                    ],
+                    [
+                        336,
+                        280
+                    ]
+                ]
+            },
+            "tab-land": {
+                "def": "/ms/p/w/tab/tab-land-sh-tow-btf-ban-ad2",
+                "id": "23312470595",
+                "name": "tab-land-sh-tow-btf-ban-ad2",
+                "sizes": [
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        760,
+                        120
+                    ],
+                    [
+                        970,
+                        90
+                    ],
+                    [
+                        970,
+                        250
+                    ],
+                    [
+                        1024,
+                        250
+                    ]
+                ]
+            },
+            "tab-port": {
+                "def": "/ms/p/w/tab/tab-port-sh-tow-btf-ban-ad2",
+                "id": "23312471183",
+                "name": "tab-port-sh-tow-btf-ban-ad2",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        728,
+                        90
+                    ],
+                    [
+                        760,
+                        120
+                    ]
+                ]
+            }
+        },
+        "sh-tow-btf-ban-ad3": {
+            "tab-land": {
+                "def": "/ms/p/w/tab/tab-land-sh-tow-btf-ban-ad3",
+                "id": "23312471138",
+                "name": "tab-land-sh-tow-btf-ban-ad3",
+                "sizes": [
+                    [
+                        300,
+                        250
+                    ],
+                    [
+                        728,
+                        90
+                    ]
+                ]
+            }
+        }
+    },
+    "isSkiSeason": "false",
+    "layout": {
+        "name": "five-up/1",
+        "navigation": {
+            "links": [
+                {
+                    "label": "Next 48 Hours",
+                    "url": "/towns-cities/regions/christchurch/locations/christchurch"
+                },
+                {
+                    "label": "7 Days",
+                    "url": "/towns-cities/regions/christchurch/locations/christchurch/7-days"
+                },
+                {
+                    "label": "Extended",
+                    "url": "/towns-cities/regions/christchurch/locations/christchurch/extended"
+                },
+                {
+                    "label": "Water Activities",
+                    "url": "/towns-cities/regions/christchurch/locations/christchurch/water-activities"
+                },
+                {
+                    "label": "Nearby Forecasts",
+                    "url": "/towns-cities/regions/christchurch/locations/christchurch/nearby-forecasts"
+                },
+                {
+                    "label": "Airborne Allergens",
+                    "url": "/towns-cities/regions/christchurch/locations/christchurch/airborne-allergens"
+                },
+                {
+                    "label": "Past Weather",
+                    "url": "/towns-cities/regions/christchurch/locations/christchurch/past-weather"
+                }
+            ]
+        },
+        "primary": {
+            "slots": {
+                "first": {
+                    "modules": []
+                },
+                "left-major": {
+                    "modules": []
+                },
+                "left-minor": {
+                    "modules": [
+                        {
+                            "dataUrl": "/publicData/webdata/module/currentConditions/93781/93781?allergy=true",
+                            "name": "current-conditions/1",
+                            "type": "module"
+                        },
+                        {
+                            "content": [
+                                {
+                                    "html": "<div style='padding-bottom: 10px;'>Sneezing, itchy eyes, or a stuffy nose getting in your way? Visit your local Unichem or Life Pharmacy.</div>",
+                                    "type": "richtext"
+                                },
+                                {
+                                    "html": "<div style='padding-bottom: 10px;'>From antihistamines, nasal sprays, and eye drops to expert advice, our pharmacists can recommend the right option to help you feel better. Not sure what’s triggering your symptoms? We have <a href='https://www.lifepharmacy.co.nz/blogs/health-hq/about-allergies-1' target='_blank' rel='noopener'>simple tips</a> to help you manage allergens this season.</div>",
+                                    "type": "richtext"
+                                },
+                                {
+                                    "html": "While you’re in store, it’s also a great time to get your flu vaccination and stay protected as flu season approaches.",
+                                    "type": "richtext"
+                                },
+                                {
+                                    "sponsor": {
+                                        "image": "/files/images/allergens/lp_logo.png",
+                                        "maxHeight": 1.5,
+                                        "text": "Here to help you feel your best",
+                                        "url": "https://www.lifepharmacy.co.nz/blogs/health-hq/about-allergies-1"
+                                    },
+                                    "type": "sponsor"
+                                }
+                            ],
+                            "hideTitle": false,
+                            "name": "simple-tile/1",
+                            "title": "Allergy Relief",
+                            "urlSlug": ""
+                        },
+                        {
+                            "id": "sc-tow-atf-til-ad1",
+                            "layout": {
+                                "hideWhen": [
+                                    1,
+                                    2,
+                                    3
+                                ]
+                            },
+                            "name": "advert/1"
+                        },
+                        {
+                            "id": "sc-tow-btf-til-ad1",
+                            "layout": {
+                                "hideWhen": [
+                                    4,
+                                    5
+                                ]
+                            },
+                            "name": "advert/1"
+                        }
+                    ]
+                },
+                "main": {
+                    "modules": [
+                        {
+                            "content": [
+                                {
+                                    "html": "<span class=\"status-medium-good\" style=\"font-weight:720; font-size:14px\">Imminent</span></br>Hazelnut, Alder</br>",
+                                    "iconName": "pollen",
+                                    "type": "iconWithText"
+                                },
+                                {
+                                    "html": "<span class=\"status-good\" style=\"font-weight:720; font-size:14px\">Low</span></br>Cypress, Cedar, Fungal Spores</br>",
+                                    "iconName": "pollen",
+                                    "type": "iconWithText"
+                                },
+                                {
+                                    "html": "</br>",
+                                    "type": "richtext"
+                                },
+                                {
+                                    "text": "Last updated: Tuesday 14 July",
+                                    "type": "fineprint"
+                                },
+                                {
+                                    "html": "</br>",
+                                    "type": "richtext"
+                                },
+                                {
+                                    "headerText": "Information",
+                                    "html": "<p><span class='status-medium-good' style='font-weight:720; font-size:14px'>Imminent</span> means pollen production for this plant type is expected to begin within the next 2 weeks.</p><p><span class='status-bad' style='font-weight:720; font-size:14px'>High</span> means high levels of pollen production. These pollens are in the air and are highly likely to cause more severe inhalant allergy in sensitised persons.</p><p><span class='status-medium' style='font-weight:720; font-size:14px'>Moderate</span> means the pollen types are in the air and are likely to cause significant inhalant allergy in sensitised persons.</p><p><span class='status-good' style='font-weight:720; font-size:14px'>Low</span> means that although the plant mentioned is releasing pollen, little pollen is being released or the type of allergen does not spread widely.</p>",
+                                    "type": "dropdown"
+                                }
+                            ],
+                            "name": "simple-tile/1",
+                            "title": "Airborne Allergen Forecast for Christchurch Central"
+                        }
+                    ]
+                },
+                "right": {
+                    "modules": [
+                        {
+                            "id": "sc-tow-atf-ban-ad2",
+                            "layout": {
+                                "hideWhen": [
+                                    1,
+                                    2,
+                                    3
+                                ]
+                            },
+                            "name": "advert/1"
+                        }
+                    ]
+                }
+            }
+        },
+        "search": {
+            "dataUrl": "/publicData/webdata/module/searchOverlayMessages",
+            "searchLocations": [
+                {
+                    "items": [
+                        {
+                            "children": [
+                                {
+                                    "label": "Dargaville",
+                                    "url": "/towns-cities/regions/northland/locations/dargaville"
+                                },
+                                {
+                                    "label": "Kaikohe",
+                                    "url": "/rural/regions/northland/locations/kaikohe"
+                                },
+                                {
+                                    "label": "Kaitaia",
+                                    "url": "/towns-cities/regions/northland/locations/kaitaia"
+                                },
+                                {
+                                    "label": "Kaitaia Airport",
+                                    "url": "/towns-cities/regions/northland/locations/kaitaia-airport"
+                                },
+                                {
+                                    "label": "Kerikeri",
+                                    "url": "/towns-cities/regions/northland/locations/kerikeri"
+                                },
+                                {
+                                    "label": "Paihia",
+                                    "url": "/towns-cities/regions/northland/locations/paihia"
+                                },
+                                {
+                                    "label": "Russell",
+                                    "url": "/towns-cities/regions/northland/locations/russell"
+                                },
+                                {
+                                    "label": "Whangārei",
+                                    "url": "/towns-cities/regions/northland/locations/whangarei"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Northland",
+                                "url": "/rural/regions/northland"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Auckland Central",
+                                    "url": "/towns-cities/regions/auckland/locations/auckland"
+                                },
+                                {
+                                    "label": "Hunua",
+                                    "url": "/towns-cities/regions/auckland/locations/hunua"
+                                },
+                                {
+                                    "label": "Kumeu",
+                                    "url": "/rural/regions/auckland/locations/kumeu"
+                                },
+                                {
+                                    "label": "Manukau",
+                                    "url": "/towns-cities/regions/auckland/locations/manukau"
+                                },
+                                {
+                                    "label": "North Shore",
+                                    "url": "/towns-cities/regions/auckland/locations/north-shore"
+                                },
+                                {
+                                    "label": "Pukekohe",
+                                    "url": "/rural/regions/auckland/locations/pukekohe"
+                                },
+                                {
+                                    "label": "Pōkeno",
+                                    "url": "/towns-cities/regions/auckland/locations/pokeno"
+                                },
+                                {
+                                    "label": "Tuakau",
+                                    "url": "/towns-cities/regions/auckland/locations/tuakau"
+                                },
+                                {
+                                    "label": "Waiheke Island",
+                                    "url": "/towns-cities/regions/auckland/locations/waiheke-island"
+                                },
+                                {
+                                    "label": "Waitakere",
+                                    "url": "/towns-cities/regions/auckland/locations/waitakere"
+                                },
+                                {
+                                    "label": "Warkworth",
+                                    "url": "/rural/regions/auckland/locations/warkworth"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Auckland",
+                                "url": "/rural/regions/auckland"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Cambridge",
+                                    "url": "/rural/regions/waikato/locations/cambridge"
+                                },
+                                {
+                                    "label": "Hamilton",
+                                    "url": "/towns-cities/regions/waikato/locations/hamilton"
+                                },
+                                {
+                                    "label": "Huntly",
+                                    "url": "/rural/regions/waikato/locations/huntly"
+                                },
+                                {
+                                    "label": "Matamata",
+                                    "url": "/rural/regions/waikato/locations/matamata"
+                                },
+                                {
+                                    "label": "Morrinsville",
+                                    "url": "/rural/regions/waikato/locations/morrinsville"
+                                },
+                                {
+                                    "label": "Ngāruawāhia",
+                                    "url": "/rural/regions/waikato/locations/ngaruawahia"
+                                },
+                                {
+                                    "label": "Paeroa",
+                                    "url": "/rural/regions/waikato/locations/paeroa"
+                                },
+                                {
+                                    "label": "Putāruru",
+                                    "url": "/rural/regions/waikato/locations/putaruru"
+                                },
+                                {
+                                    "label": "Raglan",
+                                    "url": "/rural/regions/waikato/locations/raglan"
+                                },
+                                {
+                                    "label": "Te Aroha",
+                                    "url": "/rural/regions/waikato/locations/te-aroha"
+                                },
+                                {
+                                    "label": "Te Awamutu",
+                                    "url": "/rural/regions/waikato/locations/te-awamutu"
+                                },
+                                {
+                                    "label": "Tokoroa",
+                                    "url": "/towns-cities/regions/waikato/locations/tokoroa"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Waikato",
+                                "url": "/rural/regions/waikato"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Piopio",
+                                    "url": "/rural/regions/waitomo/locations/piopio"
+                                },
+                                {
+                                    "label": "Te Kuiti",
+                                    "url": "/towns-cities/regions/waitomo/locations/te-kuiti"
+                                },
+                                {
+                                    "label": "Waitomo",
+                                    "url": "/rural/regions/waitomo/locations/waitomo"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Waitomo",
+                                "url": "/rural/regions/waitomo"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Thames",
+                                    "url": "/towns-cities/regions/coromandel/locations/thames"
+                                },
+                                {
+                                    "label": "Waihi",
+                                    "url": "/rural/regions/coromandel/locations/waihi"
+                                },
+                                {
+                                    "label": "Waikawau Bay",
+                                    "url": "/rural/regions/coromandel/locations/waikawau-bay"
+                                },
+                                {
+                                    "label": "Whangamatā",
+                                    "url": "/rural/regions/coromandel/locations/whangamata"
+                                },
+                                {
+                                    "label": "Whitianga",
+                                    "url": "/towns-cities/regions/coromandel/locations/whitianga"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Coromandel",
+                                "url": "/rural/regions/coromandel"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Ngongotahā",
+                                    "url": "/towns-cities/regions/rotorua/locations/ngongotaha"
+                                },
+                                {
+                                    "label": "Rotorua",
+                                    "url": "/towns-cities/regions/rotorua/locations/rotorua"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Rotorua",
+                                "url": "/rural/regions/rotorua"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Katikati",
+                                    "url": "/rural/regions/bay-of-plenty/locations/katikati"
+                                },
+                                {
+                                    "label": "Kawerau",
+                                    "url": "/rural/regions/bay-of-plenty/locations/kawerau"
+                                },
+                                {
+                                    "label": "Mount Maunganui",
+                                    "url": "/towns-cities/regions/bay-of-plenty/locations/mount-maunganui"
+                                },
+                                {
+                                    "label": "Opotiki",
+                                    "url": "/rural/regions/bay-of-plenty/locations/opotiki"
+                                },
+                                {
+                                    "label": "Papamoa",
+                                    "url": "/rural/regions/bay-of-plenty/locations/papamoa"
+                                },
+                                {
+                                    "label": "Tauranga",
+                                    "url": "/towns-cities/regions/bay-of-plenty/locations/tauranga"
+                                },
+                                {
+                                    "label": "Te Puke",
+                                    "url": "/rural/regions/bay-of-plenty/locations/te-puke"
+                                },
+                                {
+                                    "label": "Whakatāne",
+                                    "url": "/towns-cities/regions/bay-of-plenty/locations/whakatane"
+                                },
+                                {
+                                    "label": "Ōhope",
+                                    "url": "/towns-cities/regions/bay-of-plenty/locations/ohope"
+                                },
+                                {
+                                    "label": "Ōmokoroa",
+                                    "url": "/towns-cities/regions/bay-of-plenty/locations/omokoroa"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Bay of Plenty",
+                                "url": "/rural/regions/bay-of-plenty"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Taupō",
+                                    "url": "/towns-cities/regions/taupo/locations/taupo"
+                                },
+                                {
+                                    "label": "Taupō Airport",
+                                    "url": "/towns-cities/regions/taupo/locations/taupo-airport"
+                                },
+                                {
+                                    "label": "Tūrangi",
+                                    "url": "/rural/regions/taupo/locations/turangi"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Taupō",
+                                "url": "/rural/regions/taupo"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Gisborne",
+                                    "url": "/towns-cities/regions/gisborne/locations/gisborne"
+                                },
+                                {
+                                    "label": "Ruatoria",
+                                    "url": "/rural/regions/gisborne/locations/ruatoria"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Gisborne",
+                                "url": "/rural/regions/gisborne"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Eastern Rangitaiki",
+                                    "url": "/rural/regions/hawkes-bay/locations/eastern-rangitaiki"
+                                },
+                                {
+                                    "label": "Hastings",
+                                    "url": "/towns-cities/regions/hawkes-bay/locations/hastings"
+                                },
+                                {
+                                    "label": "Havelock North",
+                                    "url": "/towns-cities/regions/hawkes-bay/locations/havelock-north"
+                                },
+                                {
+                                    "label": "Mahia",
+                                    "url": "/rural/regions/hawkes-bay/locations/mahia"
+                                },
+                                {
+                                    "label": "Napier",
+                                    "url": "/towns-cities/regions/hawkes-bay/locations/napier"
+                                },
+                                {
+                                    "label": "Napier Airport",
+                                    "url": "/towns-cities/regions/hawkes-bay/locations/napier-airport"
+                                },
+                                {
+                                    "label": "Waipukurau",
+                                    "url": "/rural/regions/hawkes-bay/locations/waipukurau"
+                                },
+                                {
+                                    "label": "Wairoa",
+                                    "url": "/rural/regions/hawkes-bay/locations/wairoa"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Hawke's Bay",
+                                "url": "/rural/regions/hawkes-bay"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Eltham",
+                                    "url": "/rural/regions/taranaki/locations/eltham"
+                                },
+                                {
+                                    "label": "Hāwera",
+                                    "url": "/rural/regions/taranaki/locations/hawera"
+                                },
+                                {
+                                    "label": "Inglewood",
+                                    "url": "/rural/regions/taranaki/locations/inglewood"
+                                },
+                                {
+                                    "label": "New Plymouth",
+                                    "url": "/towns-cities/regions/taranaki/locations/new-plymouth"
+                                },
+                                {
+                                    "label": "New Plymouth Airport",
+                                    "url": "/towns-cities/regions/taranaki/locations/new-plymouth-airport"
+                                },
+                                {
+                                    "label": "Opunake",
+                                    "url": "/rural/regions/taranaki/locations/opunake"
+                                },
+                                {
+                                    "label": "Stratford",
+                                    "url": "/rural/regions/taranaki/locations/stratford"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Taranaki",
+                                "url": "/rural/regions/taranaki"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Taumarunui",
+                                    "url": "/towns-cities/regions/taumarunui/locations/taumarunui"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Taumarunui",
+                                "url": "/rural/regions/taumarunui"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Ohakune",
+                                    "url": "/rural/regions/taihape/locations/ohakune"
+                                },
+                                {
+                                    "label": "Waiouru",
+                                    "url": "/rural/regions/taihape/locations/waiouru"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Taihape",
+                                "url": "/rural/regions/taihape"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Whanganui",
+                                    "url": "/towns-cities/regions/wanganui/locations/wanganui"
+                                },
+                                {
+                                    "label": "Whanganui Airport",
+                                    "url": "/towns-cities/regions/wanganui/locations/wanganui-airport"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Whanganui",
+                                "url": "/rural/regions/wanganui"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Feilding",
+                                    "url": "/rural/regions/manawatu/locations/feilding"
+                                },
+                                {
+                                    "label": "Hunterville",
+                                    "url": "/rural/regions/manawatu/locations/hunterville"
+                                },
+                                {
+                                    "label": "Ohakea",
+                                    "url": "/rural/regions/manawatu/locations/ohakea"
+                                },
+                                {
+                                    "label": "Palmerston North",
+                                    "url": "/towns-cities/regions/manawatu/locations/palmerston-north"
+                                },
+                                {
+                                    "label": "Palmerston North Airport",
+                                    "url": "/towns-cities/regions/manawatu/locations/palmerston-north-airport"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Manawatu",
+                                "url": "/rural/regions/manawatu"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Carterton",
+                                    "url": "/rural/regions/wairarapa/locations/carterton"
+                                },
+                                {
+                                    "label": "Castlepoint",
+                                    "url": "/rural/regions/wairarapa/locations/castlepoint"
+                                },
+                                {
+                                    "label": "Dannevirke",
+                                    "url": "/towns-cities/regions/wairarapa/locations/dannevirke"
+                                },
+                                {
+                                    "label": "Featherston",
+                                    "url": "/rural/regions/wairarapa/locations/featherston"
+                                },
+                                {
+                                    "label": "Martinborough",
+                                    "url": "/rural/regions/wairarapa/locations/martinborough"
+                                },
+                                {
+                                    "label": "Masterton",
+                                    "url": "/towns-cities/regions/wairarapa/locations/masterton"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Wairarapa",
+                                "url": "/rural/regions/wairarapa"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Levin",
+                                    "url": "/towns-cities/regions/kapiti-horowhenua/locations/levin"
+                                },
+                                {
+                                    "label": "Paraparaumu",
+                                    "url": "/towns-cities/regions/kapiti-horowhenua/locations/paraparaumu"
+                                },
+                                {
+                                    "label": "Te Horo",
+                                    "url": "/rural/regions/kapiti-horowhenua/locations/te-horo"
+                                },
+                                {
+                                    "label": "Waikanae",
+                                    "url": "/towns-cities/regions/kapiti-horowhenua/locations/waikanae"
+                                },
+                                {
+                                    "label": "Ōtaki",
+                                    "url": "/rural/regions/kapiti-horowhenua/locations/otaki"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Kapiti-Horowhenua",
+                                "url": "/rural/regions/kapiti-horowhenua"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Judgeford",
+                                    "url": "/rural/regions/wellington/locations/judgeford"
+                                },
+                                {
+                                    "label": "Lower Hutt",
+                                    "url": "/towns-cities/regions/wellington/locations/lower-hutt"
+                                },
+                                {
+                                    "label": "Lyall Bay",
+                                    "url": "/towns-cities/regions/wellington/locations/lyall-bay"
+                                },
+                                {
+                                    "label": "Ohariu Valley",
+                                    "url": "/rural/regions/wellington/locations/ohariu-valley"
+                                },
+                                {
+                                    "label": "Porirua",
+                                    "url": "/towns-cities/regions/wellington/locations/porirua"
+                                },
+                                {
+                                    "label": "Upper Hutt",
+                                    "url": "/towns-cities/regions/wellington/locations/upper-hutt"
+                                },
+                                {
+                                    "label": "Wainuiomata",
+                                    "url": "/towns-cities/regions/wellington/locations/wainuiomata"
+                                },
+                                {
+                                    "label": "Wellington Central",
+                                    "url": "/towns-cities/regions/wellington/locations/wellington"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Wellington",
+                                "url": "/rural/regions/wellington"
+                            }
+                        }
+                    ],
+                    "title": "North Island"
+                },
+                {
+                    "items": [
+                        {
+                            "children": [
+                                {
+                                    "label": "Blenheim",
+                                    "url": "/towns-cities/regions/marlborough/locations/blenheim"
+                                },
+                                {
+                                    "label": "Kaikōura",
+                                    "url": "/towns-cities/regions/marlborough/locations/kaikoura"
+                                },
+                                {
+                                    "label": "Kaikōura Airport",
+                                    "url": "/towns-cities/regions/marlborough/locations/kaikoura-airport"
+                                },
+                                {
+                                    "label": "Picton",
+                                    "url": "/rural/regions/marlborough/locations/picton"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Marlborough",
+                                "url": "/rural/regions/marlborough"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Golden Bay",
+                                    "url": "/rural/regions/nelson"
+                                },
+                                {
+                                    "label": "Motueka",
+                                    "url": "/towns-cities/regions/nelson/locations/motueka"
+                                },
+                                {
+                                    "label": "Murchison",
+                                    "url": "/rural/regions/nelson/locations/murchison"
+                                },
+                                {
+                                    "label": "Nelson",
+                                    "url": "/towns-cities/regions/nelson/locations/nelson"
+                                },
+                                {
+                                    "label": "Richmond",
+                                    "url": "/towns-cities/regions/nelson/locations/richmond"
+                                },
+                                {
+                                    "label": "St Arnaud",
+                                    "url": "/rural/regions/nelson/locations/st-arnaud"
+                                },
+                                {
+                                    "label": "Takaka",
+                                    "url": "/rural/regions/nelson/locations/takaka"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Nelson",
+                                "url": "/rural/regions/nelson"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Reefton",
+                                    "url": "/towns-cities/regions/buller/locations/reefton"
+                                },
+                                {
+                                    "label": "Westport",
+                                    "url": "/towns-cities/regions/buller/locations/westport"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Buller",
+                                "url": "/rural/regions/buller"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Greymouth",
+                                    "url": "/towns-cities/regions/grey/locations/greymouth"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Grey",
+                                "url": "/rural/regions/grey"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Franz Josef",
+                                    "url": "/rural/regions/westland/locations/franz-josef"
+                                },
+                                {
+                                    "label": "Haast",
+                                    "url": "/rural/regions/westland/locations/haast"
+                                },
+                                {
+                                    "label": "Hokitika",
+                                    "url": "/towns-cities/regions/westland/locations/hokitika"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Westland",
+                                "url": "/rural/regions/westland"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Ashburton",
+                                    "url": "/towns-cities/regions/canterbury-plains/locations/ashburton"
+                                },
+                                {
+                                    "label": "Darfield",
+                                    "url": "/rural/regions/canterbury-plains/locations/darfield"
+                                },
+                                {
+                                    "label": "Kaiapoi",
+                                    "url": "/rural/regions/canterbury-plains/locations/kaiapoi"
+                                },
+                                {
+                                    "label": "Methven",
+                                    "url": "/rural/regions/canterbury-plains/locations/methven"
+                                },
+                                {
+                                    "label": "Pegasus",
+                                    "url": "/rural/regions/canterbury-plains/locations/pegasus"
+                                },
+                                {
+                                    "label": "Rakaia",
+                                    "url": "/rural/regions/canterbury-plains/locations/rakaia"
+                                },
+                                {
+                                    "label": "Temuka",
+                                    "url": "/rural/regions/canterbury-plains/locations/temuka"
+                                },
+                                {
+                                    "label": "Timaru",
+                                    "url": "/towns-cities/regions/canterbury-plains/locations/timaru"
+                                },
+                                {
+                                    "label": "Waimate",
+                                    "url": "/rural/regions/canterbury-plains/locations/waimate"
+                                },
+                                {
+                                    "label": "Waipara",
+                                    "url": "/rural/regions/canterbury-plains/locations/waipara"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Canterbury Plains",
+                                "url": "/rural/regions/canterbury-plains"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Culverden",
+                                    "url": "/rural/regions/canterbury-high-country/locations/culverden"
+                                },
+                                {
+                                    "label": "Hanmer Springs",
+                                    "url": "/rural/regions/canterbury-high-country/locations/hanmer-springs"
+                                },
+                                {
+                                    "label": "Mount Cook",
+                                    "url": "/towns-cities/regions/canterbury-high-country/locations/mount-cook"
+                                },
+                                {
+                                    "label": "Omarama",
+                                    "url": "/rural/regions/canterbury-high-country/locations/omarama"
+                                },
+                                {
+                                    "label": "Twizel",
+                                    "url": "/rural/regions/canterbury-high-country/locations/twizel"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Canterbury High Country",
+                                "url": "/rural/regions/canterbury-high-country"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Banks Peninsula",
+                                    "url": "/towns-cities/regions/christchurch/locations/banks-peninsula"
+                                },
+                                {
+                                    "label": "Christchurch Central",
+                                    "url": "/towns-cities/regions/christchurch/locations/christchurch"
+                                },
+                                {
+                                    "label": "Eastern Suburbs",
+                                    "url": "/towns-cities/regions/christchurch/locations/eastern-suburbs"
+                                },
+                                {
+                                    "label": "Hilltop",
+                                    "url": "/rural/regions/christchurch/locations/hill-top"
+                                },
+                                {
+                                    "label": "Lincoln",
+                                    "url": "/rural/regions/christchurch/locations/lincoln"
+                                },
+                                {
+                                    "label": "Marshland",
+                                    "url": "/rural/regions/christchurch/locations/marshlands"
+                                },
+                                {
+                                    "label": "Port Hills",
+                                    "url": "/towns-cities/regions/christchurch/locations/port-hills"
+                                },
+                                {
+                                    "label": "Prebbleton",
+                                    "url": "/towns-cities/regions/christchurch/locations/prebbleton"
+                                },
+                                {
+                                    "label": "Rolleston",
+                                    "url": "/towns-cities/regions/christchurch/locations/rolleston"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Christchurch",
+                                "url": "/rural/regions/christchurch"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Oamaru",
+                                    "url": "/towns-cities/regions/north-otago/locations/oamaru"
+                                },
+                                {
+                                    "label": "Oamaru Airport",
+                                    "url": "/towns-cities/regions/north-otago/locations/oamaru-airport"
+                                }
+                            ],
+                            "heading": {
+                                "label": "North Otago",
+                                "url": "/rural/regions/north-otago"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Alexandra",
+                                    "url": "/towns-cities/regions/central-otago/locations/alexandra"
+                                },
+                                {
+                                    "label": "Cromwell",
+                                    "url": "/rural/regions/central-otago/locations/cromwell"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Central Otago",
+                                "url": "/rural/regions/central-otago"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Dunedin",
+                                    "url": "/towns-cities/regions/dunedin/locations/dunedin"
+                                },
+                                {
+                                    "label": "Leith Saddle",
+                                    "url": "/towns-cities/regions/dunedin/locations/leith-saddle"
+                                },
+                                {
+                                    "label": "Middlemarch",
+                                    "url": "/rural/regions/dunedin/locations/middlemarch"
+                                },
+                                {
+                                    "label": "Mosgiel",
+                                    "url": "/towns-cities/regions/dunedin/locations/mosgiel"
+                                },
+                                {
+                                    "label": "Port Chalmers",
+                                    "url": "/towns-cities/regions/dunedin/locations/port-chalmers"
+                                },
+                                {
+                                    "label": "Waitati",
+                                    "url": "/rural/regions/dunedin/locations/waitati"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Dunedin",
+                                "url": "/rural/regions/dunedin"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Balclutha",
+                                    "url": "/rural/regions/clutha/locations/balclutha"
+                                },
+                                {
+                                    "label": "Nugget Point",
+                                    "url": "/rural/regions/clutha/locations/nugget-point"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Clutha",
+                                "url": "/rural/regions/clutha"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Glenorchy",
+                                    "url": "/rural/regions/southern-lakes/locations/glenorchy"
+                                },
+                                {
+                                    "label": "Lake Hayes",
+                                    "url": "/rural/regions/southern-lakes/locations/lake-hayes"
+                                },
+                                {
+                                    "label": "Queenstown",
+                                    "url": "/towns-cities/regions/southern-lakes/locations/queenstown"
+                                },
+                                {
+                                    "label": "Wānaka",
+                                    "url": "/towns-cities/regions/southern-lakes/locations/wanaka"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Southern Lakes",
+                                "url": "/rural/regions/southern-lakes"
+                            }
+                        },
+                        {
+                            "children": [
+                                {
+                                    "label": "Gore",
+                                    "url": "/towns-cities/regions/southland/locations/gore"
+                                },
+                                {
+                                    "label": "Invercargill",
+                                    "url": "/towns-cities/regions/southland/locations/invercargill"
+                                },
+                                {
+                                    "label": "Lumsden",
+                                    "url": "/rural/regions/southland/locations/lumsden"
+                                },
+                                {
+                                    "label": "Milford Sound",
+                                    "url": "/towns-cities/regions/southland/locations/milford-sound"
+                                },
+                                {
+                                    "label": "Stewart Island",
+                                    "url": "/rural/regions/southland/locations/stewart-island"
+                                },
+                                {
+                                    "label": "Te Anau",
+                                    "url": "/rural/regions/southland/locations/te-anau"
+                                }
+                            ],
+                            "heading": {
+                                "label": "Southland",
+                                "url": "/rural/regions/southland"
+                            }
+                        }
+                    ],
+                    "title": "South Island"
+                }
+            ]
+        },
+        "secondary": {
+            "slots": {
+                "major": {
+                    "modules": [
+                        {
+                            "content": [
+                                {
+                                    "text": "About 25 – 30% of our population is allergic to one or more allergens – with those allergic to inhaled pollens being the greatest group. These allergic particles are carried on the air, and come from plants which are flowering. Particles from sporing fungi both inside our houses and outside, from pets, from bedding and from other sources also contribute.",
+                                    "type": "tileTextBlock"
+                                },
+                                {
+                                    "text": "Pollen is shed from flowering plants as microscopic grains 15 to 50 micrometres across. Pollens are allergenic because the air-borne grains release proteins upon contact with water, which allows the pollen to fertilise the receiving plant.  It is these proteins which may cause an allergic reaction if you are sensitised.",
+                                    "type": "tileTextBlock"
+                                },
+                                {
+                                    "image": "/files/images/allergens/pollen_micrograph.jpg",
+                                    "type": "image"
+                                },
+                                {
+                                    "text": "Pollen grains from wind-dispersed plants are very light and buoyant and can travel long distances. Only when they are shed in large numbers are they visible as dust or as a cloud in the air.",
+                                    "type": "tileTextBlock"
+                                },
+                                {
+                                    "image": "/files/images/allergens/pollen_from_air.jpg",
+                                    "type": "image"
+                                },
+                                {
+                                    "heading": "Seasonal Allergens",
+                                    "type": "h2"
+                                },
+                                {
+                                    "text": "Although there is localised pollen production in the winter months of May and June from some cypress and cedar trees, the main full pollen season runs from July through to February and March of the following year. The season varies slightly in its timings each year depending largely on plant growth and development in the preceding year, for that is when much pollen formation is initiated, and on the weather, especially temperature, experienced in the late winter and spring.",
+                                    "type": "tileTextBlock"
+                                },
+                                {
+                                    "text": "Dramatic pollen production and air-distribution begins in July or August with the Pinus (pine) season. This is seen by everyone as yellow dust which settles on car surfaces, and rings around puddles, ponds and lakes. Other early pollen hazards here are wattle (Acacia) where pollen is shed in polyads or larger clusters, macrocarpa (Cupressus macrocarpa -pollen of which has been shown to sensitise up to 30% of asthma clinic attendees in Melbourne) and hazelnut (Corylus) a potent allergenic pollen which may have an occupational implication here as the emerging horticultural industry grows. This continues into August/September and overlaps with deciduous trees like oaks, elm, birches, alders, poplars and ash - all potent aeroallergens to persons sensitised to them.",
+                                    "type": "tileTextBlock"
+                                },
+                                {
+                                    "image": "/files/images/allergens/pine_pollen.jpg",
+                                    "type": "image"
+                                },
+                                {
+                                    "text": "The major pollen hazard in New Zealand, the grasses, dominate in October through to and after Christmas and finally olive trees, privets and chenopod/amaranth/composite weeds contribute to pollen load in January and February. Fungal spores are produced into the air in February and March but are there in all months. Spores, and danders (dried saliva) from pets, house dust mites from inside bedding all contribute to ‘hayfever’. Asthma can be exacerbated by all or some of these inhaled allergens.",
+                                    "type": "tileTextBlock"
+                                },
+                                {
+                                    "text": "Adapted from content provided by Dr David Fountain, Associate Professor in Plant Biology, Massey University.",
+                                    "type": "fineprint"
+                                }
+                            ],
+                            "name": "simple-tile/1",
+                            "title": "What is pollen?",
+                            "urlSlug": ""
+                        }
+                    ]
+                },
+                "minor": {
+                    "modules": []
+                },
+                "right": {
+                    "modules": [
+                        {
+                            "id": "sc-tow-btf-ban-ad3",
+                            "layout": {
+                                "hideWhen": [
+                                    1
+                                ]
+                            },
+                            "name": "advert/1"
+                        }
+                    ]
+                }
+            }
+        },
+        "type": "layout"
+    },
+    "location": {
+        "favouriteKey": "christchurch/christchurch",
+        "favouriteType": "urban",
+        "key": "christchurch",
+        "label": "Christchurch Central",
+        "type": "urban",
+        "warningDataUrl": "/publicData/webdata/warnings-service/urban/christchurch",
+        "websiteLocation": "christchurch",
+        "websiteRegion": "christchurch",
+        "websiteSection": "urban"
+    },
+    "metadata": {
+        "appleItunesApp": "app-id=525900888",
+        "author": "MetService",
+        "canonicalUrl": "https://www.metservice.com /towns-cities/regions/christchurch/locations/christchurch/airborne-allergens",
+        "description": "Get the latest pollen and airborne allergens forecast for Christchurch Central. Stay ahead of seasonal allergies with MetService – New Zealand’s trusted weather source",
+        "googlePlayApp": "app-id=com.metservice.phone.android",
+        "image": null,
+        "keywords": "New Zealand, New Zealand weather, NZ pollen, New Zealand pollen, pollen, pollen now, hayfever, hayfever season, NZ hayfever, NZ hayfever season, airborne, airborne pollen, airborne allergens, pollen levels, allergies, allergy risk, current pollen",
+        "siteName": "MetService",
+        "title": "Christchurch Central Airborne Allergens Forecast - MetService New Zealand",
+        "twitterSite": "@metservicenz"
+    },
+    "searchLabel": "Christchurch Central - Airborne Allergens",
+    "type": "screen",
+    "url": "/towns-cities/regions/christchurch/locations/christchurch/airborne-allergens"
+}
