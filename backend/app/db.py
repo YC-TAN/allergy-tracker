@@ -2,14 +2,17 @@
 09/Jul/2026 Not using supabase-py as the generated python types TypedDict is not stable yet
 ref: https://github.com/supabase/supabase-py/issues/1443 
 
+SQLModel.metadata.create_all(engine) is not required here as the db is created via supabase CLI
+
 """
 
 from sqlmodel import create_engine, Session
 from app.config import get_settings
 
 settings = get_settings()
-databaseUrl = str(settings.database_url)
-engine = create_engine(databaseUrl, pool_size=5, max_overflow=5)
+databaseUrl: str = str(settings.database_url)
+echo: bool = settings.environment == 'development' 
+engine = create_engine(databaseUrl, pool_size=5, max_overflow=5, echo = echo)
 
 def get_session():
     with Session(engine) as session:
