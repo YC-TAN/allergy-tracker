@@ -16,6 +16,7 @@ class PollenForecastBase(SQLModel):
     location: str
     imminent: list[str] = Field(default=[], sa_type=JSONB)
     low: list[str] = Field(default=[], sa_type=JSONB)
+    moderate: list[str] = Field(default=[], sa_type=JSONB)
     high: list[str] = Field(default=[], sa_type=JSONB)
 
 class PollenForecast(PollenForecastBase, table=True):
