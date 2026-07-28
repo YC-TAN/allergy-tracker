@@ -7,7 +7,7 @@ Adopting ELT (Extract, Load, Transform), collect first, transform later
 """
 
 from sqlmodel import SQLModel, Field
-from sqlalchemy import JSONB
+from sqlalchemy.dialects.postgresql import JSONB
 from datetime import date as date_type, datetime, timezone
 from uuid import UUID, uuid4
 
