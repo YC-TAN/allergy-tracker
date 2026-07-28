@@ -10,10 +10,10 @@ npm install supabase --save-dev
 npx supabase login                    
 npx supabase init                     
 npx supabase link --project-ref <your-project-ref>
-npx supabase migration new create_initial_schema
+npx supabase migration new <file_name>
 ```
 
-Ensure your Docker Desktop is running before connecting to the remote Postgres. 
+Ensure your **Docker Desktop** is running before connecting to the remote Postgres. 
 Run the following command to migrate your schema and policy to the actual remote Postgres.
 ```bash
 npx supabase db push
