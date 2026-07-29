@@ -15,7 +15,7 @@ def mock_pollen_response():
 def test_parse_allergen_data():
     content = '<span class="status-medium-good" style="font-weight:720; font-size:14px">Imminent</span></br>Hazelnut, Alder</br>'
     result = pollen_service.parse_allergen_data(content)
-    expected = {"imminent": ["hazelnut", "alder"]}
+    expected = ("imminent", ["hazelnut", "alder"])
     assert result == expected
 
 
@@ -30,10 +30,8 @@ def test_extract_allergen_data(mocker, mock_pollen_response):
     location_path = "/towns-cities/regions/christchurch/locations/christchurch"
     result = pollen_service.extract_allergen_data(location_path)
     expected = [
-        {
-            "imminent": ["hazelnut", "alder"],
-        },
-        {"low": ["cypress", "cedar", "fungal spores"]},
+        ( "imminent", ["hazelnut", "alder"]),
+        ("low", ["cypress", "cedar", "fungal spores"])
     ]
 
     assert result == expected
