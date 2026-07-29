@@ -1,5 +1,10 @@
 #### Pytest commands
 
+Run test using uv
+```
+uv run pytest
+```
+
 - version: `pytest --version`
 - `pytest`: run all files whose names follow the form test_*.py or *_test.py in the current directory and its subdirectories.
 - `pytest <filename.py>`: run all tests in a specific file

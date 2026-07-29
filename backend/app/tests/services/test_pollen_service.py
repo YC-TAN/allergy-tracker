@@ -1,6 +1,7 @@
 import json
 import pytest
 from pathlib import Path
+from datetime import date
 
 from app.services import pollen_service
 
@@ -34,4 +35,33 @@ def test_extract_allergen_data(mocker, mock_pollen_response):
         ("low", ["cypress", "cedar", "fungal spores"])
     ]
 
+    assert result == expected
+
+
+def test_build_forecast_payload():
+    parsed = [
+        ( "imminent", ["hazelnut", "alder"]),
+        ("low", ["cypress", "cedar", "fungal spores"])
+    ]
+    location = "christchurch"
+    expected = {
+        "date": date.today(),
+        "location": location,
+        "imminent": ["hazelnut", "alder"],
+        "low": ["cypress", "cedar", "fungal spores"]
+    }
+    result = pollen_service.build_forecast_payload(parsed, location)
+    assert result == expected
+
+
+def test_build_forecast_payload_invalid_risks():
+    parsed = [
+        ( "other", ["hazelnut", "alder"]),
+    ]
+    location = "christchurch"
+    expected = {
+        "date": date.today(),
+        "location": location,
+    }
+    result = pollen_service.build_forecast_payload(parsed, location)
     assert result == expected
