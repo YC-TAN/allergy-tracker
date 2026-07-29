@@ -16,7 +16,8 @@ class Settings(BaseSettings):
     # Supabase
     supabase_url: AnyHttpUrl
     supabase_key: SecretStr 
-    database_url: PostgresDsn
+    # database_url: PostgresDsn
+    pooler_database_url: str
 
     # Metservice API
     metservice_base_url: AnyHttpUrl = "https://www.metservice.com"
