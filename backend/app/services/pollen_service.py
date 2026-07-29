@@ -1,14 +1,19 @@
 import requests
 import re
+from datetime import date
+from sqlmodel import select
 from app.config import get_settings
+from app.deps import SessionDep
+from app.schemas.pollen_forecast import PollenForecast
 
 settings = get_settings()
-location = "Christchurch Central"
-location_path = "/towns-cities/regions/christchurch/locations/christchurch"
+location_paths = {
+    "christchurch_central": "/towns-cities/regions/christchurch/locations/christchurch"
+}
 METSERVICE_ALLERGEN_PATH = "/publicData/webdata{location_path}/airborne-allergens"
 
 
-def fetch_allergen_data(location_path: str) -> dict:
+def fetch_allergen_data(location: str) -> dict[str, str]:
     """
     Fetch the pollen forecast using the given location path.
 
@@ -19,7 +24,7 @@ def fetch_allergen_data(location_path: str) -> dict:
     Returns:
         The parsed JSON response body as a Python dict.
     """
-
+    location_path = location_paths[location.lower()]
     url = str(settings.metservice_base_url) + METSERVICE_ALLERGEN_PATH.format(
         location_path=location_path
     )
@@ -27,7 +32,7 @@ def fetch_allergen_data(location_path: str) -> dict:
     return result.json()
 
 
-def parse_allergen_data(content: str) -> dict:
+def parse_allergen_data(content: str) -> tuple[str, list[str]] | None:
     """
     Extract the risk level and allergen plants from a single HTML fragment.
 
@@ -43,10 +48,10 @@ def parse_allergen_data(content: str) -> dict:
         return None
     risk_word, plants_str = match.groups()
     risk = risk_word.lower().strip()
-    return {risk: [p.strip().lower() for p in plants_str.split(",") if p.strip()]}
+    return (risk, [p.strip().lower() for p in plants_str.split(",") if p.strip()])
 
 
-def extract_allergen_data(location_path: str) -> list[dict]:
+def extract_allergen_data(location: str) -> list[tuple]:
     """
     Fetch and parse allergen data, keeping only content items whose type
     is "iconWithText".
@@ -54,7 +59,7 @@ def extract_allergen_data(location_path: str) -> list[dict]:
     Returns:
         A list of {risk: allergens list} mappings.
     """
-    response = fetch_allergen_data(location_path)
+    response = fetch_allergen_data(location)
     # TODO Add error handling, try-except
     content = response["layout"]["primary"]["slots"]["main"]["modules"][0]["content"]
     allergens = [
@@ -63,3 +68,46 @@ def extract_allergen_data(location_path: str) -> list[dict]:
         if item.get("type") == "iconWithText"
     ]
     return allergens
+
+def create_allergen_data(allergen_data: dict, db: SessionDep) -> PollenForecast:
+    """
+    Insert extracted daily allergen data into database.
+
+    """
+    data = PollenForecast(**allergen_data)
+    db.add(data)
+    db.commit()
+    db.refresh(data)
+    return data
+
+
+def get_allergen_data(check_date: date, location: str, db: SessionDep) -> PollenForecast | None:
+    statement = select(PollenForecast).where(
+        PollenForecast.date == check_date,
+        PollenForecast.location == location,
+    )
+    return db.exec(statement).first()
+
+
+def build_forecast_payload(parsed: list[tuple[str, list[str]]], location: str) -> dict:
+    payload = {
+        "date": date.today(),
+        "location": location
+    }
+    valid_risks = {"imminent", "low", "moderate", "high"}
+    for risk, allergens in parsed:
+        if risk in valid_risks:
+            payload[risk] = allergens
+        #TODO log unexpected risk
+    return payload
+
+
+def sync_allergen_data(location: str, db: SessionDep) -> PollenForecast:
+    todays_forecast = get_allergen_data(date.today(), location, db)
+    if todays_forecast is None:
+        allergen_data = extract_allergen_data(location)
+        payload = build_forecast_payload(allergen_data, location)
+        todays_forecast = create_allergen_data(payload, db)
+    return todays_forecast
+
+    
