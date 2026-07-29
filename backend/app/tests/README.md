@@ -1,3 +1,11 @@
+### Unit Test
+- Custom functions/ Business logic
+
+
+### Integration Test
+- API + DB interactions
+
+
 #### Pytest commands
 
 Run test using uv
