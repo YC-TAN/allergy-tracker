@@ -1,5 +1,6 @@
 from enum import Enum
 from sqlmodel import SQLModel, Field
+from pydantic import field_validator
 from sqlalchemy.dialects.postgresql import JSONB
 from datetime import date as date_type, datetime, timezone
 from uuid import UUID, uuid4
@@ -36,6 +37,13 @@ class EntryBase(SQLModel):
         max_length=255,
         title="Additional information"
     )
+
+    @field_validator("date")
+    @classmethod
+    def date_must_not_be_future(cls, v: date_type) -> date_type:
+        if v > date_type.today():
+            raise ValueError("Date cannot be in the future")
+        return v
 
 
 class Entry(EntryBase, table=True):
