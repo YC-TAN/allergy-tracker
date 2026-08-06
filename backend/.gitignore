@@ -2,8 +2,7 @@
 .venv/
 
 # Environment variables
-.env
-.env.local
+.env*
 
 # Python
 __pycache__/
