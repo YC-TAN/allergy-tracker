@@ -1,5 +1,7 @@
+from datetime import date
 from uuid import UUID
 from fastapi import APIRouter, HTTPException, status
+from sqlmodel import select
 
 from app.deps import SessionDep
 from app.schemas.entry import Entry, EntryCreate
@@ -21,9 +23,15 @@ def create_entry(payload: EntryCreate, session: SessionDep):
     return db_item
 
 
-@router.get("/{entry_id}", response_model=Entry)
-def read_item(entry_id: UUID, session: SessionDep):
-    entry = session.get(Entry, entry_id)
-    if not entry:
-        raise HTTPException(status_code=404, detail="Item not found")
+@router.get("/{entry_date}", response_model=Entry)
+def read_item(entry_date: date, session: SessionDep):
+    """
+    Get daily entry record using date.
+    """
+    statement = select(Entry).where(Entry.date == entry_date)
+    entry = session.exec(statement).first()
+
+    if entry is None:
+        raise HTTPException(status_code=404, detail="No entry for this date")
+
     return entry
