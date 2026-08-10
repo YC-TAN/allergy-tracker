@@ -1,4 +1,5 @@
 from enum import Enum
+from sqlalchemy import Integer
 from sqlmodel import SQLModel, Field
 from pydantic import field_validator
 from sqlalchemy.dialects.postgresql import JSONB
@@ -24,7 +25,7 @@ class Symptom(str, Enum):
 
 class EntryBase(SQLModel):
     date: date_type
-    severity: SeverityLevel
+    severity: SeverityLevel = Field(sa_type=Integer)
     #TODO deduplicate the list - prevent storing duplicate symptoms
     symptoms: list[Symptom] = Field(
         default=[], 
@@ -44,6 +45,14 @@ class EntryBase(SQLModel):
         if v > date_type.today():
             raise ValueError("Date cannot be in the future")
         return v
+
+    @field_validator("notes", mode="before")
+    @classmethod
+    def normalize_notes(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        v = v.strip()
+        return v or None  # empty after stripping → None
 
 
 class Entry(EntryBase, table=True):
