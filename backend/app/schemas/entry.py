@@ -54,6 +54,11 @@ class EntryBase(SQLModel):
         v = v.strip()
         return v or None  # empty after stripping → None
 
+    @field_validator("symptoms")
+    @classmethod
+    def deduplicate_symptoms(cls, v: list[Symptom]) -> list[Symptom]:
+        return list(dict.fromkeys(v))   # dict to keep insertion order, keys are unique
+
 
 class Entry(EntryBase, table=True):
     __tablename__ = "entries"

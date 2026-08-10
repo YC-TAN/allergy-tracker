@@ -15,7 +15,7 @@ def test_entry_create_accepts_full_valid_payload():
         "date": test_date,
         "severity": 2,
         "symptoms": ["eyes", "nose", "headache"],
-        "notes": "Windy day, worse outdoors",
+        "notes": "pets",
     }
     entry = EntryCreate(**payload)
 

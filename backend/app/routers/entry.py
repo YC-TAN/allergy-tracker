@@ -1,5 +1,4 @@
 from datetime import date
-from uuid import UUID
 from fastapi import APIRouter, HTTPException, status
 from sqlmodel import select
 
