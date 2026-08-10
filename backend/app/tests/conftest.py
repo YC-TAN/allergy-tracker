@@ -3,7 +3,7 @@ import os
 import subprocess
 from pathlib import Path
 
-from sqlmodel import create_engine, Session, text
+from sqlmodel import create_engine, Session
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -13,7 +13,10 @@ from app.db import get_session
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 TEST_DB_URL = os.environ["TEST_DB_URL"]
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(
+    scope="session", 
+    # autouse=True
+    )
 def _reset_test_db():
     """
     Runs once per test session. 
@@ -28,7 +31,12 @@ def _reset_test_db():
 
 
 @pytest.fixture(scope="session")
-def engine():
+def engine(_reset_test_db):
+    """
+    Depends on `_reset_test_db`.
+    The DB is reset and migrated exactly once per test session, 
+    and only when a test actually needs a DB connection (via `session`/`client`)
+    """
     return create_engine(TEST_DB_URL)
 
 
