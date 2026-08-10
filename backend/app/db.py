@@ -10,9 +10,9 @@ from sqlmodel import create_engine, Session
 from app.config import get_settings
 
 settings = get_settings()
-databaseUrl = settings.pooler_database_url
+database_url = settings.pooler_database_url
 echo: bool = settings.environment == 'development' 
-engine = create_engine(databaseUrl, pool_size=5, max_overflow=5, echo = echo)
+engine = create_engine(database_url, pool_size=5, max_overflow=5, echo = echo)
 
 def get_session():
     with Session(engine) as session:

@@ -7,7 +7,7 @@ Pydantic automatically handle reading and parsing of `.env`.
 
 
 from functools import lru_cache
-from pydantic import AnyHttpUrl, PostgresDsn, SecretStr
+from pydantic import AnyHttpUrl, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Literal
 
