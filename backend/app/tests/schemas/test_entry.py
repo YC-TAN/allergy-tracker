@@ -86,10 +86,19 @@ def test_symptoms_rejects_unknown_value(symptoms_list):
             symptoms=symptoms_list
         )
 
-# TODO: once dedup logic is added to EntryBase, add:
-# def test_symptoms_deduplicates_repeated_values():
-#     entry = EntryCreate(date=test_date, severity=1, symptoms=["eyes", "eyes"], notes=None)
-#     assert entry.symptoms == ["eyes"]
+
+@pytest.mark.parametrize(
+    "symptoms_input, expected",
+    [
+        pytest.param(["nose", "nose"], ["nose"], id="simple_duplicate"),
+        pytest.param(["nose", "eyes", "nose"], ["nose", "eyes"], id="duplicate_preserves_first_position"),
+        pytest.param(["nose", "nose", "nose"], ["nose"], id="triple_duplicate"),
+        pytest.param([], [], id="empty_list")
+    ],
+)
+def test_symptoms_deduplicates_repeated_values(symptoms_input, expected):
+    entry = EntryCreate(date=test_date, severity=1, symptoms=symptoms_input)
+    assert entry.symptoms == expected
 
 
 # --- notes ---

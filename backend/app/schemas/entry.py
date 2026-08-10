@@ -1,32 +1,29 @@
 from enum import Enum
-from sqlalchemy import Integer
+from typing import Literal
 from sqlmodel import SQLModel, Field
 from pydantic import field_validator
+from sqlalchemy import Integer
 from sqlalchemy.dialects.postgresql import JSONB
 from datetime import date as date_type, datetime, timezone
 from uuid import UUID, uuid4
 
 
 class SeverityLevel(int, Enum):
-    no_symptom = 0
+    no_symptoms = 0
     mild = 1
     moderate = 2
     severe = 3
 
 
-class Symptom(str, Enum):
-    eyes = "eyes"
-    nose = "nose"
-    throat = "throat"
-    energy = "energy"
-    headache = "headache"
-    other = "other"
+Symptom = Literal["eyes", "nose", "throat", "energy", "headache", "other"]
 
 
 class EntryBase(SQLModel):
     date: date_type
-    severity: SeverityLevel = Field(sa_type=Integer)
-    #TODO deduplicate the list - prevent storing duplicate symptoms
+    severity: Literal[0, 1, 2, 3] = Field(
+        sa_type=Integer, 
+        description="0 = no symptoms, 1 = mild, 2 = moderate, 3 = severe"
+    )
     symptoms: list[Symptom] = Field(
         default=[], 
         sa_type=JSONB,
