@@ -5,15 +5,15 @@ on:
         branches: [main]
         paths:
             - "backend/**"
-            - ".github/workflows/backend.yml"
+            - ".github/workflows/backend.yaml"
     pull_request:
         branches: [main]
         paths:
             - "backend/**"
-            - ".github/workflows/backend.yml"
+            - ".github/workflows/backend.yaml"
 
 jobs:
-    initial_setup:
+    initial_setup_and_test:
         runs-on: ubuntu-latest
 
         # env are Dummy values, otherwise get_settings() will fail validation and crash test collection if they're unset.
