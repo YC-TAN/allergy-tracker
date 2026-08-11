@@ -5,17 +5,27 @@ ref: https://github.com/supabase/supabase-py/issues/1443
 SQLModel.metadata.create_all(engine) is not required here as the db is created via supabase CLI
 
 """
-
+from functools import lru_cache
 from sqlmodel import create_engine, Session
 from app.config import get_settings
 
-settings = get_settings()
-database_url = settings.pooler_database_url
-echo: bool = settings.environment == 'development' 
-engine = create_engine(database_url, pool_size=5, max_overflow=5, echo = echo)
+# settings = get_settings()
+# database_url = settings.pooler_database_url
+# echo: bool = settings.environment == 'development' 
+# engine = create_engine(database_url, pool_size=5, max_overflow=5, echo = echo)
 
+
+@lru_cache
+def get_engine():
+    settings = get_settings()
+    return create_engine(
+        settings.pooler_database_url,
+        pool_size=5,
+        max_overflow=5,
+        echo=settings.environment == 'development'
+    )
 def get_session():
-    with Session(engine) as session:
+    with Session(get_engine()) as session:
         yield session
 
 # from functools import lru_cache
