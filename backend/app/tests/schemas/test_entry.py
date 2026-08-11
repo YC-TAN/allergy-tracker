@@ -175,9 +175,3 @@ def test_date_rejects_future_date():
             date=tomorrow,
             severity=1
         )
-
-
-
-
-
-

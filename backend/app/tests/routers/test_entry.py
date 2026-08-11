@@ -66,14 +66,14 @@ def test_post_entry_defaults_symptoms_and_notes(client):
 
     assert res.status_code == 201
     assert result["symptoms"] == []
-    assert result["notes"] == None
+    assert result["notes"] is None
 
 
 # POST: Negative cases (wrong date format, future date, no severity, severity not in range, symptoms not in range)
 def test_invalid_severity_returns_422(client):
     payload = {**VALID_PAYLOAD, "severity": 9}
     response = client.post("/entries/", json=payload)
-    assert response.status_code == 422
+    assert response.status_code == 422 
  
  
 def test_missing_severity_returns_422(client):
