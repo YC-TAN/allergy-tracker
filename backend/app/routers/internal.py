@@ -1,3 +1,8 @@
+"""
+    This module includes endpoints that are only called internally.
+    Users cannot access these endpoints.
+"""
+
 from fastapi import APIRouter, HTTPException
 from sqlmodel import text
 
@@ -9,6 +14,10 @@ router = APIRouter()
 
 @router.get("/health/db")
 def db_health(db: SessionDep):
+    """
+        This is a cron-triggered endpoint.
+        It automatically check db health at a set time.
+    """
     try:
         db.exec(text("SELECT 1"))
         return {"status": "ok"}
@@ -19,6 +28,7 @@ def db_health(db: SessionDep):
 @router.post("/pollen_forecast/{location}")
 def fetch_and_save_pollen_forecast(location: str, db: SessionDep):
     """
-    This endpoint will be cron-triggered, automatically fetch data daily
+        This is a cron-triggered endpoint.
+        It automatically fetch data daily.
     """
     return sync_allergen_data(location, db)
