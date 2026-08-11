@@ -58,7 +58,7 @@ jobs:
               working-directory: ./backend
               run: uv sync --locked
 
-            - name: Lint and format
+            - name: Lint and Format
               working-directory: ./backend
               run: uv run ruff check .
         
