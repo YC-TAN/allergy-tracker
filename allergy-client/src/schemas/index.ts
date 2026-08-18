@@ -58,7 +58,7 @@ export type Symptom = z.infer<typeof SymptomSchema>;
 const ENTRY_SCHEMA_VERSION = 1;
 
 export const EntrySchema = z.object({
-  user_id: z.uuid().optional(),
+  // user_id: z.uuid().optional(),
   // use arrow function getTodayDate so that it is called fresh each time
   date: z.iso.date().default(() => getTodayDate()), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
   severity: SeveritySchema,
@@ -68,15 +68,17 @@ export const EntrySchema = z.object({
   _v: z.literal(ENTRY_SCHEMA_VERSION).default(ENTRY_SCHEMA_VERSION),
 });
 
+export const EntryResponseSchema = EntrySchema.extend({
+  id: z.uuid(),
+  // user_id: z.uuid(),
+  created_at: z.string(),
+});
+
 export type Entry = z.infer<typeof EntrySchema>;
 // To allow fields with default value to be optional in forms, can be omitted before parsing
 export type EntryInput = z.input<typeof EntrySchema>;
 
-export const EntryWithIDSchema = EntrySchema.extend({
-  id: z.uuid(),
-})
-
-export type EntryWithID = z.infer<typeof EntryWithIDSchema>;
+export type EntryResponse = z.infer<typeof EntryResponseSchema>;
 
 // ---- Settings
 export const SettingsSchema = z.object({
