@@ -1,5 +1,5 @@
 import {
-  getEntry,
+  getLocalEntry,
   saveEntry,
   clearAllEntries,
   getSettings,
@@ -27,12 +27,12 @@ beforeEach(() => {
 
 describe("getEntry", () => {
   it("returns null for a date with no entry", () => {
-    expect(getEntry(today, test_entry_key)).toBeNull();
+    expect(getLocalEntry(today, test_entry_key)).toBeNull();
   });
 
   it("returns the entry after saving", () => {
     const parsed = saveEntry(mockEntry, test_entry_key);
-    expect(getEntry(today, test_entry_key)).toEqual(parsed);
+    expect(getLocalEntry(today, test_entry_key)).toEqual(parsed);
   });
 });
 
@@ -40,7 +40,6 @@ describe("saveEntry", () => {
   it("returns the parsed entry with defaults filled in", () => {
     const result = saveEntry(mockEntry, test_entry_key);
     expect(result).toMatchObject({ date: today, severity: 2 });
-    expect(result.id).toBeDefined();
     expect(result._synced).toBe(false);
     expect(result._v).toBe(1);
   });
@@ -48,7 +47,7 @@ describe("saveEntry", () => {
   it("overwrites an existing entry for the same date", () => {
     saveEntry(mockEntry, test_entry_key);
     saveEntry({ ...mockEntry, severity: 1 }, test_entry_key);
-    expect(getEntry(today, test_entry_key)?.severity).toBe(1);
+    expect(getLocalEntry(today, test_entry_key)?.severity).toBe(1);
   });
 
   it("throws on invalid severity", () => {

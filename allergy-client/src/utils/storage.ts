@@ -5,7 +5,7 @@
  * It provides functions to read and write entries by date, validate data with
  * Zod, query ranges, delete entries, and reset stored data.
  */
-import { EntrySchema, SettingsSchema, type Entry, type EntryInput, type Settings } from '../schemas'
+import { EntryLocalSchema, SettingsSchema, type EntryLocal, type EntryInput, type Settings } from '../schemas'
 
 // Prefix used for localStorage keys
 const KEYS = {
@@ -14,7 +14,7 @@ const KEYS = {
 } as const;
 
 // Returns all entries from localStorage, or empty object if none
-export const loadAll = (key: string = KEYS.entry): Record<string, Entry>  => {
+export const loadAll = (key: string = KEYS.entry): Record<string, EntryLocal>  => {
   try {
     const raw = localStorage.getItem(key)
     return raw ? JSON.parse(raw) : {}
@@ -24,20 +24,20 @@ export const loadAll = (key: string = KEYS.entry): Record<string, Entry>  => {
 }
 
 // Saves the full entries map back to localStorage
-export const saveAll = (entries: Record<string, Entry>, key: string = KEYS.entry): void => {
+export const saveAll = (entries: Record<string, EntryLocal>, key: string = KEYS.entry): void => {
   localStorage.setItem(key, JSON.stringify(entries))
 }
 
 // Get a single entry by ISO date string ('YYYY-MM-DD')
-export const getEntry = (date: string, key: string = KEYS.entry): Entry | null => {
+export const getLocalEntry = (date: string, key: string = KEYS.entry): EntryLocal | null => {
   const entries = loadAll(key)
   return entries[date] ?? null
 }
 
 // Save or overwrite an entry for its date
 // Validates with Zod before saving — throws if invalid
-export const saveEntry = (entry: EntryInput, key: string = KEYS.entry): Entry => {
-  const parsed = EntrySchema.parse(entry)
+export const saveEntry = (entry: EntryInput, key: string = KEYS.entry): EntryLocal => {
+  const parsed = EntryLocalSchema.parse(entry)
   const entries = loadAll(key)
   // if (entries[parsed.date]) {
   //   throw new Error(`Entry for ${parsed.date} already exists`)
@@ -45,6 +45,11 @@ export const saveEntry = (entry: EntryInput, key: string = KEYS.entry): Entry =>
   entries[parsed.date] = parsed
   saveAll(entries, key)
   return parsed
+}
+
+export const listUnsyncedEntries = (key: string = KEYS.entry): EntryLocal[] => {
+  const entries = loadAll(key);
+  return Object.values(entries).filter((entry) => !entry._synced);
 }
 
 // export const updateEntry(entry: Entry): Entry {
@@ -61,7 +66,7 @@ export const saveEntry = (entry: EntryInput, key: string = KEYS.entry): Entry =>
 // }
 
 // Get entries for a date range (inclusive), sorted oldest → newest
-export function getEntriesInRange(from: string, to: string): Entry[] {
+export function getEntriesInRange(from: string, to: string): EntryLocal[] {
   const entries = loadAll()
   return Object.values(entries)
     .filter(e => e.date >= from && e.date <= to)
