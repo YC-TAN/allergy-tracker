@@ -80,7 +80,7 @@ export const EntryResponseSchema = EntrySchema.extend({
 
 export type Entry = z.infer<typeof EntrySchema>;
 // To allow fields with default value to be optional in forms, can be omitted before parsing
-export type EntryInput = z.input<typeof EntrySchema>;
+export type EntryInput = z.input<typeof EntryLocalSchema>;
 export type EntryLocal = z.infer<typeof EntryLocalSchema>;
 export type EntryResponse = z.infer<typeof EntryResponseSchema>;
 
