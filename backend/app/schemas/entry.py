@@ -45,8 +45,8 @@ class EntryBase(SQLModel):
         title="Hay Fever Symptoms",
         description="Multiselect: 'eyes', 'nose', 'throat', 'energy', 'headache', 'other'",
     )
-    notes: str | None = Field(
-        default=None, max_length=255, title="Additional information"
+    notes: str = Field(
+        default="", max_length=255, title="Additional information"
     )
 
     @field_validator("date")
@@ -58,11 +58,8 @@ class EntryBase(SQLModel):
 
     @field_validator("notes", mode="before")
     @classmethod
-    def normalize_notes(cls, v: str | None) -> str | None:
-        if v is None:
-            return v
-        v = v.strip()
-        return v or None  # empty after stripping → None
+    def normalize_notes(cls, v: str) -> str:
+        return v.strip()
 
     @field_validator("symptoms")
     @classmethod
