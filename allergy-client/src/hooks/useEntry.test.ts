@@ -35,7 +35,7 @@ describe('useEntry', () => {
   })
 
   it('updates query cache on save without refetching', async () => {
-    const spy = vi.spyOn(storage, 'getEntry')
+    const spy = vi.spyOn(storage, 'getLocalEntry')
     const { result } = renderHook(() => useEntry('2026-06-25'), { wrapper: createWrapper() })
     await waitFor(() => expect(result.current.isPending).toBe(false))
 
@@ -47,7 +47,7 @@ describe('useEntry', () => {
   })
 
   it('defaults to today when no date passed', async () => {
-    const spy = vi.spyOn(storage, 'getEntry')
+    const spy = vi.spyOn(storage, 'getLocalEntry')
     const { result } = renderHook(() => useEntry(), { wrapper: createWrapper() })
     await waitFor(() => expect(result.current.isPending).toBe(false))
     expect(spy).toHaveBeenCalledWith(expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/))

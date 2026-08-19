@@ -5,9 +5,10 @@
  */
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { getEntry, saveEntry } from "../utils/storage";
+import { getLocalEntry, saveEntry } from "../utils/storage";
+import {createEntry} from "../services/entry";
 import { getTodayDate } from "../utils/dates";
-import type { EntryInput } from "../schemas";
+import type { EntryInput, EntryLocal } from "../schemas";
 
 export const useEntry = (date: string = getTodayDate()) => {
 
@@ -15,11 +16,22 @@ export const useEntry = (date: string = getTodayDate()) => {
 
     const result = useQuery({
         queryKey: ['entry', date],
-        queryFn: () => getEntry(date)
+        queryFn: () => getLocalEntry(date)
     })
 
     const saveMutation = useMutation({
-        mutationFn: (entry: EntryInput) => Promise.resolve(saveEntry(entry)),
+        mutationFn: async (input: EntryInput): Promise<EntryLocal> => {
+            // Promise.resolve(saveEntry(entry))
+            if (navigator.onLine) {
+                try {
+                    await createEntry(input); // createEntry does its own strip+send internally
+                    return saveEntry({...input, _synced: true});
+                } catch (err) {
+                    console.error('Sync attempt failed:', err);
+                }
+            }
+            return saveEntry(input);
+        },
         onSuccess: (saved) => {
             queryClient.setQueryData(['entry', saved.date], saved)
         }
@@ -35,7 +47,7 @@ export const useEntry = (date: string = getTodayDate()) => {
     return {
         entry: result.data,
         isPending: result.isPending,
-        save: (entry: EntryInput) => saveMutation.mutate(entry),
+        save: (input: EntryInput) => saveMutation.mutate(input),
         // update: (entry: Entry) => updateMutation.mutate(entry)        
     }
 }
