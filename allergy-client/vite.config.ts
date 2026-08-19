@@ -10,16 +10,20 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/',
   plugins: [
     react(),
     tailwindcss(),
     VitePWA({
+      scope: '/',
       registerType: "autoUpdate",
       workbox: {
+        cleanupOutdatedCaches: true,
         globIgnores: [
           "**/fonts.googleapis.com/**",
         ],
-        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2}"],
+        navigateFallback: 'index.html',
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -94,5 +98,13 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     setupFiles: "./testSetup.ts",
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+    }
   },
 });
