@@ -15,7 +15,7 @@ def test_get_entry_by_date(client, session):
     session.add(entry)
     session.commit()
 
-    res = client.get("/entries/2026-08-01")
+    res = client.get("/api/entries/2026-08-01")
     result = res.json()
 
     assert res.status_code == 200
@@ -35,13 +35,13 @@ def test_get_entry_by_date(client, session):
     ]
 )
 def test_get_entry_invalid_or_not_exist(client, invalid_date, expected_status):
-    res = client.get(f"/entries/{invalid_date}")
+    res = client.get(f"/api/entries/{invalid_date}")
     assert res.status_code == expected_status
 
 
 # POST: Happy
 def test_create_entry_success(client):
-    post_res = client.post("/entries/", json=VALID_PAYLOAD)
+    post_res = client.post("/api/entries", json=VALID_PAYLOAD)
     assert post_res.status_code == 201
 
     post_result = post_res.json()
@@ -53,7 +53,7 @@ def test_create_entry_success(client):
     assert post_result["symptoms"] == VALID_PAYLOAD["symptoms"]
     assert post_result["notes"] == VALID_PAYLOAD["notes"]
 
-    get_res = client.get("/entries/2026-08-01")
+    get_res = client.get("/api/entries/2026-08-01")
     assert get_res.status_code == 200
     assert get_res.json() == post_result 
 
@@ -61,43 +61,43 @@ def test_create_entry_success(client):
 # POST: default notes and symptoms
 def test_post_entry_defaults_symptoms_and_notes(client):
     payload = {"date": "2026-08-03", "severity": 0}   # no symptoms, no notes
-    res = client.post("/entries/", json=payload)
+    res = client.post("/api/entries", json=payload)
     result = res.json()
 
     assert res.status_code == 201
     assert result["symptoms"] == []
-    assert result["notes"] is None
+    assert result["notes"] == ""
 
 
 # POST: Negative cases (wrong date format, future date, no severity, severity not in range, symptoms not in range)
 def test_invalid_severity_returns_422(client):
     payload = {**VALID_PAYLOAD, "severity": 9}
-    response = client.post("/entries/", json=payload)
+    response = client.post("/api/entries", json=payload)
     assert response.status_code == 422 
  
  
 def test_missing_severity_returns_422(client):
     payload = {k: v for k, v in VALID_PAYLOAD.items() if k != "severity"}
-    response = client.post("/entries/", json=payload)
+    response = client.post("/api/entries", json=payload)
     assert response.status_code == 422
  
  
 def test_future_date_returns_422(client):
     tomorrow = (date.today() + timedelta(days=1)).isoformat()
     payload = {**VALID_PAYLOAD, "date": tomorrow}
-    response = client.post("/entries/", json=payload)
+    response = client.post("/api/entries", json=payload)
     assert response.status_code == 422
 
 
 def test_unknown_symptom_returns_422(client):
     payload = {**VALID_PAYLOAD, "symptoms": ["elbow"]}
-    response = client.post("/entries/", json=payload)
+    response = client.post("/api/entries", json=payload)
     assert response.status_code == 422
  
  
 def test_malformed_json_body_returns_422(client):
     response = client.post(
-        "/entries/",
+        "/api/entries",
         content="not valid json",
         headers={"Content-Type": "application/json"},
     )

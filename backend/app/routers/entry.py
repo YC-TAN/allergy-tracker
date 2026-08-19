@@ -10,7 +10,7 @@ router = APIRouter(
     tags=["entries"]
 )
 
-@router.post("/", response_model=Entry, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=Entry, status_code=status.HTTP_201_CREATED)
 def create_entry(payload: EntryCreate, session: SessionDep):
     """
     Convert payload into db object then save into database and return the db object

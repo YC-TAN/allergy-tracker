@@ -1,12 +1,15 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from .routers import pollen_forecast, internal, entry
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-app.include_router(pollen_forecast.router)
-app.include_router(internal.router)
-app.include_router(entry.router)
+api = APIRouter(prefix="/api")
+api.include_router(pollen_forecast.router)
+api.include_router(internal.router)
+api.include_router(entry.router)
+
+app.include_router(api)
 
 origins = [
     "http://localhost:5173",

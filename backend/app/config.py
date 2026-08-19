@@ -14,8 +14,8 @@ from typing import Literal
 class Settings(BaseSettings):
 
     # Supabase
-    supabase_url: AnyHttpUrl
-    supabase_key: SecretStr 
+    # supabase_url: AnyHttpUrl
+    # supabase_key: SecretStr 
     # database_url: PostgresDsn
     pooler_database_url: str
 

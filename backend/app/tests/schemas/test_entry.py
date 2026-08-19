@@ -103,9 +103,14 @@ def test_symptoms_deduplicates_repeated_values(symptoms_input, expected):
 
 # --- notes ---
 
-def test_notes_accepts_none():
-    entry = EntryCreate(date=test_date, severity=0, notes=None)
-    assert entry.notes is None
+def test_notes_accepts_empty_str():
+    entry = EntryCreate(date=test_date, severity=0, notes="")
+    assert entry.notes == ""
+
+
+def test_notes_defaults_empty_str():
+    entry = EntryCreate(date=test_date, severity=0)
+    assert entry.notes == ""
 
 
 def test_notes_accepts_up_to_255_chars():
@@ -125,9 +130,9 @@ def test_notes_rejects_over_255_chars():
         pytest.param("\t\n", id="tabs_and_newlines"),
     ],
 )
-def test_notes_whitespace_only_becomes_none(notes_input):
+def test_notes_whitespace_only_becomes_empty_str(notes_input):
     entry = EntryCreate(date=test_date, severity=0, notes=notes_input)
-    assert entry.notes is None
+    assert entry.notes == ""
 
 
 @pytest.mark.parametrize(
