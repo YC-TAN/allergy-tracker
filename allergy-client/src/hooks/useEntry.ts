@@ -6,9 +6,9 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { getLocalEntry, saveEntry } from "../utils/storage";
-import {createEntry} from "../services/entry";
+import {createEntry, updateEntry} from "../services/entry";
 import { getTodayDate } from "../utils/dates";
-import type { EntryInput, EntryLocal } from "../schemas";
+import type { Entry, EntryLocal } from "../schemas";
 
 export const useEntry = (date: string = getTodayDate()) => {
 
@@ -20,14 +20,26 @@ export const useEntry = (date: string = getTodayDate()) => {
     })
 
     const saveMutation = useMutation({
-        mutationFn: async (input: EntryInput): Promise<EntryLocal> => {
-            // Promise.resolve(saveEntry(entry))
+        mutationFn: async (input: Entry): Promise<EntryLocal> => {
+            // if (navigator.onLine) {
+            //     try {
+            //         await createEntry(input);
+            //         return saveEntry({...input, _synced: true});
+            //     } catch (err) {
+            //         console.error('Sync attempt failed:', err);
+            //     }
+            // }
             if (navigator.onLine) {
                 try {
-                    await createEntry(input); // createEntry does its own strip+send internally
+                    const isEditing = !!getLocalEntry(input.date);
+                    if (isEditing) {
+                        await updateEntry(input);
+                    } else {
+                        await createEntry(input);
+                    }
                     return saveEntry({...input, _synced: true});
                 } catch (err) {
-                    console.error('Sync attempt failed:', err);
+                    console.error("Sync attempt failed:", err);
                 }
             }
             return saveEntry(input);
@@ -47,7 +59,7 @@ export const useEntry = (date: string = getTodayDate()) => {
     return {
         entry: result.data,
         isPending: result.isPending,
-        save: (input: EntryInput) => saveMutation.mutate(input),
+        save: (input: Entry) => saveMutation.mutate(input),
         // update: (entry: Entry) => updateMutation.mutate(entry)        
     }
 }
