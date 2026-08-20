@@ -40,8 +40,10 @@ def read_entry(entry_date: date, session: SessionDep):
 
 @router.put("/{entry_date}", response_model=EntryResponse)
 def update_entry(entry_date: date, payload: EntryUpdate, session: SessionDep):
-    statement = select(Entry).where(Entry.date == entry_date)
-    db_entry = session.exec(statement).first()
+    db_entry = entry_repo.get_entry_by_date(
+            session,
+            entry_date
+        )
     if db_entry is None:
         raise HTTPException(status_code=404, detail="No entry for this date")
 
