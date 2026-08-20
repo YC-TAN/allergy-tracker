@@ -1,5 +1,7 @@
 import pytest
 from datetime import date, timedelta
+from fastapi.testclient import TestClient
+from sqlmodel import Session
 from app.schemas.entry import Entry
 
 VALID_PAYLOAD = {
@@ -9,11 +11,16 @@ VALID_PAYLOAD = {
     "notes": "Contact with pets" 
 }
 
-# GET: Happy path
-def test_get_entry_by_date(client, session):
+def create_existing_entry(session: Session):
     entry = Entry(**VALID_PAYLOAD)    # write to db table directly
     session.add(entry)
     session.commit()
+    session.refresh(entry)
+    return entry
+
+# GET: Happy path
+def test_get_entry_by_date_success(client, session):
+    create_existing_entry(session)
 
     res = client.get("/api/entries/2026-08-01")
     result = res.json()
@@ -29,12 +36,12 @@ def test_get_entry_by_date(client, session):
 @pytest.mark.parametrize(
     "invalid_date, expected_status", 
     [
-        pytest.param("2026-12-25", 404, id="valid_format_no_entry"),
+        pytest.param((date.today() + timedelta(days=2)).isoformat(), 404, id="valid_format_no_entry"),
         pytest.param("invalid-date", 422, id="malformed_string"),
         pytest.param("9999-99-99", 422, id="invalid_month_day"),
     ]
 )
-def test_get_entry_invalid_or_not_exist(client, invalid_date, expected_status):
+def test_get_entry_invalid_or_not_exist_returns_404_or_422(client, invalid_date, expected_status):
     res = client.get(f"/api/entries/{invalid_date}")
     assert res.status_code == expected_status
 
@@ -59,7 +66,7 @@ def test_create_entry_success(client):
 
 
 # POST: default notes and symptoms
-def test_post_entry_defaults_symptoms_and_notes(client):
+def test_create_entry_defaults_symptoms_and_notes(client):
     payload = {"date": "2026-08-03", "severity": 0}   # no symptoms, no notes
     res = client.post("/api/entries", json=payload)
     result = res.json()
@@ -102,3 +109,68 @@ def test_malformed_json_body_returns_422(client):
         headers={"Content-Type": "application/json"},
     )
     assert response.status_code == 422
+
+def normalize_timestamp(ts_str: str) -> str:
+  # Replace 'Z' with '+00:00' to unify formats
+  return ts_str.replace("Z", "+00:00")
+
+# PUT
+def test_update_entry_by_date_success(client: TestClient, session: Session):
+    """Happy path"""
+
+    db_entry = create_existing_entry(session)
+    initial_updated_at = db_entry.updated_at
+    initial_created_at = db_entry.created_at
+
+    payload = {
+        "date": VALID_PAYLOAD['date'], 
+        "severity": 2,
+        "symptoms": ["nose", "eyes"],
+        "notes": "Contact with pets, outdoor"
+    }
+
+    response = client.put(
+        f"/api/entries/{VALID_PAYLOAD['date']}",
+        json=payload
+    )
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["severity"] == 2
+    assert data["symptoms"] == ["nose", "eyes"]
+    assert data["notes"] == "Contact with pets, outdoor"
+    assert data["id"] == str(db_entry.id)  # same row, not a new one
+    assert normalize_timestamp(data["created_at"]) == initial_created_at.isoformat() # created_at should not change
+    assert normalize_timestamp(data["updated_at"]) != initial_updated_at.isoformat()
+ 
+
+@pytest.mark.parametrize(
+    "invalid_date", 
+    [
+        pytest.param("invalid-date", id="malformed_string"),
+        pytest.param("9999-99-99", id="invalid_month_day"),
+    ]
+)
+def test_update_entry_invalid_date_returns_422(client, invalid_date):
+    res = client.put(f"/api/entries/{invalid_date}", json=VALID_PAYLOAD)
+    assert res.status_code == 422
+
+
+def test_update_not_found_returns_404(client: TestClient):
+    res = client.put(f"/api/entries/{date.today() + timedelta(days=2)}", json=VALID_PAYLOAD)
+    assert res.status_code == 404
+
+
+@pytest.mark.parametrize(
+    "invalid_data", 
+    [
+        pytest.param({**VALID_PAYLOAD, "severity": 4}, id="severity_out_of_range"),
+        pytest.param({**VALID_PAYLOAD, "severity": -1}, id="severity_negative"),
+        pytest.param({**VALID_PAYLOAD, "symptoms": ["elbow"]}, id="unknown_symptoms"),
+        pytest.param({**VALID_PAYLOAD, "symptoms": ["eyes", "elbow"]}, id="known_and_unknown_symptoms"),
+        pytest.param({**VALID_PAYLOAD, "notes": "a"*256}, id="notes_greater_than_255"),
+    ]
+)
+def test_update_entry_invalid_input_returns_422(client, invalid_data):
+    res = client.put(f"/api/entries/{VALID_PAYLOAD["date"]}", json=invalid_data)
+    assert res.status_code == 422

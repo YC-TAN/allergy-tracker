@@ -58,7 +58,9 @@ class EntryBase(SQLModel):
 
     @field_validator("notes", mode="before")
     @classmethod
-    def normalize_notes(cls, v: str) -> str:
+    def normalize_notes(cls, v: str | None) -> str:
+        if v is None:
+            return ""
         return v.strip()
 
     @field_validator("symptoms")
@@ -85,10 +87,10 @@ class EntryCreate(EntryBase):
 class EntryUpdate(EntryBase):
     """Payload model for updating an existing allergy entry."""
 
-    pass
-
 
 class EntryResponse(EntryBase):
     """Response model for returning entry data through the API."""
 
-    pass
+    id: UUID
+    created_at: datetime
+    updated_at: datetime
