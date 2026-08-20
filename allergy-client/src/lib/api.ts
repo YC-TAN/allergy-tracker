@@ -1,11 +1,16 @@
+import { supabase } from "../lib/supabase"
+
 const API_URL = '/api';
 
 const apiFetch = async <T>(path: string, options: RequestInit = {}): Promise<T> => {
+    const { data } = await supabase.auth.getSession();
+    const token = data.session?.access_token;
 
     const response = await fetch(`${API_URL}${path}`, {
         ...options,
         headers: {
             'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
             ...options.headers,
         },
     });
