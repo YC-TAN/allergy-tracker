@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "dev": "concurrently \"uv --directory backend run fastapi dev app/main.py\" \"npm run dev --prefix allergy-client\""
+  },
   "devDependencies": {
     "concurrently": "^10.0.4",
     "supabase": "^2.109.0"
