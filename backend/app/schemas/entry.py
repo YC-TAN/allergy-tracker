@@ -18,6 +18,7 @@ from sqlalchemy import Integer
 from sqlalchemy.dialects.postgresql import JSONB
 from datetime import date as date_type, datetime, timezone
 from uuid import UUID, uuid4
+from locations_literal import Valid_locations
 
 
 class SeverityLevel(int, Enum):
@@ -49,6 +50,8 @@ class EntryBase(SQLModel):
         default="", max_length=255, title="Additional information"
     )
 
+    location: Valid_locations
+
     @field_validator("date")
     @classmethod
     def date_must_not_be_future(cls, v: date_type) -> date_type:
@@ -74,6 +77,7 @@ class Entry(EntryBase, table=True):
 
     __tablename__ = "entries"
     id: UUID = Field(default_factory=uuid4, primary_key=True)
+    user_id: UUID # from auth token
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -86,6 +90,7 @@ class EntryCreate(EntryBase):
 
 class EntryUpdate(EntryBase):
     """Payload model for updating an existing allergy entry."""
+    pass
 
 
 class EntryResponse(EntryBase):

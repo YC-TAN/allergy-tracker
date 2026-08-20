@@ -1,7 +1,7 @@
 # AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY.
 from typing import Literal
 
-ValidLocations = Literal[
+Valid_locations = Literal[
     "Alexandra",
     "Ashburton",
     "Auckland Central",
