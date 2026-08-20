@@ -1,6 +1,5 @@
 from datetime import date, datetime, timezone
 from fastapi import APIRouter, HTTPException, status
-from sqlmodel import select
 
 from app.deps import SessionDep
 from app.schemas.entry import Entry, EntryCreate, EntryUpdate, EntryResponse
