@@ -1,0 +1,722 @@
+{
+  "north_island": {
+    "Northland": [
+      {
+        "label": "Dargaville",
+        "url": "/towns-cities/regions/northland/locations/dargaville"
+      },
+      {
+        "label": "Kaikohe",
+        "url": "/rural/regions/northland/locations/kaikohe"
+      },
+      {
+        "label": "Kaitaia",
+        "url": "/towns-cities/regions/northland/locations/kaitaia"
+      },
+      {
+        "label": "Kaitaia Airport",
+        "url": "/towns-cities/regions/northland/locations/kaitaia-airport"
+      },
+      {
+        "label": "Kerikeri",
+        "url": "/towns-cities/regions/northland/locations/kerikeri"
+      },
+      {
+        "label": "Paihia",
+        "url": "/towns-cities/regions/northland/locations/paihia"
+      },
+      {
+        "label": "Russell",
+        "url": "/towns-cities/regions/northland/locations/russell"
+      },
+      {
+        "label": "Whang\u0101rei",
+        "url": "/towns-cities/regions/northland/locations/whangarei"
+      }
+    ],
+    "Auckland": [
+      {
+        "label": "Auckland Central",
+        "url": "/towns-cities/regions/auckland/locations/auckland"
+      },
+      {
+        "label": "Hunua",
+        "url": "/towns-cities/regions/auckland/locations/hunua"
+      },
+      {
+        "label": "Kumeu",
+        "url": "/rural/regions/auckland/locations/kumeu"
+      },
+      {
+        "label": "Manukau",
+        "url": "/towns-cities/regions/auckland/locations/manukau"
+      },
+      {
+        "label": "North Shore",
+        "url": "/towns-cities/regions/auckland/locations/north-shore"
+      },
+      {
+        "label": "Pukekohe",
+        "url": "/rural/regions/auckland/locations/pukekohe"
+      },
+      {
+        "label": "P\u014dkeno",
+        "url": "/towns-cities/regions/auckland/locations/pokeno"
+      },
+      {
+        "label": "Tuakau",
+        "url": "/towns-cities/regions/auckland/locations/tuakau"
+      },
+      {
+        "label": "Waiheke Island",
+        "url": "/towns-cities/regions/auckland/locations/waiheke-island"
+      },
+      {
+        "label": "Waitakere",
+        "url": "/towns-cities/regions/auckland/locations/waitakere"
+      },
+      {
+        "label": "Warkworth",
+        "url": "/rural/regions/auckland/locations/warkworth"
+      }
+    ],
+    "Waikato": [
+      {
+        "label": "Cambridge",
+        "url": "/rural/regions/waikato/locations/cambridge"
+      },
+      {
+        "label": "Hamilton",
+        "url": "/towns-cities/regions/waikato/locations/hamilton"
+      },
+      {
+        "label": "Huntly",
+        "url": "/rural/regions/waikato/locations/huntly"
+      },
+      {
+        "label": "Matamata",
+        "url": "/rural/regions/waikato/locations/matamata"
+      },
+      {
+        "label": "Morrinsville",
+        "url": "/rural/regions/waikato/locations/morrinsville"
+      },
+      {
+        "label": "Ng\u0101ruaw\u0101hia",
+        "url": "/rural/regions/waikato/locations/ngaruawahia"
+      },
+      {
+        "label": "Paeroa",
+        "url": "/rural/regions/waikato/locations/paeroa"
+      },
+      {
+        "label": "Put\u0101ruru",
+        "url": "/rural/regions/waikato/locations/putaruru"
+      },
+      {
+        "label": "Raglan",
+        "url": "/rural/regions/waikato/locations/raglan"
+      },
+      {
+        "label": "Te Aroha",
+        "url": "/rural/regions/waikato/locations/te-aroha"
+      },
+      {
+        "label": "Te Awamutu",
+        "url": "/rural/regions/waikato/locations/te-awamutu"
+      },
+      {
+        "label": "Tokoroa",
+        "url": "/towns-cities/regions/waikato/locations/tokoroa"
+      }
+    ],
+    "Waitomo": [
+      {
+        "label": "Piopio",
+        "url": "/rural/regions/waitomo/locations/piopio"
+      },
+      {
+        "label": "Te Kuiti",
+        "url": "/towns-cities/regions/waitomo/locations/te-kuiti"
+      },
+      {
+        "label": "Waitomo",
+        "url": "/rural/regions/waitomo/locations/waitomo"
+      }
+    ],
+    "Coromandel": [
+      {
+        "label": "Thames",
+        "url": "/towns-cities/regions/coromandel/locations/thames"
+      },
+      {
+        "label": "Waihi",
+        "url": "/rural/regions/coromandel/locations/waihi"
+      },
+      {
+        "label": "Waikawau Bay",
+        "url": "/rural/regions/coromandel/locations/waikawau-bay"
+      },
+      {
+        "label": "Whangamat\u0101",
+        "url": "/rural/regions/coromandel/locations/whangamata"
+      },
+      {
+        "label": "Whitianga",
+        "url": "/towns-cities/regions/coromandel/locations/whitianga"
+      }
+    ],
+    "Rotorua": [
+      {
+        "label": "Ngongotah\u0101",
+        "url": "/towns-cities/regions/rotorua/locations/ngongotaha"
+      },
+      {
+        "label": "Rotorua",
+        "url": "/towns-cities/regions/rotorua/locations/rotorua"
+      }
+    ],
+    "Bay of Plenty": [
+      {
+        "label": "Katikati",
+        "url": "/rural/regions/bay-of-plenty/locations/katikati"
+      },
+      {
+        "label": "Kawerau",
+        "url": "/rural/regions/bay-of-plenty/locations/kawerau"
+      },
+      {
+        "label": "Mount Maunganui",
+        "url": "/towns-cities/regions/bay-of-plenty/locations/mount-maunganui"
+      },
+      {
+        "label": "Opotiki",
+        "url": "/rural/regions/bay-of-plenty/locations/opotiki"
+      },
+      {
+        "label": "Papamoa",
+        "url": "/rural/regions/bay-of-plenty/locations/papamoa"
+      },
+      {
+        "label": "Tauranga",
+        "url": "/towns-cities/regions/bay-of-plenty/locations/tauranga"
+      },
+      {
+        "label": "Te Puke",
+        "url": "/rural/regions/bay-of-plenty/locations/te-puke"
+      },
+      {
+        "label": "Whakat\u0101ne",
+        "url": "/towns-cities/regions/bay-of-plenty/locations/whakatane"
+      },
+      {
+        "label": "\u014chope",
+        "url": "/towns-cities/regions/bay-of-plenty/locations/ohope"
+      },
+      {
+        "label": "\u014cmokoroa",
+        "url": "/towns-cities/regions/bay-of-plenty/locations/omokoroa"
+      }
+    ],
+    "Taup\u014d": [
+      {
+        "label": "Taup\u014d",
+        "url": "/towns-cities/regions/taupo/locations/taupo"
+      },
+      {
+        "label": "Taup\u014d Airport",
+        "url": "/towns-cities/regions/taupo/locations/taupo-airport"
+      },
+      {
+        "label": "T\u016brangi",
+        "url": "/rural/regions/taupo/locations/turangi"
+      }
+    ],
+    "Gisborne": [
+      {
+        "label": "Gisborne",
+        "url": "/towns-cities/regions/gisborne/locations/gisborne"
+      },
+      {
+        "label": "Ruatoria",
+        "url": "/rural/regions/gisborne/locations/ruatoria"
+      }
+    ],
+    "Hawke's Bay": [
+      {
+        "label": "Eastern Rangitaiki",
+        "url": "/rural/regions/hawkes-bay/locations/eastern-rangitaiki"
+      },
+      {
+        "label": "Hastings",
+        "url": "/towns-cities/regions/hawkes-bay/locations/hastings"
+      },
+      {
+        "label": "Havelock North",
+        "url": "/towns-cities/regions/hawkes-bay/locations/havelock-north"
+      },
+      {
+        "label": "Mahia",
+        "url": "/rural/regions/hawkes-bay/locations/mahia"
+      },
+      {
+        "label": "Napier",
+        "url": "/towns-cities/regions/hawkes-bay/locations/napier"
+      },
+      {
+        "label": "Napier Airport",
+        "url": "/towns-cities/regions/hawkes-bay/locations/napier-airport"
+      },
+      {
+        "label": "Waipukurau",
+        "url": "/rural/regions/hawkes-bay/locations/waipukurau"
+      },
+      {
+        "label": "Wairoa",
+        "url": "/rural/regions/hawkes-bay/locations/wairoa"
+      }
+    ],
+    "Taranaki": [
+      {
+        "label": "Eltham",
+        "url": "/rural/regions/taranaki/locations/eltham"
+      },
+      {
+        "label": "H\u0101wera",
+        "url": "/rural/regions/taranaki/locations/hawera"
+      },
+      {
+        "label": "Inglewood",
+        "url": "/rural/regions/taranaki/locations/inglewood"
+      },
+      {
+        "label": "New Plymouth",
+        "url": "/towns-cities/regions/taranaki/locations/new-plymouth"
+      },
+      {
+        "label": "New Plymouth Airport",
+        "url": "/towns-cities/regions/taranaki/locations/new-plymouth-airport"
+      },
+      {
+        "label": "Opunake",
+        "url": "/rural/regions/taranaki/locations/opunake"
+      },
+      {
+        "label": "Stratford",
+        "url": "/rural/regions/taranaki/locations/stratford"
+      }
+    ],
+    "Taumarunui": [
+      {
+        "label": "Taumarunui",
+        "url": "/towns-cities/regions/taumarunui/locations/taumarunui"
+      }
+    ],
+    "Taihape": [
+      {
+        "label": "Ohakune",
+        "url": "/rural/regions/taihape/locations/ohakune"
+      },
+      {
+        "label": "Waiouru",
+        "url": "/rural/regions/taihape/locations/waiouru"
+      }
+    ],
+    "Whanganui": [
+      {
+        "label": "Whanganui",
+        "url": "/towns-cities/regions/wanganui/locations/wanganui"
+      },
+      {
+        "label": "Whanganui Airport",
+        "url": "/towns-cities/regions/wanganui/locations/wanganui-airport"
+      }
+    ],
+    "Manawatu": [
+      {
+        "label": "Feilding",
+        "url": "/rural/regions/manawatu/locations/feilding"
+      },
+      {
+        "label": "Hunterville",
+        "url": "/rural/regions/manawatu/locations/hunterville"
+      },
+      {
+        "label": "Ohakea",
+        "url": "/rural/regions/manawatu/locations/ohakea"
+      },
+      {
+        "label": "Palmerston North",
+        "url": "/towns-cities/regions/manawatu/locations/palmerston-north"
+      },
+      {
+        "label": "Palmerston North Airport",
+        "url": "/towns-cities/regions/manawatu/locations/palmerston-north-airport"
+      }
+    ],
+    "Wairarapa": [
+      {
+        "label": "Carterton",
+        "url": "/rural/regions/wairarapa/locations/carterton"
+      },
+      {
+        "label": "Castlepoint",
+        "url": "/rural/regions/wairarapa/locations/castlepoint"
+      },
+      {
+        "label": "Dannevirke",
+        "url": "/towns-cities/regions/wairarapa/locations/dannevirke"
+      },
+      {
+        "label": "Featherston",
+        "url": "/rural/regions/wairarapa/locations/featherston"
+      },
+      {
+        "label": "Martinborough",
+        "url": "/rural/regions/wairarapa/locations/martinborough"
+      },
+      {
+        "label": "Masterton",
+        "url": "/towns-cities/regions/wairarapa/locations/masterton"
+      }
+    ],
+    "Kapiti-Horowhenua": [
+      {
+        "label": "Levin",
+        "url": "/towns-cities/regions/kapiti-horowhenua/locations/levin"
+      },
+      {
+        "label": "Paraparaumu",
+        "url": "/towns-cities/regions/kapiti-horowhenua/locations/paraparaumu"
+      },
+      {
+        "label": "Te Horo",
+        "url": "/rural/regions/kapiti-horowhenua/locations/te-horo"
+      },
+      {
+        "label": "Waikanae",
+        "url": "/towns-cities/regions/kapiti-horowhenua/locations/waikanae"
+      },
+      {
+        "label": "\u014ctaki",
+        "url": "/rural/regions/kapiti-horowhenua/locations/otaki"
+      }
+    ],
+    "Wellington": [
+      {
+        "label": "Judgeford",
+        "url": "/rural/regions/wellington/locations/judgeford"
+      },
+      {
+        "label": "Lower Hutt",
+        "url": "/towns-cities/regions/wellington/locations/lower-hutt"
+      },
+      {
+        "label": "Lyall Bay",
+        "url": "/towns-cities/regions/wellington/locations/lyall-bay"
+      },
+      {
+        "label": "Ohariu Valley",
+        "url": "/rural/regions/wellington/locations/ohariu-valley"
+      },
+      {
+        "label": "Porirua",
+        "url": "/towns-cities/regions/wellington/locations/porirua"
+      },
+      {
+        "label": "Upper Hutt",
+        "url": "/towns-cities/regions/wellington/locations/upper-hutt"
+      },
+      {
+        "label": "Wainuiomata",
+        "url": "/towns-cities/regions/wellington/locations/wainuiomata"
+      },
+      {
+        "label": "Wellington Central",
+        "url": "/towns-cities/regions/wellington/locations/wellington"
+      }
+    ]
+  },
+  "south_island": {
+    "Marlborough": [
+      {
+        "label": "Blenheim",
+        "url": "/towns-cities/regions/marlborough/locations/blenheim"
+      },
+      {
+        "label": "Kaik\u014dura",
+        "url": "/towns-cities/regions/marlborough/locations/kaikoura"
+      },
+      {
+        "label": "Kaik\u014dura Airport",
+        "url": "/towns-cities/regions/marlborough/locations/kaikoura-airport"
+      },
+      {
+        "label": "Picton",
+        "url": "/rural/regions/marlborough/locations/picton"
+      }
+    ],
+    "Nelson": [
+      {
+        "label": "Golden Bay",
+        "url": "/rural/regions/nelson"
+      },
+      {
+        "label": "Motueka",
+        "url": "/towns-cities/regions/nelson/locations/motueka"
+      },
+      {
+        "label": "Murchison",
+        "url": "/rural/regions/nelson/locations/murchison"
+      },
+      {
+        "label": "Nelson",
+        "url": "/towns-cities/regions/nelson/locations/nelson"
+      },
+      {
+        "label": "Richmond",
+        "url": "/towns-cities/regions/nelson/locations/richmond"
+      },
+      {
+        "label": "St Arnaud",
+        "url": "/rural/regions/nelson/locations/st-arnaud"
+      },
+      {
+        "label": "Takaka",
+        "url": "/rural/regions/nelson/locations/takaka"
+      }
+    ],
+    "Buller": [
+      {
+        "label": "Reefton",
+        "url": "/towns-cities/regions/buller/locations/reefton"
+      },
+      {
+        "label": "Westport",
+        "url": "/towns-cities/regions/buller/locations/westport"
+      }
+    ],
+    "Grey": [
+      {
+        "label": "Greymouth",
+        "url": "/towns-cities/regions/grey/locations/greymouth"
+      }
+    ],
+    "Westland": [
+      {
+        "label": "Franz Josef",
+        "url": "/rural/regions/westland/locations/franz-josef"
+      },
+      {
+        "label": "Haast",
+        "url": "/rural/regions/westland/locations/haast"
+      },
+      {
+        "label": "Hokitika",
+        "url": "/towns-cities/regions/westland/locations/hokitika"
+      }
+    ],
+    "Canterbury Plains": [
+      {
+        "label": "Ashburton",
+        "url": "/towns-cities/regions/canterbury-plains/locations/ashburton"
+      },
+      {
+        "label": "Darfield",
+        "url": "/rural/regions/canterbury-plains/locations/darfield"
+      },
+      {
+        "label": "Kaiapoi",
+        "url": "/rural/regions/canterbury-plains/locations/kaiapoi"
+      },
+      {
+        "label": "Methven",
+        "url": "/rural/regions/canterbury-plains/locations/methven"
+      },
+      {
+        "label": "Pegasus",
+        "url": "/rural/regions/canterbury-plains/locations/pegasus"
+      },
+      {
+        "label": "Rakaia",
+        "url": "/rural/regions/canterbury-plains/locations/rakaia"
+      },
+      {
+        "label": "Temuka",
+        "url": "/rural/regions/canterbury-plains/locations/temuka"
+      },
+      {
+        "label": "Timaru",
+        "url": "/towns-cities/regions/canterbury-plains/locations/timaru"
+      },
+      {
+        "label": "Waimate",
+        "url": "/rural/regions/canterbury-plains/locations/waimate"
+      },
+      {
+        "label": "Waipara",
+        "url": "/rural/regions/canterbury-plains/locations/waipara"
+      }
+    ],
+    "Canterbury High Country": [
+      {
+        "label": "Culverden",
+        "url": "/rural/regions/canterbury-high-country/locations/culverden"
+      },
+      {
+        "label": "Hanmer Springs",
+        "url": "/rural/regions/canterbury-high-country/locations/hanmer-springs"
+      },
+      {
+        "label": "Mount Cook",
+        "url": "/towns-cities/regions/canterbury-high-country/locations/mount-cook"
+      },
+      {
+        "label": "Omarama",
+        "url": "/rural/regions/canterbury-high-country/locations/omarama"
+      },
+      {
+        "label": "Twizel",
+        "url": "/rural/regions/canterbury-high-country/locations/twizel"
+      }
+    ],
+    "Christchurch": [
+      {
+        "label": "Banks Peninsula",
+        "url": "/towns-cities/regions/christchurch/locations/banks-peninsula"
+      },
+      {
+        "label": "Christchurch Central",
+        "url": "/towns-cities/regions/christchurch/locations/christchurch"
+      },
+      {
+        "label": "Eastern Suburbs",
+        "url": "/towns-cities/regions/christchurch/locations/eastern-suburbs"
+      },
+      {
+        "label": "Hilltop",
+        "url": "/rural/regions/christchurch/locations/hill-top"
+      },
+      {
+        "label": "Lincoln",
+        "url": "/rural/regions/christchurch/locations/lincoln"
+      },
+      {
+        "label": "Marshland",
+        "url": "/rural/regions/christchurch/locations/marshlands"
+      },
+      {
+        "label": "Port Hills",
+        "url": "/towns-cities/regions/christchurch/locations/port-hills"
+      },
+      {
+        "label": "Prebbleton",
+        "url": "/towns-cities/regions/christchurch/locations/prebbleton"
+      },
+      {
+        "label": "Rolleston",
+        "url": "/towns-cities/regions/christchurch/locations/rolleston"
+      }
+    ],
+    "North Otago": [
+      {
+        "label": "Oamaru",
+        "url": "/towns-cities/regions/north-otago/locations/oamaru"
+      },
+      {
+        "label": "Oamaru Airport",
+        "url": "/towns-cities/regions/north-otago/locations/oamaru-airport"
+      }
+    ],
+    "Central Otago": [
+      {
+        "label": "Alexandra",
+        "url": "/towns-cities/regions/central-otago/locations/alexandra"
+      },
+      {
+        "label": "Cromwell",
+        "url": "/rural/regions/central-otago/locations/cromwell"
+      }
+    ],
+    "Dunedin": [
+      {
+        "label": "Dunedin",
+        "url": "/towns-cities/regions/dunedin/locations/dunedin"
+      },
+      {
+        "label": "Leith Saddle",
+        "url": "/towns-cities/regions/dunedin/locations/leith-saddle"
+      },
+      {
+        "label": "Middlemarch",
+        "url": "/rural/regions/dunedin/locations/middlemarch"
+      },
+      {
+        "label": "Mosgiel",
+        "url": "/towns-cities/regions/dunedin/locations/mosgiel"
+      },
+      {
+        "label": "Port Chalmers",
+        "url": "/towns-cities/regions/dunedin/locations/port-chalmers"
+      },
+      {
+        "label": "Waitati",
+        "url": "/rural/regions/dunedin/locations/waitati"
+      }
+    ],
+    "Clutha": [
+      {
+        "label": "Balclutha",
+        "url": "/rural/regions/clutha/locations/balclutha"
+      },
+      {
+        "label": "Nugget Point",
+        "url": "/rural/regions/clutha/locations/nugget-point"
+      }
+    ],
+    "Southern Lakes": [
+      {
+        "label": "Glenorchy",
+        "url": "/rural/regions/southern-lakes/locations/glenorchy"
+      },
+      {
+        "label": "Lake Hayes",
+        "url": "/rural/regions/southern-lakes/locations/lake-hayes"
+      },
+      {
+        "label": "Queenstown",
+        "url": "/towns-cities/regions/southern-lakes/locations/queenstown"
+      },
+      {
+        "label": "W\u0101naka",
+        "url": "/towns-cities/regions/southern-lakes/locations/wanaka"
+      }
+    ],
+    "Southland": [
+      {
+        "label": "Gore",
+        "url": "/towns-cities/regions/southland/locations/gore"
+      },
+      {
+        "label": "Invercargill",
+        "url": "/towns-cities/regions/southland/locations/invercargill"
+      },
+      {
+        "label": "Lumsden",
+        "url": "/rural/regions/southland/locations/lumsden"
+      },
+      {
+        "label": "Milford Sound",
+        "url": "/towns-cities/regions/southland/locations/milford-sound"
+      },
+      {
+        "label": "Stewart Island",
+        "url": "/rural/regions/southland/locations/stewart-island"
+      },
+      {
+        "label": "Te Anau",
+        "url": "/rural/regions/southland/locations/te-anau"
+      }
+    ]
+  }
+}
