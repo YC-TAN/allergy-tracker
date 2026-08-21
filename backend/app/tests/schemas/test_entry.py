@@ -5,31 +5,38 @@ Verify that validation rules are configured as intended.
 
 import pytest
 from datetime import date, timedelta
-from app.schemas.entry import EntryCreate
 from pydantic import ValidationError
+from typing import get_args
+
+from app.schemas.entry import EntryCreate
+from app.schemas.locations_literal import Valid_locations
 
 test_date = "2026-08-01"
-
-def test_entry_create_accepts_full_valid_payload():
-    payload = {
+test_location = get_args(Valid_locations)[0] # "Alexandra"
+payload = {
         "date": test_date,
         "severity": 2,
         "symptoms": ["eyes", "nose", "headache"],
         "notes": "pets",
+        "location": test_location
     }
+
+def test_entry_create_accepts_full_valid_payload():
     entry = EntryCreate(**payload)
 
     assert entry.date.isoformat() == test_date
     assert entry.severity == payload["severity"]
     assert entry.symptoms == payload["symptoms"]
     assert entry.notes == payload["notes"]
+    assert entry.location == test_location
 
 
 # --- severity ---
 
 def test_severity_accepts_valid_range():
     for value in range(4):      # 0, 1, 2, 3
-        entry = EntryCreate(date=test_date, severity=value)
+        data = {**payload, "severity":value}
+        entry = EntryCreate(**data)
         assert entry.severity == value
 
 
@@ -43,30 +50,26 @@ def test_severity_accepts_valid_range():
 )
 def test_severity_rejects_invalid_values(severity_level):
     with pytest.raises(ValidationError):
-        EntryCreate(
-            date=test_date, 
-            severity=severity_level
-        )
+        data = {**payload, "severity":severity_level}
+        EntryCreate(**data)
 
 
 def test_severity_is_required():
     with pytest.raises(ValidationError):
-        EntryCreate(date=test_date)
+        EntryCreate(date=test_date, location=test_location)
 
 
 # --- symptoms ---
 
 def test_symptoms_accepts_known_values():
-    entry = EntryCreate(
-        date=test_date, 
-        severity=1,
-        symptoms=["eyes", "nose", "throat", "energy", "headache", "other"],
-    )
+    data = {**payload, "symptoms":["eyes", "nose", "throat", "energy", "headache", "other"]}
+    entry = EntryCreate(**data)
+
     assert len(entry.symptoms) == 6
 
 
 def test_symptoms_defaults_empty():
-    entry = EntryCreate(date=test_date, severity=0)
+    entry = EntryCreate(date=test_date, severity=0, location=test_location)
     assert entry.symptoms == []
 
 
@@ -80,11 +83,8 @@ def test_symptoms_defaults_empty():
 )
 def test_symptoms_rejects_unknown_value(symptoms_list):
     with pytest.raises(ValidationError):
-        EntryCreate(
-            date=test_date, 
-            severity=1, 
-            symptoms=symptoms_list
-        )
+        data = {**payload, "symptoms": symptoms_list}
+        EntryCreate(**data)
 
 
 @pytest.mark.parametrize(
@@ -97,30 +97,34 @@ def test_symptoms_rejects_unknown_value(symptoms_list):
     ],
 )
 def test_symptoms_deduplicates_repeated_values(symptoms_input, expected):
-    entry = EntryCreate(date=test_date, severity=1, symptoms=symptoms_input)
+    data = {**payload, "symptoms": symptoms_input}
+    entry = EntryCreate(**data)
     assert entry.symptoms == expected
 
 
 # --- notes ---
 
 def test_notes_accepts_empty_str():
-    entry = EntryCreate(date=test_date, severity=0, notes="")
+    data = {**payload, "notes": ""}            
+    entry = EntryCreate(**data)
     assert entry.notes == ""
 
 
 def test_notes_defaults_empty_str():
-    entry = EntryCreate(date=test_date, severity=0)
+    entry = EntryCreate(date=test_date, severity=0, location=test_location)
     assert entry.notes == ""
 
 
 def test_notes_accepts_up_to_255_chars():
-    entry = EntryCreate(date=test_date, severity=1, notes="a" * 255)
+    data = {**payload, "notes": "a" * 255}
+    entry = EntryCreate(**data)
     assert len(entry.notes) == 255
 
 
 def test_notes_rejects_over_255_chars():
     with pytest.raises(ValidationError):
-        EntryCreate(date=test_date, severity=1, notes="a" * 256)
+        data = {**payload, "notes": "a" * 256}
+        EntryCreate(**data)
 
 
 @pytest.mark.parametrize(
@@ -131,7 +135,8 @@ def test_notes_rejects_over_255_chars():
     ],
 )
 def test_notes_whitespace_only_becomes_empty_str(notes_input):
-    entry = EntryCreate(date=test_date, severity=0, notes=notes_input)
+    data = {**payload, "notes": notes_input}
+    entry = EntryCreate(**data)
     assert entry.notes == ""
 
 
@@ -144,7 +149,8 @@ def test_notes_whitespace_only_becomes_empty_str(notes_input):
     ],
 )
 def test_notes_whitespace_is_removed(notes_input, expected):   
-    entry = EntryCreate(date=test_date, severity=0, notes=notes_input)
+    data = {**payload, "notes": notes_input}
+    entry = EntryCreate(**data)
     assert entry.notes == expected
 
 
@@ -152,7 +158,7 @@ def test_notes_whitespace_is_removed(notes_input, expected):
 
 def test_date_is_required():
     with pytest.raises(ValidationError):
-        EntryCreate(severity=1)
+        EntryCreate(severity=1, location=test_location)
 
 
 @pytest.mark.parametrize(
@@ -165,18 +171,48 @@ def test_date_is_required():
 )
 def test_date_rejects_invalid_format(date_input):
     with pytest.raises(ValidationError):
-        EntryCreate(
-            date=date_input, 
-            severity=0
-        )
+        data = {**payload, "date": date_input}
+        EntryCreate(**data)
 
 
 def test_date_rejects_future_date():
     tomorrow = date.today() + timedelta(days=1)
 
-
     with pytest.raises(ValueError, match="Date cannot be in the future"):
-        EntryCreate(
-            date=tomorrow,
-            severity=1
-        )
+        data = {**payload, "date": tomorrow}
+        EntryCreate(**data)
+
+# -- location --
+
+def test_location_accepts_any_valid_value():
+    # every value in the Literal should be accepted — cheap to check them all at once
+    for loc in get_args(Valid_locations):
+        data = {**payload, "location": loc}
+        entry = EntryCreate(**data)
+        assert entry.location == loc
+
+
+def test_location_rejects_invalid_value():
+    with pytest.raises(ValidationError):
+        EntryCreate(**{**payload, "location": "Not A Real Place"})
+
+
+def test_location_is_case_sensitive():
+    with pytest.raises(ValidationError):
+        EntryCreate(**{**payload, "location": "alexandra"})
+
+
+def test_location_rejects_empty_string():
+    with pytest.raises(ValidationError):
+        EntryCreate(**{**payload, "location": ""})
+
+
+def test_location_rejects_none():
+    with pytest.raises(ValidationError):
+        EntryCreate(**{**payload, "location": None})
+
+
+def test_location_rejects_wrong_type():
+    with pytest.raises(ValidationError):
+        EntryCreate(**{**payload, "location": 123})
+

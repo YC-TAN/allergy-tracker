@@ -1,7 +1,7 @@
 from datetime import date, datetime, timezone
 from fastapi import APIRouter, HTTPException, status
 
-from app.deps import SessionDep
+from app.deps import SessionDep, CurrentUserDep
 from app.schemas.entry import Entry, EntryCreate, EntryUpdate, EntryResponse
 from app.repository import entry as entry_repo
 
@@ -11,11 +11,15 @@ router = APIRouter(
 )
 
 @router.post("", response_model=EntryResponse, status_code=status.HTTP_201_CREATED)
-def create_entry(payload: EntryCreate, session: SessionDep):
+def create_entry(
+    payload: EntryCreate, 
+    session: SessionDep,
+    user_id: CurrentUserDep,
+):
     """
     Convert payload into db object then save into database and return the db object
     """
-    db_item = Entry.model_validate(payload)
+    db_item = Entry.model_validate(payload, update={"user_id": user_id})
     session.add(db_item)
     session.commit()
     session.refresh(db_item)
@@ -23,13 +27,18 @@ def create_entry(payload: EntryCreate, session: SessionDep):
 
 
 @router.get("/{entry_date}", response_model=EntryResponse)
-def read_entry(entry_date: date, session: SessionDep):
+def read_entry(
+    entry_date: date, 
+    session: SessionDep,
+    user_id: CurrentUserDep
+):
     """
     Get daily entry record using date.
     """
     entry = entry_repo.get_entry_by_date(
         session,
-        entry_date
+        entry_date,
+        user_id
     )
 
     if entry is None:
@@ -38,10 +47,11 @@ def read_entry(entry_date: date, session: SessionDep):
     return entry
 
 @router.put("/{entry_date}", response_model=EntryResponse)
-def update_entry(entry_date: date, payload: EntryUpdate, session: SessionDep):
+def update_entry(entry_date: date, payload: EntryUpdate, session: SessionDep, user_id: CurrentUserDep,):
     db_entry = entry_repo.get_entry_by_date(
             session,
-            entry_date
+            entry_date,
+            user_id
         )
     if db_entry is None:
         raise HTTPException(status_code=404, detail="No entry for this date")

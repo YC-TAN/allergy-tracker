@@ -2,17 +2,25 @@ import pytest
 from datetime import date, timedelta
 from fastapi.testclient import TestClient
 from sqlmodel import Session
+from typing import get_args
+
 from app.schemas.entry import Entry
+from app.schemas.locations_literal import Valid_locations
+from app.tests.conftest import TEST_USER_ID
+
+
+test_location = get_args(Valid_locations)[0]
 
 VALID_PAYLOAD = {
     "date": "2026-08-01", 
     "severity": 1, 
     "symptoms": ["nose"], 
-    "notes": "Contact with pets" 
+    "notes": "Contact with pets", 
+    "location": test_location
 }
 
 def create_existing_entry(session: Session):
-    entry = Entry(**VALID_PAYLOAD)    # write to db table directly
+    entry = Entry(**VALID_PAYLOAD, user_id=TEST_USER_ID)    # write to db table directly
     session.add(entry)
     session.commit()
     session.refresh(entry)
@@ -30,6 +38,7 @@ def test_get_entry_by_date_success(client, session):
     assert result["severity"] == VALID_PAYLOAD["severity"]
     assert result["symptoms"] == VALID_PAYLOAD["symptoms"]
     assert result["notes"] == VALID_PAYLOAD["notes"]
+    assert result["location"] == VALID_PAYLOAD["location"]
 
 
 # GET: Negative case
@@ -47,7 +56,7 @@ def test_get_entry_invalid_or_not_exist_returns_404_or_422(client, invalid_date,
 
 
 # POST: Happy
-def test_create_entry_success(client):
+def test_create_entry_success(client, session):
     post_res = client.post("/api/entries", json=VALID_PAYLOAD)
     assert post_res.status_code == 201
 
@@ -59,15 +68,19 @@ def test_create_entry_success(client):
     assert post_result["severity"] == VALID_PAYLOAD["severity"]
     assert post_result["symptoms"] == VALID_PAYLOAD["symptoms"]
     assert post_result["notes"] == VALID_PAYLOAD["notes"]
+    assert post_result["location"] == VALID_PAYLOAD["location"]
 
     get_res = client.get("/api/entries/2026-08-01")
     assert get_res.status_code == 200
     assert get_res.json() == post_result 
 
+    db_entry = session.get(Entry, post_result['id'])
+    assert db_entry.user_id == TEST_USER_ID
+
 
 # POST: default notes and symptoms
 def test_create_entry_defaults_symptoms_and_notes(client):
-    payload = {"date": "2026-08-03", "severity": 0}   # no symptoms, no notes
+    payload = {"date": "2026-08-03", "severity": 0, "location": test_location}   # no symptoms, no notes
     res = client.post("/api/entries", json=payload)
     result = res.json()
 
@@ -126,7 +139,8 @@ def test_update_entry_by_date_success(client: TestClient, session: Session):
         "date": VALID_PAYLOAD['date'], 
         "severity": 2,
         "symptoms": ["nose", "eyes"],
-        "notes": "Contact with pets, outdoor"
+        "notes": "Contact with pets, outdoor",
+        "location": test_location
     }
 
     response = client.put(

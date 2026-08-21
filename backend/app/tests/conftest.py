@@ -2,16 +2,19 @@ import pytest
 import os
 import subprocess
 from pathlib import Path
-
+from uuid import uuid4
 from sqlmodel import create_engine, Session
+from sqlalchemy import text
 from fastapi.testclient import TestClient
 
 from app.main import app
 from app.db import get_session
+from app.core.auth import get_current_user_id
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 TEST_DB_URL = os.environ["TEST_DB_URL"]
+TEST_USER_ID = uuid4()
 
 @pytest.fixture(
     scope="session", 
@@ -51,6 +54,16 @@ def session(engine):
     transaction = connection.begin()
     session = Session(bind=connection, join_transaction_mode="create_savepoint")
 
+    # Seed the FK-referenced user row so entries.user_id can point at it
+    session.exec(
+        text("""
+            INSERT INTO auth.users (id, email, encrypted_password, aud, role)
+            VALUES (:id, :email, '', 'authenticated', 'authenticated')
+        """),
+        params={"id": TEST_USER_ID, "email": f"{TEST_USER_ID}@test.local"},
+    )
+    session.commit()  # commits into the savepoint, still rolled back at teardown
+
     yield session
 
     session.close()
@@ -65,7 +78,11 @@ def client(session):
     def _get_test_session():
         yield session
 
+    def _get_current_user_id():
+        return TEST_USER_ID
+
     app.dependency_overrides[get_session] = _get_test_session
+    app.dependency_overrides[get_current_user_id] = _get_current_user_id
 
     with TestClient(app) as c:
         yield c
