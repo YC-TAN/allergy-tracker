@@ -14,11 +14,11 @@ from enum import Enum
 from typing import Literal
 from sqlmodel import SQLModel, Field
 from pydantic import field_validator
-from sqlalchemy import Integer
+from sqlalchemy import Integer, String
 from sqlalchemy.dialects.postgresql import JSONB
 from datetime import date as date_type, datetime, timezone
 from uuid import UUID, uuid4
-from locations_literal import Valid_locations
+from .locations_literal import Valid_locations
 
 
 class SeverityLevel(int, Enum):
@@ -50,7 +50,7 @@ class EntryBase(SQLModel):
         default="", max_length=255, title="Additional information"
     )
 
-    location: Valid_locations
+    location: Valid_locations = Field(sa_type=String)
 
     @field_validator("date")
     @classmethod
