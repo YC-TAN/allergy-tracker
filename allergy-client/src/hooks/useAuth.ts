@@ -12,7 +12,7 @@ async function getSession() {
 async function sendMagicLink(email: string) {
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: window.location.origin },
+    options: { emailRedirectTo: window.location.origin }, // to send the user back after they click the link in their email inbox.
   });
   if (error) throw error;
 }
@@ -23,7 +23,7 @@ export const useAuth = () => {
   const result = useQuery({
     queryKey: ["auth", "user"],
     queryFn: getSession,
-    staleTime: Infinity,
+    staleTime: Infinity, // Because Supabase auth state is actively managed and synchronized via the event listener, preventing unnecessary refetches via React Query's default background refetching mechanisms.
   });
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export const useAuth = () => {
 
   const signOutMutation = useMutation({
     mutationFn: () => supabase.auth.signOut(),
-    onSuccess: () => queryClient.clear(),
+    onSuccess: () => queryClient.clear(), // wipes out any cached user data, preventing sensitive information from lingering in memory.
   });
 
   return {
