@@ -1,0 +1,233 @@
+{
+  "north_island": {
+    "Northland": [
+      "Dargaville",
+      "Kaikohe",
+      "Kaitaia",
+      "Kaitaia Airport",
+      "Kerikeri",
+      "Paihia",
+      "Russell",
+      "Whangārei"
+    ],
+    "Auckland": [
+      "Auckland Central",
+      "Hunua",
+      "Kumeu",
+      "Manukau",
+      "North Shore",
+      "Pukekohe",
+      "Pōkeno",
+      "Tuakau",
+      "Waiheke Island",
+      "Waitakere",
+      "Warkworth"
+    ],
+    "Waikato": [
+      "Cambridge",
+      "Hamilton",
+      "Huntly",
+      "Matamata",
+      "Morrinsville",
+      "Ngāruawāhia",
+      "Paeroa",
+      "Putāruru",
+      "Raglan",
+      "Te Aroha",
+      "Te Awamutu",
+      "Tokoroa"
+    ],
+    "Waitomo": [
+      "Piopio",
+      "Te Kuiti",
+      "Waitomo"
+    ],
+    "Coromandel": [
+      "Thames",
+      "Waihi",
+      "Waikawau Bay",
+      "Whangamatā",
+      "Whitianga"
+    ],
+    "Rotorua": [
+      "Ngongotahā",
+      "Rotorua"
+    ],
+    "Bay of Plenty": [
+      "Katikati",
+      "Kawerau",
+      "Mount Maunganui",
+      "Opotiki",
+      "Papamoa",
+      "Tauranga",
+      "Te Puke",
+      "Whakatāne",
+      "Ōhope",
+      "Ōmokoroa"
+    ],
+    "Taupō": [
+      "Taupō",
+      "Taupō Airport",
+      "Tūrangi"
+    ],
+    "Gisborne": [
+      "Gisborne",
+      "Ruatoria"
+    ],
+    "Hawke's Bay": [
+      "Eastern Rangitaiki",
+      "Hastings",
+      "Havelock North",
+      "Mahia",
+      "Napier",
+      "Napier Airport",
+      "Waipukurau",
+      "Wairoa"
+    ],
+    "Taranaki": [
+      "Eltham",
+      "Hāwera",
+      "Inglewood",
+      "New Plymouth",
+      "New Plymouth Airport",
+      "Opunake",
+      "Stratford"
+    ],
+    "Taumarunui": [
+      "Taumarunui"
+    ],
+    "Taihape": [
+      "Ohakune",
+      "Waiouru"
+    ],
+    "Whanganui": [
+      "Whanganui",
+      "Whanganui Airport"
+    ],
+    "Manawatu": [
+      "Feilding",
+      "Hunterville",
+      "Ohakea",
+      "Palmerston North",
+      "Palmerston North Airport"
+    ],
+    "Wairarapa": [
+      "Carterton",
+      "Castlepoint",
+      "Dannevirke",
+      "Featherston",
+      "Martinborough",
+      "Masterton"
+    ],
+    "Kapiti-Horowhenua": [
+      "Levin",
+      "Paraparaumu",
+      "Te Horo",
+      "Waikanae",
+      "Ōtaki"
+    ],
+    "Wellington": [
+      "Judgeford",
+      "Lower Hutt",
+      "Lyall Bay",
+      "Ohariu Valley",
+      "Porirua",
+      "Upper Hutt",
+      "Wainuiomata",
+      "Wellington Central"
+    ]
+  },
+  "south_island": {
+    "Marlborough": [
+      "Blenheim",
+      "Kaikōura",
+      "Kaikōura Airport",
+      "Picton"
+    ],
+    "Nelson": [
+      "Golden Bay",
+      "Motueka",
+      "Murchison",
+      "Nelson",
+      "Richmond",
+      "St Arnaud",
+      "Takaka"
+    ],
+    "Buller": [
+      "Reefton",
+      "Westport"
+    ],
+    "Grey": [
+      "Greymouth"
+    ],
+    "Westland": [
+      "Franz Josef",
+      "Haast",
+      "Hokitika"
+    ],
+    "Canterbury Plains": [
+      "Ashburton",
+      "Darfield",
+      "Kaiapoi",
+      "Methven",
+      "Pegasus",
+      "Rakaia",
+      "Temuka",
+      "Timaru",
+      "Waimate",
+      "Waipara"
+    ],
+    "Canterbury High Country": [
+      "Culverden",
+      "Hanmer Springs",
+      "Mount Cook",
+      "Omarama",
+      "Twizel"
+    ],
+    "Christchurch": [
+      "Banks Peninsula",
+      "Christchurch Central",
+      "Eastern Suburbs",
+      "Hilltop",
+      "Lincoln",
+      "Marshland",
+      "Port Hills",
+      "Prebbleton",
+      "Rolleston"
+    ],
+    "North Otago": [
+      "Oamaru",
+      "Oamaru Airport"
+    ],
+    "Central Otago": [
+      "Alexandra",
+      "Cromwell"
+    ],
+    "Dunedin": [
+      "Dunedin",
+      "Leith Saddle",
+      "Middlemarch",
+      "Mosgiel",
+      "Port Chalmers",
+      "Waitati"
+    ],
+    "Clutha": [
+      "Balclutha",
+      "Nugget Point"
+    ],
+    "Southern Lakes": [
+      "Glenorchy",
+      "Lake Hayes",
+      "Queenstown",
+      "Wānaka"
+    ],
+    "Southland": [
+      "Gore",
+      "Invercargill",
+      "Lumsden",
+      "Milford Sound",
+      "Stewart Island",
+      "Te Anau"
+    ]
+  }
+}
