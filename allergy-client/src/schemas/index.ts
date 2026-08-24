@@ -87,7 +87,8 @@ export type EntryResponse = z.infer<typeof EntryResponseSchema>;
 // ---- Settings
 export const SettingsSchema = z.object({
   notify_time: z.string().regex(/^\d{2}:\d{2}$/).default('20:00'), // HH:MM, 8pm
-  notify: z.boolean().default(false)
+  notify: z.boolean().default(false),
+  location: z.string().default('Christchurch Central') 
 });
 
 export type Settings = z.infer<typeof SettingsSchema>;
