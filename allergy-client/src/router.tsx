@@ -12,6 +12,7 @@ import LogPage from "./pages/LogPage";
 import TrendsPage from "./pages/TrendsPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import LoginPage from "./pages/LoginPage";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
       { path: "log/:date", element: <LogPage /> },
       { path: "trends", element: <TrendsPage /> },
       { path: "settings", element: <SettingsPage /> },
+      { path: "login", element: <LoginPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },
