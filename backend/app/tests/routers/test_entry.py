@@ -160,7 +160,7 @@ def test_upsert_entry_when_exist_success(client: TestClient, session: Session):
 
 def test_upsert_when_not_exists(client: TestClient):
     payload = {**VALID_PAYLOAD, "date": "2026-08-25"}
-    res = client.put(f"/api/entries/2026-08-25", json=payload)
+    res = client.put("/api/entries/2026-08-25", json=payload)
 
     assert res.status_code == 200
     result = res.json()
