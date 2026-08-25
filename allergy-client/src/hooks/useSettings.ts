@@ -7,7 +7,7 @@ import type { Settings } from "../schemas";
 
 interface UseSettingsReturn {
     settings: Settings | undefined;
-    isPending: boolean;
+    settingsIsPending: boolean;
     update: (settings: Settings) => void;
 }
 
@@ -28,7 +28,7 @@ export const useSettings = (): UseSettingsReturn => {
     
     return {
         settings: result.data,
-        isPending: result.isPending,
+        settingsIsPending: result.isPending,
         update: (settings: Settings) => updateMutation.mutate(settings),
     }
 }

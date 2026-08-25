@@ -46,7 +46,7 @@ export const useAuth = () => {
 
   return {
     user: result.data,
-    isPending: result.isPending,
+    userIsPending: result.isPending,
     signIn: (email: string) => signInMutation.mutate(email),
     isSigningIn: signInMutation.isPending,
     signInError: signInMutation.error,
