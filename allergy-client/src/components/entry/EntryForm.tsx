@@ -16,11 +16,12 @@ import {
   type Symptom,
 } from "../../schemas";
 import { useEntry } from "../../hooks/useEntry";
+import { useSettings } from "../../hooks/useSettings";
 import SeverityCard from "../ui/SeverityCard";
 import NotesCard from "../ui/NotesCard";
 import SymptomCard from "../ui/SymptomCard";
 import { useNavigate } from "react-router-dom";
-import type { Entry } from "../../schemas";
+import type { Entry, EntryInput } from "../../schemas";
 
 interface EntryFormProps {
   existing?: Entry | null;
@@ -28,6 +29,7 @@ interface EntryFormProps {
 
 const EntryForm = ({ existing }: EntryFormProps) => {
   const { save } = useEntry();
+  const { settings, settingsIsPending } = useSettings();
   const navigate = useNavigate();
 
   const [severity, setSeverity] = useState<SeverityRatingType>(
@@ -36,23 +38,29 @@ const EntryForm = ({ existing }: EntryFormProps) => {
   const [symptoms, setSymptoms] = useState<Symptom[]>(existing?.symptoms ?? []);
   const [notes, setNotes] = useState<string>(existing?.notes ?? "");
 
+  if (settingsIsPending) return <div>loading...</div>;
+
+  const location = settings?.location;
+
   const handleSubmit = () => {
-    const entry = {
+    const entry: EntryInput = {
       ...existing,
       severity,
       symptoms,
       notes,
+      location,
     };
     save(entry);
     navigate("/");
   };
 
   const handleNoSymptoms = () => {
-    const entry = {
+    const entry: EntryInput = {
       ...existing,
+      location,
       severity: SeverityRating.NoSymptom,
       symptoms: [],
-      notes: "",
+      notes: "",      
     };
     save(entry);
     navigate("/");
