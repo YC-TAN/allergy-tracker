@@ -1,8 +1,10 @@
 from datetime import date, datetime, timezone
 from fastapi import APIRouter, HTTPException, status
+from typing import Annotated
+from pydantic import AfterValidator
 
 from app.deps import SessionDep, CurrentUserDep
-from app.schemas.entry import Entry, EntryCreate, EntryUpdate, EntryResponse
+from app.schemas.entry import Entry, EntryCreate, EntryResponse
 from app.repository import entry as entry_repo
 
 router = APIRouter(
@@ -46,22 +48,51 @@ def read_entry(
 
     return entry
 
+def not_future(v: date) -> date:
+    if v > date.today():
+        raise ValueError("Date cannot be in the future")
+    return v
+
+NotFutureDate = Annotated[date, AfterValidator(not_future)]
+
 @router.put("/{entry_date}", response_model=EntryResponse)
-def update_entry(entry_date: date, payload: EntryUpdate, session: SessionDep, user_id: CurrentUserDep,):
+def upsert_entry(entry_date: NotFutureDate, payload: EntryCreate, session: SessionDep, user_id: CurrentUserDep,):
     db_entry = entry_repo.get_entry_by_date(
             session,
             entry_date,
             user_id
         )
-    if db_entry is None:
-        raise HTTPException(status_code=404, detail="No entry for this date")
-
-    entry = payload.model_dump()
-    db_entry.sqlmodel_update(
-        entry,
-        update={"updated_at": datetime.now(timezone.utc)}
-    )
+    
+    if db_entry:
+        entry = payload.model_dump(exclude={"date"}) # date can never be updated
+        db_entry.sqlmodel_update(
+                entry,
+                update={"updated_at": datetime.now(timezone.utc)}
+            )
+    else:
+        db_entry = Entry.model_validate(payload, update={"user_id": user_id})
+    
     session.add(db_entry)
     session.commit()
     session.refresh(db_entry)
     return db_entry
+
+# @router.put("/{entry_date}", response_model=EntryResponse)
+# def update_entry(entry_date: date, payload: EntryUpdate, session: SessionDep, user_id: CurrentUserDep,):
+#     db_entry = entry_repo.get_entry_by_date(
+#             session,
+#             entry_date,
+#             user_id
+#         )
+#     if db_entry is None:
+#         raise HTTPException(status_code=404, detail="No entry for this date")
+
+#     entry = payload.model_dump()
+#     db_entry.sqlmodel_update(
+#         entry,
+#         update={"updated_at": datetime.now(timezone.utc)}
+#     )
+#     session.add(db_entry)
+#     session.commit()
+#     session.refresh(db_entry)
+#     return db_entry

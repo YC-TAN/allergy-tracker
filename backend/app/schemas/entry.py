@@ -84,7 +84,6 @@ class Entry(EntryBase, table=True):
 
 class EntryCreate(EntryBase):
     """Payload model for creating a new allergy entry."""
-
     pass
 
 
