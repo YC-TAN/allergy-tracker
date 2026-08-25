@@ -3,12 +3,12 @@ import {
   EntrySchema,
   EntryResponseSchema,
   type EntryResponse,
-  type Entry,
+  type EntryInput,
 } from '../schemas/index';
 
 const baseUrl = "/entries";
 
-export const createEntry = async (entry: Entry): Promise<EntryResponse> => {
+export const upsertEntry = async (entry: EntryInput): Promise<EntryResponse> => {
 // Throws a ZodError with a if the shape is wrong.
   const validated = EntrySchema.parse(entry);
 
@@ -31,14 +31,14 @@ export async function getEntries(from: string, to: string): Promise<EntryRespons
   return res.map((r) => EntryResponseSchema.parse(r));
 }
 
-export const updateEntry = async (entry: Entry): Promise<EntryResponse> => {
-// Throws a ZodError if the shape is wrong.
-  const validated = EntrySchema.parse(entry);
+// export const updateEntry = async (entry: EntryInput): Promise<EntryResponse> => {
+// // Throws a ZodError if the shape is wrong.
+//   const validated = EntrySchema.parse(entry);
 
-  const res = await apiFetch<unknown>(`${baseUrl}/${validated.date}`, {
-    method: 'PUT',
-    body: JSON.stringify(validated),
-  });
+//   const res = await apiFetch<unknown>(`${baseUrl}/${validated.date}`, {
+//     method: 'PUT',
+//     body: JSON.stringify(validated),
+//   });
 
-  return EntryResponseSchema.parse(res);
-}
+//   return EntryResponseSchema.parse(res);
+// }

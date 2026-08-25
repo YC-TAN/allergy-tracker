@@ -6,9 +6,9 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { getLocalEntry, saveEntry } from "../utils/storage";
-import {createEntry, updateEntry} from "../services/entry";
+import { upsertEntry} from "../services/entry";
 import { getTodayDate } from "../utils/dates";
-import type { Entry, EntryLocal } from "../schemas";
+import type { EntryInput, EntryLocal } from "../schemas";
 
 export const useEntry = (date: string = getTodayDate()) => {
 
@@ -20,24 +20,11 @@ export const useEntry = (date: string = getTodayDate()) => {
     })
 
     const saveMutation = useMutation({
-        mutationFn: async (input: Entry): Promise<EntryLocal> => {
-            // if (navigator.onLine) {
-            //     try {
-            //         await createEntry(input);
-            //         return saveEntry({...input, _synced: true});
-            //     } catch (err) {
-            //         console.error('Sync attempt failed:', err);
-            //     }
-            // }
+        mutationFn: async (input: EntryInput): Promise<EntryLocal> => {
             if (navigator.onLine) {
                 try {
-                    const isEditing = !!getLocalEntry(input.date);
-                    if (isEditing) {
-                        await updateEntry(input);
-                    } else {
-                        await createEntry(input);
-                    }
-                    return saveEntry({...input, _synced: true});
+                    await upsertEntry(input);
+                    return saveEntry({...input, _synced: true});                    
                 } catch (err) {
                     console.error("Sync attempt failed:", err);
                 }
@@ -48,18 +35,10 @@ export const useEntry = (date: string = getTodayDate()) => {
             queryClient.setQueryData(['entry', saved.date], saved)
         }
     })
-
-    // const updateMutation = useMutation({
-    //     mutationFn: (entry: Entry) => Promise.resolve(updateEntry(entry)),
-    //     onSuccess: (saved) => {
-    //         queryClient.setQueryData(['entry', saved.date], saved)
-    //     }
-    // })
     
     return {
         entry: result.data,
         isPending: result.isPending,
-        save: (input: Entry) => saveMutation.mutate(input),
-        // update: (entry: Entry) => updateMutation.mutate(entry)        
+        save: (input: EntryInput) => saveMutation.mutate(input)    
     }
 }
