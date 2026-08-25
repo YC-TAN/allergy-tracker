@@ -7,15 +7,22 @@ import { Card, CardContent, Button, Typography } from "@mui/material";
 import { ThumbUpOutlined, AddOutlined } from "@mui/icons-material";
 import { useNavigate, Link } from "react-router-dom";
 import { useEntry } from "../../hooks/useEntry";
-import { SeverityRating } from "../../schemas";
+import { SeverityRating, type EntryInput } from "../../schemas";
+import { useSettings } from "../../hooks/useSettings";
 
 const CheckIn = () => {
 
   const {save} = useEntry();
+  const { settings, settingsIsPending } = useSettings();
   const nav = useNavigate();
 
+  if (settingsIsPending) return <div>loading...</div>;
+
+  const location = settings?.location;
+
   const handleAllGood = () => {
-    const entry = {
+    const entry: EntryInput = {
+      location,
       severity: SeverityRating.NoSymptom,      
     }
     save(entry);

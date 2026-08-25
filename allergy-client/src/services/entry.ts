@@ -12,8 +12,8 @@ export const upsertEntry = async (entry: EntryInput): Promise<EntryResponse> => 
 // Throws a ZodError with a if the shape is wrong.
   const validated = EntrySchema.parse(entry);
 
-  const res = await apiFetch<unknown>(`${baseUrl}`, {
-    method: 'POST',
+  const res = await apiFetch<unknown>(`${baseUrl}/${validated.date}`, {
+    method: 'PUT',
     body: JSON.stringify(validated),
   });
 
