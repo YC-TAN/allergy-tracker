@@ -21,6 +21,8 @@ import {
     SettingsOutlined,
 } from "@mui/icons-material";
 
+import AuthButton from "./AuthButton";
+
 const Shell = () => {
   return (
     <Box
@@ -28,8 +30,9 @@ const Shell = () => {
       sx={{ bgcolor: 'background.default' }}
     >
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className="flex justify-between">
           <Typography variant="h6">Allergy Tracker</Typography>
+          <AuthButton />
         </Toolbar>
       </AppBar>
       
