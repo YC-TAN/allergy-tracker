@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     # supabase_key: SecretStr 
     # database_url: PostgresDsn
     pooler_database_url: str
-    supabase_jwt_secret: str
+    # supabase_jwt_secret: str
     supabase_jwks_url: str
 
     # Metservice API
