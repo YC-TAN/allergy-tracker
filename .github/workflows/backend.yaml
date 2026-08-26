@@ -23,7 +23,8 @@ jobs:
             POOLER_DATABASE_URL: "postgresql+psycopg:://placeholder:placeholder@placeholder:5432/placeholder"
             ENVIRONMENT: "development"
             TEST_DB_URL: "postgresql+psycopg://postgres:postgres@127.0.0.1:54322/postgres"
-        
+            SUPABASE_JWKS_URL: "https://example.com/auth/v1/.well-known/jwks.json"
+
         steps:
             - uses: actions/checkout@v7
 
