@@ -8,7 +8,7 @@ from datetime import date, timedelta
 from pydantic import ValidationError
 from typing import get_args
 
-from app.schemas.entry import EntryCreate
+from app.schemas.entry import EntryUpsert
 from app.schemas.locations_literal import Valid_locations
 
 test_date = "2026-08-01"
@@ -22,7 +22,7 @@ payload = {
     }
 
 def test_entry_create_accepts_full_valid_payload():
-    entry = EntryCreate(**payload)
+    entry = EntryUpsert(**payload)
 
     assert entry.date.isoformat() == test_date
     assert entry.severity == payload["severity"]
@@ -36,7 +36,7 @@ def test_entry_create_accepts_full_valid_payload():
 def test_severity_accepts_valid_range():
     for value in range(4):      # 0, 1, 2, 3
         data = {**payload, "severity":value}
-        entry = EntryCreate(**data)
+        entry = EntryUpsert(**data)
         assert entry.severity == value
 
 
@@ -51,25 +51,25 @@ def test_severity_accepts_valid_range():
 def test_severity_rejects_invalid_values(severity_level):
     with pytest.raises(ValidationError):
         data = {**payload, "severity":severity_level}
-        EntryCreate(**data)
+        EntryUpsert(**data)
 
 
 def test_severity_is_required():
     with pytest.raises(ValidationError):
-        EntryCreate(date=test_date, location=test_location)
+        EntryUpsert(date=test_date, location=test_location)
 
 
 # --- symptoms ---
 
 def test_symptoms_accepts_known_values():
     data = {**payload, "symptoms":["eyes", "nose", "throat", "energy", "headache", "other"]}
-    entry = EntryCreate(**data)
+    entry = EntryUpsert(**data)
 
     assert len(entry.symptoms) == 6
 
 
 def test_symptoms_defaults_empty():
-    entry = EntryCreate(date=test_date, severity=0, location=test_location)
+    entry = EntryUpsert(date=test_date, severity=0, location=test_location)
     assert entry.symptoms == []
 
 
@@ -84,7 +84,7 @@ def test_symptoms_defaults_empty():
 def test_symptoms_rejects_unknown_value(symptoms_list):
     with pytest.raises(ValidationError):
         data = {**payload, "symptoms": symptoms_list}
-        EntryCreate(**data)
+        EntryUpsert(**data)
 
 
 @pytest.mark.parametrize(
@@ -98,7 +98,7 @@ def test_symptoms_rejects_unknown_value(symptoms_list):
 )
 def test_symptoms_deduplicates_repeated_values(symptoms_input, expected):
     data = {**payload, "symptoms": symptoms_input}
-    entry = EntryCreate(**data)
+    entry = EntryUpsert(**data)
     assert entry.symptoms == expected
 
 
@@ -106,25 +106,25 @@ def test_symptoms_deduplicates_repeated_values(symptoms_input, expected):
 
 def test_notes_accepts_empty_str():
     data = {**payload, "notes": ""}            
-    entry = EntryCreate(**data)
+    entry = EntryUpsert(**data)
     assert entry.notes == ""
 
 
 def test_notes_defaults_empty_str():
-    entry = EntryCreate(date=test_date, severity=0, location=test_location)
+    entry = EntryUpsert(date=test_date, severity=0, location=test_location)
     assert entry.notes == ""
 
 
 def test_notes_accepts_up_to_255_chars():
     data = {**payload, "notes": "a" * 255}
-    entry = EntryCreate(**data)
+    entry = EntryUpsert(**data)
     assert len(entry.notes) == 255
 
 
 def test_notes_rejects_over_255_chars():
     with pytest.raises(ValidationError):
         data = {**payload, "notes": "a" * 256}
-        EntryCreate(**data)
+        EntryUpsert(**data)
 
 
 @pytest.mark.parametrize(
@@ -136,7 +136,7 @@ def test_notes_rejects_over_255_chars():
 )
 def test_notes_whitespace_only_becomes_empty_str(notes_input):
     data = {**payload, "notes": notes_input}
-    entry = EntryCreate(**data)
+    entry = EntryUpsert(**data)
     assert entry.notes == ""
 
 
@@ -150,7 +150,7 @@ def test_notes_whitespace_only_becomes_empty_str(notes_input):
 )
 def test_notes_whitespace_is_removed(notes_input, expected):   
     data = {**payload, "notes": notes_input}
-    entry = EntryCreate(**data)
+    entry = EntryUpsert(**data)
     assert entry.notes == expected
 
 
@@ -158,7 +158,7 @@ def test_notes_whitespace_is_removed(notes_input, expected):
 
 def test_date_is_required():
     with pytest.raises(ValidationError):
-        EntryCreate(severity=1, location=test_location)
+        EntryUpsert(severity=1, location=test_location)
 
 
 @pytest.mark.parametrize(
@@ -172,7 +172,7 @@ def test_date_is_required():
 def test_date_rejects_invalid_format(date_input):
     with pytest.raises(ValidationError):
         data = {**payload, "date": date_input}
-        EntryCreate(**data)
+        EntryUpsert(**data)
 
 
 def test_date_rejects_future_date():
@@ -180,7 +180,7 @@ def test_date_rejects_future_date():
 
     with pytest.raises(ValueError, match="Date cannot be in the future"):
         data = {**payload, "date": tomorrow}
-        EntryCreate(**data)
+        EntryUpsert(**data)
 
 # -- location --
 
@@ -188,31 +188,31 @@ def test_location_accepts_any_valid_value():
     # every value in the Literal should be accepted — cheap to check them all at once
     for loc in get_args(Valid_locations):
         data = {**payload, "location": loc}
-        entry = EntryCreate(**data)
+        entry = EntryUpsert(**data)
         assert entry.location == loc
 
 
 def test_location_rejects_invalid_value():
     with pytest.raises(ValidationError):
-        EntryCreate(**{**payload, "location": "Not A Real Place"})
+        EntryUpsert(**{**payload, "location": "Not A Real Place"})
 
 
 def test_location_is_case_sensitive():
     with pytest.raises(ValidationError):
-        EntryCreate(**{**payload, "location": "alexandra"})
+        EntryUpsert(**{**payload, "location": "alexandra"})
 
 
 def test_location_rejects_empty_string():
     with pytest.raises(ValidationError):
-        EntryCreate(**{**payload, "location": ""})
+        EntryUpsert(**{**payload, "location": ""})
 
 
 def test_location_rejects_none():
     with pytest.raises(ValidationError):
-        EntryCreate(**{**payload, "location": None})
+        EntryUpsert(**{**payload, "location": None})
 
 
 def test_location_rejects_wrong_type():
     with pytest.raises(ValidationError):
-        EntryCreate(**{**payload, "location": 123})
+        EntryUpsert(**{**payload, "location": 123})
 

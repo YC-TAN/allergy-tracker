@@ -82,14 +82,14 @@ class Entry(EntryBase, table=True):
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-class EntryCreate(EntryBase):
-    """Payload model for creating a new allergy entry."""
+class EntryUpsert(EntryBase):
+    """Payload model for creating / updating a new allergy entry."""
     pass
 
 
-class EntryUpdate(EntryBase):
-    """Payload model for updating an existing allergy entry."""
-    pass
+# class EntryUpdate(EntryBase):
+#     """Payload model for updating an existing allergy entry."""
+#     pass
 
 
 class EntryResponse(EntryBase):
@@ -98,3 +98,11 @@ class EntryResponse(EntryBase):
     id: UUID
     created_at: datetime
     updated_at: datetime
+
+
+class MigrateRequest(SQLModel):
+    entries: list[EntryUpsert]
+
+class MigrateResponse(SQLModel):
+    synced: list[EntryResponse]
+    failed: list[str]   # dates still unsynced — client keeps these as _synced: false
