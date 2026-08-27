@@ -93,6 +93,7 @@ export const SettingsSchema = z.object({
 });
 
 export type Settings = z.infer<typeof SettingsSchema>;
+export type SettingsInput = z.input<typeof SettingsSchema>;
 
 // ---- Pollen schema and type
 export const PollenLevel = {

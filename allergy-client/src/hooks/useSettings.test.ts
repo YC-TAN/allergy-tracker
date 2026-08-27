@@ -7,24 +7,24 @@ beforeEach(() => localStorage.clear())
 describe('useSettings', () => {
   it('returns schema defaults when nothing is stored', async () => {
     const { result } = renderHook(() => useSettings(), { wrapper: createWrapper() })
-    await waitFor(() => expect(result.current.isPending).toBe(false))
-    expect(result.current.settings).toEqual({ notify: false, notify_time: '20:00' })
+    await waitFor(() => expect(result.current.settingsIsPending).toBe(false))
+    expect(result.current.settings).toEqual({ notify: false, notify_time: '20:00', location: "Christchurch Central" })
   })
 
   it('updates settings and reflects in query cache', async () => {
     const { result } = renderHook(() => useSettings(), { wrapper: createWrapper() })
-    await waitFor(() => expect(result.current.isPending).toBe(false))
+    await waitFor(() => expect(result.current.settingsIsPending).toBe(false))
 
     act(() => { result.current.update({ notify: true, notify_time: '08:00' }) })
 
     await waitFor(() =>
-      expect(result.current.settings).toEqual({ notify: true, notify_time: '08:00' })
+      expect(result.current.settings).toEqual({ notify: true, notify_time: '08:00', location: "Christchurch Central" })
     )
   })
 
   it('persists settings to localStorage', async () => {
     const { result } = renderHook(() => useSettings(), { wrapper: createWrapper() })
-    await waitFor(() => expect(result.current.isPending).toBe(false))
+    await waitFor(() => expect(result.current.settingsIsPending).toBe(false))
 
     act(() => { result.current.update({ notify: true, notify_time: '07:00' }) })
     await waitFor(() => expect(result.current.settings?.notify).toBe(true))

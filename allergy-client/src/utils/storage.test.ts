@@ -66,6 +66,6 @@ describe("Settings", () => {
 
   it("set and get settings correctly", () => {
     setSettings({ notify: true, notify_time: "08:00" });
-    expect(getSettings()).toEqual({ notify: true, notify_time: "08:00" });
+    expect(getSettings()).toEqual({ notify: true, notify_time: "08:00", location: "Christchurch Central" });
   });
 });

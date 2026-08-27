@@ -5,7 +5,7 @@
  * It provides functions to read and write entries by date, validate data with
  * Zod, query ranges, delete entries, and reset stored data.
  */
-import { EntryLocalSchema, SettingsSchema, type EntryLocal, type EntryInput, type Settings } from '../schemas'
+import { EntryLocalSchema, SettingsSchema, type EntryLocal, type EntryInput, type Settings, type SettingsInput } from '../schemas'
 
 // Prefix used for localStorage keys
 const KEYS = {
@@ -100,7 +100,7 @@ export const getSettings = (key: string = KEYS.settings): Settings => {
   }
 }
 
-export const setSettings = (settings: Settings, key: string = KEYS.settings): Settings => {
+export const setSettings = (settings: SettingsInput, key: string = KEYS.settings): Settings => {
   const parsed = SettingsSchema.parse(settings);
   localStorage.setItem(key, JSON.stringify(parsed));
   return parsed

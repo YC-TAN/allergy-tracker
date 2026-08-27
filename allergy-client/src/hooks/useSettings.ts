@@ -3,12 +3,12 @@ import { useQuery,
     useQueryClient 
 } from "@tanstack/react-query";
 import { getSettings, setSettings } from "../utils/storage";
-import type { Settings } from "../schemas";
+import type { Settings, SettingsInput } from "../schemas";
 
 interface UseSettingsReturn {
     settings: Settings | undefined;
     settingsIsPending: boolean;
-    update: (settings: Settings) => void;
+    update: (settings: SettingsInput) => void;
 }
 
 export const useSettings = (): UseSettingsReturn => {
@@ -19,8 +19,8 @@ export const useSettings = (): UseSettingsReturn => {
         queryFn: () => getSettings()
     })
 
-    const updateMutation = useMutation<Settings, Error, Settings>({
-        mutationFn: (settings: Settings) => Promise.resolve(setSettings(settings)),
+    const updateMutation = useMutation<Settings, Error, SettingsInput>({
+        mutationFn: (settings: SettingsInput) => Promise.resolve(setSettings(settings)),
         onSuccess: (updated) => {
             queryClient.setQueryData(['settings'], updated)
         }
@@ -29,6 +29,6 @@ export const useSettings = (): UseSettingsReturn => {
     return {
         settings: result.data,
         settingsIsPending: result.isPending,
-        update: (settings: Settings) => updateMutation.mutate(settings),
+        update: (settings: SettingsInput) => updateMutation.mutate(settings),
     }
 }
