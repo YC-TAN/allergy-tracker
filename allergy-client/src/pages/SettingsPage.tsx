@@ -10,9 +10,9 @@ import NotificationToggleCard from "../components/settings/NotificationToggleCar
 import NotificationTimeCard from "../components/settings/NotificationTimeCard";
 
 const SettingsPage = () => {
-  const { isPending } = useSettings();
+  const { settingsIsPending } = useSettings();
 
-  if (isPending) return <div>loading...</div>;
+  if (settingsIsPending) return <div>loading...</div>;
 
   return (
     <div className="flex flex-col items-center px-5 pt-8 pb-6">
