@@ -11,6 +11,8 @@ api.include_router(entry.router)
 
 app.include_router(api)
 
+app.frontend("/", directory="dist", fallback="index.html")
+
 origins = [
     "http://localhost:5173",
 ]
