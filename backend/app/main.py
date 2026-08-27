@@ -8,9 +8,7 @@ api = APIRouter(prefix="/api")
 api.include_router(pollen_forecast.router)
 api.include_router(internal.router)
 api.include_router(entry.router)
-
 app.include_router(api)
-
 app.frontend("/", directory="dist", fallback="index.html")
 
 origins = [
