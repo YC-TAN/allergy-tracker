@@ -1,0 +1,14 @@
+name: Daily Pollen Forecast
+
+on:    
+    schedule:
+        - cron: '15 12 * * *' # NZT midnight
+    workflow_dispatch:
+
+jobs:
+    call-daily-forecast:
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        steps:
+            - name: Call pollen forecast endpoint
+              run: curl -sS -f --max-time 90 -X GET https://allergy-tracker-q0vb.onrender.com/api/pollen_forecast/christchurch_central 
