@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:ui": "rm -rf ../backend/dist && npm run build && cp -r dist ../backend",
     "test": "vitest run",
     "lint": "eslint .",
     "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
