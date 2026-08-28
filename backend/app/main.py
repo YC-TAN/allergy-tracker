@@ -26,7 +26,7 @@ app.add_middleware(
 def main():
     print("Hello from backend!")
 
-@app.get("/")
+@app.get("/health-check")
 def read_root():
     return {"message": "Hello from backend"}
 
