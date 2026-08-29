@@ -1,6 +1,6 @@
 import requests
 import re
-from datetime import date
+from datetime import date, datetime
 from zoneinfo import ZoneInfo
 from sqlmodel import select
 from app.config import get_settings
@@ -8,6 +8,7 @@ from app.deps import SessionDep
 from app.schemas.pollen_forecast import PollenForecast
 
 settings = get_settings()
+today = datetime.now(ZoneInfo("Pacific/Auckland")).date()
 location_paths = {
     "christchurch_central": "/towns-cities/regions/christchurch/locations/christchurch"
 }
@@ -92,7 +93,7 @@ def get_allergen_data(check_date: date, location: str, db: SessionDep) -> Pollen
 
 def build_forecast_payload(parsed: list[tuple[str, list[str]]], location: str) -> dict:
     payload = {
-        "date": date.today(),
+        "date": today,
         "location": location
     }
     valid_risks = {"imminent", "low", "moderate", "high"}
@@ -104,7 +105,7 @@ def build_forecast_payload(parsed: list[tuple[str, list[str]]], location: str) -
 
 
 def sync_allergen_data(location: str, db: SessionDep) -> PollenForecast:
-    todays_forecast = get_allergen_data(datetime.now(ZoneInfo("Pacific/Auckland")).date(), location, db)
+    todays_forecast = get_allergen_data(today, location, db)
     if todays_forecast is None:
         allergen_data = extract_allergen_data(location)
         payload = build_forecast_payload(allergen_data, location)
