@@ -1,6 +1,7 @@
 import requests
 import re
 from datetime import date
+from zoneinfo import ZoneInfo
 from sqlmodel import select
 from app.config import get_settings
 from app.deps import SessionDep
@@ -103,7 +104,7 @@ def build_forecast_payload(parsed: list[tuple[str, list[str]]], location: str) -
 
 
 def sync_allergen_data(location: str, db: SessionDep) -> PollenForecast:
-    todays_forecast = get_allergen_data(date.today(), location, db)
+    todays_forecast = get_allergen_data(datetime.now(ZoneInfo("Pacific/Auckland")).date(), location, db)
     if todays_forecast is None:
         allergen_data = extract_allergen_data(location)
         payload = build_forecast_payload(allergen_data, location)
