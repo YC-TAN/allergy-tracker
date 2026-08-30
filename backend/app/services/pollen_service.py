@@ -3,8 +3,9 @@ import re
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
 from sqlmodel import select
-from app.config import get_settings
-from app.deps import SessionDep
+
+from app.core.config import get_settings
+from app.core.deps import SessionDep
 from app.schemas.pollen_forecast import PollenForecast
 
 settings = get_settings()

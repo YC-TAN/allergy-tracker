@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from app.deps import SessionDep
+
+from app.core.deps import SessionDep
 from app.services.pollen_service import sync_allergen_data
 
 router = APIRouter(

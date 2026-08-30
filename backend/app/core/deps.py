@@ -9,7 +9,7 @@ from typing import Annotated
 from sqlmodel import Session
 from uuid import UUID
 
-from app.db import get_session
+from backend.app.core.db import get_session
 from app.core.auth import get_current_user_id
 
 
