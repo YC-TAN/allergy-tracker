@@ -1,8 +1,9 @@
-from app.schemas.entry import Entry, EntryUpsert
-from app.deps import SessionDep
 from datetime import date, datetime, timezone
 from sqlmodel import select
 from uuid import UUID
+
+from app.schemas.entry import Entry, EntryUpsert
+from app.core.deps import SessionDep
 
 
 def get_entry_by_date(session: SessionDep, entry_date: date, user_id: UUID) -> Entry | None:

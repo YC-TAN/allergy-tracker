@@ -8,7 +8,7 @@ from sqlalchemy import text
 from fastapi.testclient import TestClient
 
 from app.main import app
-from app.db import get_session
+from app.core.db import get_session
 from app.core.auth import get_current_user_id
 
 

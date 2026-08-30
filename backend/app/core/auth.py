@@ -2,7 +2,7 @@ from fastapi import Header, HTTPException
 import jwt
 from jwt import PyJWKClient
 from uuid import UUID
-from app.config import get_settings
+from backend.app.core.config import get_settings
 from functools import lru_cache
 
 @lru_cache

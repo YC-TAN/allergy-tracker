@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, status
 from typing import Annotated
 from pydantic import AfterValidator
 
-from app.deps import SessionDep, CurrentUserDep
+from app.core.deps import SessionDep, CurrentUserDep
 from app.schemas.entry import Entry, EntryUpsert, EntryResponse, MigrateRequest, MigrateResponse
 from app.repository import entry as entry_repo
 

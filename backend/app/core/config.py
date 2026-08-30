@@ -24,10 +24,12 @@ class Settings(BaseSettings):
     # Metservice API
     metservice_base_url: AnyHttpUrl = "https://www.metservice.com"
 
-
     # App
     environment: Literal["development", "staging", "production"] = "development"
     debug: bool = False
+
+    # Log
+    log_level: str = "INFO"
 
     model_config = SettingsConfigDict(
         env_file=".env",
