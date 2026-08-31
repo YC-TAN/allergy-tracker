@@ -9,8 +9,8 @@ from typing import Annotated
 from sqlmodel import Session
 from uuid import UUID
 
-from backend.app.core.db import get_session
-from app.core.auth import get_current_user_id
+from .db import get_session
+from .auth import get_current_user_id
 
 
 SessionDep = Annotated[Session, Depends(get_session)]
