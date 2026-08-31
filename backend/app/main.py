@@ -1,8 +1,17 @@
-from fastapi import FastAPI, APIRouter
-from .routers import pollen_forecast, internal, entry
+from fastapi import FastAPI, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+import logging
+
+from .routers import pollen_forecast, internal, entry
+from .core.logging_config import setup_logging
+from .core.exception_handlers import register_exception_handlers
+
+setup_logging()
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
+register_exception_handlers(app)
 
 api = APIRouter(prefix="/api")
 api.include_router(pollen_forecast.router)
@@ -29,6 +38,7 @@ def main():
 @app.get("/health-check")
 def read_root():
     return {"message": "Hello from backend"}
+
 
 if __name__ == "__main__":
     main()
