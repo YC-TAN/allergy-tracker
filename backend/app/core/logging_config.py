@@ -1,6 +1,6 @@
 import logging
 
-from app.core.config import get_settings
+from .config import get_settings
 
 def setup_logging():
     settings = get_settings()
