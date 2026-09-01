@@ -15,7 +15,7 @@ from app.errors.app_error import PollenFetchError, UnsupportedLocationError
 logger = logging.getLogger(__name__)
 settings = get_settings()
 
-_LOCATION_PATHS_FILE = Path(__file__).parent / "data" / "location_paths.json"
+_LOCATION_PATHS_FILE = Path(__file__).parent.parent / "data" / "location_paths.json"
 with open(_LOCATION_PATHS_FILE) as f:
     location_paths = json.load(f)
 

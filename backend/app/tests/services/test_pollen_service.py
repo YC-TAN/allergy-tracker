@@ -1,9 +1,10 @@
 import json
 import pytest
 from pathlib import Path
-from datetime import date
 
 from app.services import pollen_service
+from app.utils.date_utils import get_today_NZT
+from app.errors.app_error import PollenFetchError
 
 FIXTURE_DIR = Path(__file__).parent.parent / "fixtures"
 
@@ -23,13 +24,12 @@ def test_parse_allergen_data():
 def test_parse_allergen_data_no_match():
     assert pollen_service.parse_allergen_data("<div>Unmatched</div>") is None
 
-
-def test_extract_allergen_data(mocker, mock_pollen_response):
+@pytest.mark.asyncio
+async def test_extract_allergen_data(mocker, mock_pollen_response):
     mocker.patch.object(
         pollen_service, "fetch_allergen_data", return_value=mock_pollen_response
     )
-    location_path = "/towns-cities/regions/christchurch/locations/christchurch"
-    result = pollen_service.extract_allergen_data(location_path)
+    result = await pollen_service.extract_allergen_data("Christchurch central")
     expected = [
         ( "imminent", ["hazelnut", "alder"]),
         ("low", ["cypress", "cedar", "fungal spores"])
@@ -43,9 +43,9 @@ def test_build_forecast_payload():
         ( "imminent", ["hazelnut", "alder"]),
         ("low", ["cypress", "cedar", "fungal spores"])
     ]
-    location = "christchurch"
+    location = "Christchurch central"
     expected = {
-        "date": date.today(),
+        "date": get_today_NZT(),
         "location": location,
         "imminent": ["hazelnut", "alder"],
         "low": ["cypress", "cedar", "fungal spores"]
@@ -58,10 +58,5 @@ def test_build_forecast_payload_invalid_risks():
     parsed = [
         ( "other", ["hazelnut", "alder"]),
     ]
-    location = "christchurch"
-    expected = {
-        "date": date.today(),
-        "location": location,
-    }
-    result = pollen_service.build_forecast_payload(parsed, location)
-    assert result == expected
+    with pytest.raises(PollenFetchError):
+          pollen_service.build_forecast_payload(parsed, "christchurch")
