@@ -13,6 +13,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from app.errors.app_error import AppError
+
 logger = logging.getLogger(__name__)
 
 
@@ -62,6 +64,24 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
     return JSONResponse(status_code=500, content={"detail": "Internal server error"})
 
 
+async def app_error_handler(request: Request, exc: AppError):
+    """Handle AppError and its subclasses, logging and returning a JSON response.
+
+    Logs at WARNING level for client errors (status_code < 500) and ERROR
+    level for server errors. 
+
+    Args:
+        request: The incoming HTTP request.
+        exc: The AppError instance.
+
+    Returns:
+        JSONResponse with status code and detail`.
+    """
+    log = logger.warning if exc.status_code < 500 else logger.error
+    log("%s: %s (%s %s)", type(exc).__name__, exc.detail, request.method, request.url)
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+
+
 def register_exception_handlers(app: FastAPI) -> None:
     """
     Registers all handlers with a FastAPI app instance.
@@ -71,4 +91,5 @@ def register_exception_handlers(app: FastAPI) -> None:
     """
     app.add_exception_handler(StarletteHTTPException, custom_http_exception_handler)
     app.add_exception_handler(RequestValidationError, validation_exception_handler)
+    app.add_exception_handler(AppError, app_error_handler)
     app.add_exception_handler(Exception, unhandled_exception_handler)

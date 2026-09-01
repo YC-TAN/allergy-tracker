@@ -1,11 +1,11 @@
 from datetime import date
-from fastapi import APIRouter, HTTPException, status
-from typing import Annotated
-from pydantic import AfterValidator
+from fastapi import APIRouter, status
 
 from app.core.deps import SessionDep, CurrentUserDep
 from app.schemas.entry import Entry, EntryUpsert, EntryResponse, MigrateRequest, MigrateResponse
 from app.repository import entry as entry_repo
+from app.errors.app_error import EntryNotFoundError
+from app.utils.date_utils import NotFutureDate
 
 router = APIRouter(
     prefix="/entries", 
@@ -44,16 +44,10 @@ def read_entry(
     )
 
     if entry is None:
-        raise HTTPException(status_code=404, detail="No entry for this date")
+        raise EntryNotFoundError()
 
     return entry
 
-def not_future(v: date) -> date:
-    if v > date.today():
-        raise ValueError("Date cannot be in the future")
-    return v
-
-NotFutureDate = Annotated[date, AfterValidator(not_future)]
 
 @router.put("/{entry_date}", response_model=EntryResponse)
 def upsert_entry(entry_date: NotFutureDate, payload: EntryUpsert, session: SessionDep, user_id: CurrentUserDep,):

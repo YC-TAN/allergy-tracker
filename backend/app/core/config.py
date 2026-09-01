@@ -23,6 +23,7 @@ class Settings(BaseSettings):
 
     # Metservice API
     metservice_base_url: AnyHttpUrl = "https://www.metservice.com"
+    metservice_allergen_path: str = "/publicData/webdata{location_path}/airborne-allergens"
 
     # App
     environment: Literal["development", "staging", "production"] = "development"

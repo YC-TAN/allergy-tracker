@@ -16,9 +16,11 @@ from sqlmodel import SQLModel, Field
 from pydantic import field_validator
 from sqlalchemy import Integer, String
 from sqlalchemy.dialects.postgresql import JSONB
-from datetime import date as date_type, datetime, timezone
+from datetime import datetime, timezone
 from uuid import UUID, uuid4
+
 from .locations_literal import Valid_locations
+from app.utils.date_utils import NotFutureDate
 
 
 class SeverityLevel(int, Enum):
@@ -35,7 +37,7 @@ Symptom = Literal["eyes", "nose", "throat", "energy", "headache", "other"]
 class EntryBase(SQLModel):
     """Shared fields and validation for allergy entry."""
 
-    date: date_type
+    date: NotFutureDate
     severity: Literal[0, 1, 2, 3] = Field(
         sa_type=Integer,
         description="0 = no symptoms, 1 = mild, 2 = moderate, 3 = severe",
@@ -51,13 +53,6 @@ class EntryBase(SQLModel):
     )
 
     location: Valid_locations = Field(sa_type=String)
-
-    @field_validator("date")
-    @classmethod
-    def date_must_not_be_future(cls, v: date_type) -> date_type:
-        if v > date_type.today():
-            raise ValueError("Date cannot be in the future")
-        return v
 
     @field_validator("notes", mode="before")
     @classmethod

@@ -1,38 +1,53 @@
-import requests
+import json
 import re
-from datetime import date, datetime
-from zoneinfo import ZoneInfo
-from sqlmodel import select
+import httpx2
+import logging
+from pathlib import Path
 
 from app.core.config import get_settings
 from app.core.deps import SessionDep
 from app.schemas.pollen_forecast import PollenForecast
+from app.utils.date_utils import get_today_NZT
+from app.repository import pollen as pollen_repo
+from app.errors.app_error import PollenFetchError, UnsupportedLocationError
 
+
+logger = logging.getLogger(__name__)
 settings = get_settings()
-today = datetime.now(ZoneInfo("Pacific/Auckland")).date()
-location_paths = {
-    "christchurch_central": "/towns-cities/regions/christchurch/locations/christchurch"
-}
-METSERVICE_ALLERGEN_PATH = "/publicData/webdata{location_path}/airborne-allergens"
+
+_LOCATION_PATHS_FILE = Path(__file__).parent.parent / "data" / "location_paths.json"
+with open(_LOCATION_PATHS_FILE) as f:
+    location_paths = json.load(f)
 
 
-def fetch_allergen_data(location: str) -> dict[str, str]:
-    """
-    Fetch the pollen forecast using the given location path.
+def construct_url(location: str) -> str:
+
+    try:
+        location_path = location_paths[location]
+    except KeyError as e:
+        raise UnsupportedLocationError(location) from e
+
+    return str(settings.metservice_base_url) + settings.metservice_allergen_path.format(location_path=location_path)
+
+
+async def fetch_allergen_data(location: str) -> dict[str, str]:
+    """Fetch the pollen forecast using the given location path.
 
     Args:
-        location_path: URL path segment identifying the region/location,
-            e.g. "/towns-cities/regions/christchurch/locations/christchurch".
+        location (str):
 
     Returns:
         The parsed JSON response body as a Python dict.
     """
-    location_path = location_paths[location.lower()]
-    url = str(settings.metservice_base_url) + METSERVICE_ALLERGEN_PATH.format(
-        location_path=location_path
-    )
-    result = requests.get(url)
-    return result.json()
+    url = construct_url(location)
+
+    try:
+        async with httpx2.AsyncClient() as client:                       
+            r = await client.get(url)
+            r.raise_for_status()
+    except httpx2.HTTPError as e:
+        raise PollenFetchError(location) from e
+    return r.json()
 
 
 def parse_allergen_data(content: str) -> tuple[str, list[str]] | None:
@@ -54,7 +69,7 @@ def parse_allergen_data(content: str) -> tuple[str, list[str]] | None:
     return (risk, [p.strip().lower() for p in plants_str.split(",") if p.strip()])
 
 
-def extract_allergen_data(location: str) -> list[tuple]:
+async def extract_allergen_data(location: str) -> list[tuple]:
     """
     Fetch and parse allergen data, keeping only content items whose type
     is "iconWithText".
@@ -62,55 +77,46 @@ def extract_allergen_data(location: str) -> list[tuple]:
     Returns:
         A list of {risk: allergens list} mappings.
     """
-    response = fetch_allergen_data(location)
-    # TODO Add error handling, try-except
-    content = response["layout"]["primary"]["slots"]["main"]["modules"][0]["content"]
+    response = await fetch_allergen_data(location)
+
+    try:
+        content = response["layout"]["primary"]["slots"]["main"]["modules"][0]["content"]
+    except (KeyError, IndexError, TypeError) as e:
+        raise PollenFetchError(location) from e
+
     allergens = [
         parse_allergen_data(item["html"])
         for item in content
-        if item.get("type") == "iconWithText"
+        if item.get("type") == "iconWithText" and parse_allergen_data(item["html"]) is not None
     ]
     return allergens
-
-def create_allergen_data(allergen_data: dict, db: SessionDep) -> PollenForecast:
-    """
-    Insert extracted daily allergen data into database.
-
-    """
-    data = PollenForecast(**allergen_data)
-    db.add(data)
-    db.commit()
-    db.refresh(data)
-    return data
-
-
-def get_allergen_data(check_date: date, location: str, db: SessionDep) -> PollenForecast | None:
-    statement = select(PollenForecast).where(
-        PollenForecast.date == check_date,
-        PollenForecast.location == location,
-    )
-    return db.exec(statement).first()
 
 
 def build_forecast_payload(parsed: list[tuple[str, list[str]]], location: str) -> dict:
     payload = {
-        "date": today,
+        "date": get_today_NZT(),
         "location": location
     }
     valid_risks = {"imminent", "low", "moderate", "high"}
     for risk, allergens in parsed:
         if risk in valid_risks:
             payload[risk] = allergens
-        #TODO log unexpected risk
+        else:
+            logger.warning("Unexpected risk level %r for location %r", risk, location)
+
+    if len(payload) == 2:  # only date/location got set, nothing matched
+        raise PollenFetchError(location)
+
     return payload
 
 
-def sync_allergen_data(location: str, db: SessionDep) -> PollenForecast:
-    todays_forecast = get_allergen_data(today, location, db)
+async def sync_allergen_data(location: str, db: SessionDep) -> PollenForecast:
+    today = get_today_NZT()
+    todays_forecast = pollen_repo.get_allergen_data(today, location, db)
     if todays_forecast is None:
-        allergen_data = extract_allergen_data(location)
+        allergen_data = await extract_allergen_data(location)
         payload = build_forecast_payload(allergen_data, location)
-        todays_forecast = create_allergen_data(payload, db)
+        todays_forecast = pollen_repo.create_allergen_data(payload, db)
     return todays_forecast
 
     
