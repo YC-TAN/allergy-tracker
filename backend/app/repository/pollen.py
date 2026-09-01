@@ -45,7 +45,7 @@ def create_allergen_data(allergen_data: dict, db: SessionDep) -> PollenForecast:
         index_elements=["date", "location"]
     ).returning(PollenForecast)
 
-    result = db.exec(statement).one_or_none()
+    result = db.exec(statement).scalars().one_or_none()
     db.commit()
 
     if result is None:
@@ -54,5 +54,7 @@ def create_allergen_data(allergen_data: dict, db: SessionDep) -> PollenForecast:
             allergen_data["location"],
             db
         )
+    else:
+        db.refresh(result)
 
     return result
