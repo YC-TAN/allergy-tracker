@@ -48,12 +48,6 @@ def read_entry(
 
     return entry
 
-# def not_future(v: date) -> date:
-#     if v > date.today():
-#         raise ValueError("Date cannot be in the future")
-#     return v
-
-# NotFutureDate = Annotated[date, AfterValidator(not_future)]
 
 @router.put("/{entry_date}", response_model=EntryResponse)
 def upsert_entry(entry_date: NotFutureDate, payload: EntryUpsert, session: SessionDep, user_id: CurrentUserDep,):
