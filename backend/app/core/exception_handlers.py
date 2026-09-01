@@ -91,5 +91,5 @@ def register_exception_handlers(app: FastAPI) -> None:
     """
     app.add_exception_handler(StarletteHTTPException, custom_http_exception_handler)
     app.add_exception_handler(RequestValidationError, validation_exception_handler)
-    app.add_exception_handler(Exception, unhandled_exception_handler)
     app.add_exception_handler(AppError, app_error_handler)
+    app.add_exception_handler(Exception, unhandled_exception_handler)
