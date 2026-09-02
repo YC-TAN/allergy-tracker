@@ -1,44 +1,58 @@
 /**
- * useEntry is a shared hook for loading and saving daily entry.
+ * Loads the daily allergy entry for a date and exposes a save mutation.
+ *
+ * If the app is online, it attempts to sync the entry first and falls back to
+ * local storage on sync failure. 
  * 
- * To be updated with api endpoints.
+ * Successful saves new entry/ updates entry will show a success notification; 
+ * failures show an error notification.
  */
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getLocalEntry, saveEntry } from "../utils/storage";
-import { upsertEntry} from "../services/entry";
+import { upsertEntry } from "../services/entry";
 import { getTodayDate } from "../utils/dates";
 import type { EntryInput, EntryLocal } from "../schemas";
+import { useNotificationActions } from "./useNotificationStore";
 
 export const useEntry = (date: string = getTodayDate()) => {
+  const queryClient = useQueryClient();
+  const { show } = useNotificationActions();
 
-    const queryClient = useQueryClient()
+  const result = useQuery({
+    queryKey: ["entry", date],
+    queryFn: () => getLocalEntry(date),
+  });
 
-    const result = useQuery({
-        queryKey: ['entry', date],
-        queryFn: () => getLocalEntry(date)
-    })
-
-    const saveMutation = useMutation({
-        mutationFn: async (input: EntryInput): Promise<EntryLocal> => {
-            if (navigator.onLine) {
-                try {
-                    await upsertEntry(input);
-                    return saveEntry({...input, _synced: true});                    
-                } catch (err) {
-                    console.error("Sync attempt failed:", err);
-                }
-            }
-            return saveEntry(input);
-        },
-        onSuccess: (saved) => {
-            queryClient.setQueryData(['entry', saved.date], saved)
+  const saveMutation = useMutation({
+    mutationFn: async (input: EntryInput): Promise<EntryLocal> => {
+      if (navigator.onLine) {
+        try {
+          await upsertEntry(input);
+          return saveEntry({ ...input, _synced: true });
+        } catch (err) {
+          console.error("Sync attempt failed:", err);
+          return saveEntry(input);
         }
-    })
-    
-    return {
-        entry: result.data,
-        isPending: result.isPending,
-        save: (input: EntryInput) => saveMutation.mutate(input)    
-    }
-}
+      }
+      return saveEntry(input);
+    },
+    onSuccess: (saved) => {
+      queryClient.setQueryData(["entry", saved.date], saved);
+
+      show(
+        saved._synced ? "Entry saved and synced" : "Saved on device",
+        "success"
+      );
+    },
+    onError: (err) => {
+      show(err.message, "error");
+    },
+  });
+
+  return {
+    entry: result.data,
+    isPending: result.isPending,
+    save: (input: EntryInput) => saveMutation.mutate(input),
+  };
+};
