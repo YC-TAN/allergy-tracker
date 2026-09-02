@@ -37,7 +37,7 @@ export const useEntry = (date: string = getTodayDate()) => {
       queryClient.setQueryData(["entry", saved.date], saved);
 
       show(
-        saved._synced ? "Entry saved and synced" : "Saved offline",
+        saved._synced ? "Entry saved and synced" : "Saved on device",
         "success"
       );
     },
