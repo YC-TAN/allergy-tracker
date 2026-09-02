@@ -1,7 +1,11 @@
 /**
- * useEntry is a shared hook for loading and saving daily entry.
+ * Loads the daily allergy entry for a date and exposes a save mutation.
  *
- * To be updated with api endpoints.
+ * If the app is online, it attempts to sync the entry first and falls back to
+ * local storage on sync failure. 
+ * 
+ * Successful saves new entry/ updates entry will show a success notification; 
+ * failures show an error notification.
  */
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
