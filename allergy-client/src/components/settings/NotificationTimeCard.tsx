@@ -15,7 +15,7 @@ const NotificationTimeCard = () => {
 
   const handleNewTime = () => {
     if (!settings || !draftTime) return;
-    update({ ...settings, notify_time: draftTime });
+    update({ ...settings, notify_time: draftTime }, `Reminder updated to ${draftTime}`);
     setDraftTime(undefined);
   };
   return (

@@ -23,7 +23,9 @@ const NotificationToggleCard = () => {
     update({
       ...settings,
       notify: !settings.notify,
-    });
+    }, 
+    settings.notify ? "Notifications disabled" : "Notifications enabled"
+  );
   };
 
   return (
