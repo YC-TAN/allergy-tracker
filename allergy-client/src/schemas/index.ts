@@ -80,10 +80,17 @@ export const EntryResponseSchema = EntrySchema.extend({
 });
 
 export type Entry = z.infer<typeof EntrySchema>;
-// To allow fields with default value to be optional in forms, can be omitted before parsing
+// z.input<> - to allow fields with default value to be optional in forms, can be omitted before parsing
 export type EntryInput = z.input<typeof EntryLocalSchema>;
 export type EntryLocal = z.infer<typeof EntryLocalSchema>;
 export type EntryResponse = z.infer<typeof EntryResponseSchema>;
+
+export const MigrateResponseSchema = z.object({
+  synced: z.array(EntryResponseSchema),
+  failed: z.array(z.string()), // dates as ISO strings, e.g. "2026-08-14"
+});
+
+export type MigrateResponse = z.infer<typeof MigrateResponseSchema>;
 
 // ---- Settings
 export const SettingsSchema = z.object({

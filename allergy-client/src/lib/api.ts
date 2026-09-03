@@ -1,4 +1,5 @@
-import { supabase } from "../lib/supabase"
+import { supabase } from "../lib/supabase";
+import { ApiError } from "./error";
 
 const API_URL = '/api';
 
@@ -17,7 +18,7 @@ const apiFetch = async <T>(path: string, options: RequestInit = {}): Promise<T> 
 
     if (!response.ok) {
     const body = await response.json().catch(() => null);
-    throw new Error(body?.detail ?? `Request failed: ${response.status}`);
+    throw new ApiError(response.status, body?.detail ?? 'Request failed');
   }
 
   return response.json();

@@ -20,8 +20,11 @@ import { RouterProvider } from "react-router-dom";
 import { theme } from "./theme/index";
 import { router } from "./router";
 import NotificationSnackbar from "./components/ui/NotificationSnackbar";
+import { useSyncOnReconnect } from "./hooks/useSyncOnReconnect";
 
 export default function App() {
+  useSyncOnReconnect();
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
