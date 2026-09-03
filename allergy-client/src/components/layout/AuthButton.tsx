@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import { LogoutOutlined, LoginOutlined } from "@mui/icons-material";
+import { CloudDoneOutlined, CloudOffOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -11,11 +11,11 @@ const AuthButton = () => {
 
   return user ? (
     <IconButton color="inherit" onClick={() => signOut()} aria-label="log out">
-      <LogoutOutlined />
+      <CloudDoneOutlined />     
     </IconButton>
   ) : (
     <IconButton color="inherit" onClick={() => navigate("/login")} aria-label="log in">
-      <LoginOutlined />
+      <CloudOffOutlined />
     </IconButton>
   );
 };
