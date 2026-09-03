@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../lib/supabase";
+import { useNotificationActions } from "./useNotificationStore";
 
 async function getSession() {
   const {
@@ -19,6 +20,7 @@ async function sendMagicLink(email: string) {
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
+  const { show } = useNotificationActions();
 
   const result = useQuery({
     queryKey: ["auth", "user"],
@@ -37,11 +39,17 @@ export const useAuth = () => {
 
   const signInMutation = useMutation({
     mutationFn: (email: string) => sendMagicLink(email),
+    onSuccess: () => show("Check your email for sign-in link", "success"),
+    onError: (error) => show(`Couldn't send login link: ${error.message}`, "error"),
   });
 
   const signOutMutation = useMutation({
     mutationFn: () => supabase.auth.signOut(),
-    onSuccess: () => queryClient.clear(), // wipes out any cached user data, preventing sensitive information from lingering in memory.
+    onSuccess: () => {
+      queryClient.clear();
+      show("Signed out - tap the cloud icon to sign in", "success");
+    },
+    onError: (error) => show(`Couldn't sign out: ${error.message}`, "error")
   });
 
   return {
