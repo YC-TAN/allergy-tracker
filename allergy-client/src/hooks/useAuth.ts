@@ -18,12 +18,14 @@ async function sendMagicLink(email: string) {
   if (error) throw error;
 }
 
+export const AUTH_USER_KEY = ["auth", "user"] as const;
+
 export const useAuth = () => {
   const queryClient = useQueryClient();
   const { show } = useNotificationActions();
 
   const result = useQuery({
-    queryKey: ["auth", "user"],
+    queryKey: AUTH_USER_KEY,
     queryFn: getSession,
     staleTime: Infinity, // Because Supabase auth state is actively managed and synchronized via the event listener, preventing unnecessary refetches via React Query's default background refetching mechanisms.
   });
