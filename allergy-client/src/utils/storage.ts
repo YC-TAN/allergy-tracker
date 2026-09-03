@@ -47,7 +47,7 @@ export const saveEntry = (entry: EntryInput, key: string = KEYS.entry): EntryLoc
   return parsed
 }
 
-export const listUnsyncedEntries = (key: string = KEYS.entry): EntryLocal[] => {
+export const getUnsyncedEntries = (key: string = KEYS.entry): EntryLocal[] => {
   const entries = loadAll(key);
   return Object.values(entries).filter((entry) => !entry._synced);
 }
