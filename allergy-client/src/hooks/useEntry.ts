@@ -15,6 +15,7 @@ import { getTodayDate } from "../utils/dates";
 import type { EntryInput, EntryLocal } from "../schemas";
 import { useNotificationActions } from "./useNotificationStore";
 import { ApiError } from "../lib/error";
+import { ZodError } from "zod";
 import { AUTH_USER_KEY } from "./useAuth";
 
 export const useEntry = (date: string = getTodayDate()) => {
@@ -50,11 +51,15 @@ export const useEntry = (date: string = getTodayDate()) => {
           await upsertEntry(input);
           return saveEntry({ ...input, _synced: true });
         } catch (err) {
+          if (err instanceof ZodError) {
+            console.error(err.issues)
+            throw err
+          };
           console.error("Sync attempt failed:", err);
-          return saveEntry(input);
+          return saveEntry({ ...input, _synced: false});
         }
       }
-      return saveEntry( {...input, _synced: false});
+      return saveEntry({ ...input, _synced: false });
     },
     onSuccess: (saved) => {
       queryClient.setQueryData(["entry", saved.date], saved);
@@ -67,7 +72,11 @@ export const useEntry = (date: string = getTodayDate()) => {
       }
     },
     onError: (err) => {
-      show(err.message, "error");
+      const message =
+        err instanceof ZodError
+          ? "Something went wrong with the entry data — please try again"
+          : err.message;
+      show(message, "error");
     },
   });
 
