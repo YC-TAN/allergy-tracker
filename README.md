@@ -8,14 +8,22 @@ A New Zealand focused Hay Fever Tracking App that lets you log daily hay fever s
 4. Daily reminder - work in progress
 5. Installable PWA - works offline, and all data stays on your device until you're ready to sync
 
-<p align="center">
-  <img src="./assets/screenshot_homepage_check_in.png" width="250">
-  <em>Daily check-in screen</em>
-  <img src="./assets/screenshot_log_form.png" width="250">
-  <em>Log Form screen</em>
-  <img src="./assets/screenshot_record.png" width="250">
-  <em>Daily Record screen</em>
-</p>
+<table>
+  <tr>
+    <td align="center">
+      <img src="./assets/screenshot_homepage_check_in.png" width="250"><br/>
+      <em>Daily check-in screen</em>
+    </td>
+    <td align="center">
+      <img src="./assets/screenshot_log_form.png" width="250"><br/>
+      <em>Log Form screen</em>
+    </td>
+    <td align="center">
+      <img src="./assets/screenshot_record.png" width="250"><br/>
+      <em>Daily Record screen</em>
+    </td>
+  </tr>
+</table>
 
 ### Problems to Solve
 The log data collected could be used to study the personalised pollen-symptom pattern, as well as effectiveness of potential treatments.
