@@ -27,7 +27,7 @@ A New Zealand focused Hay Fever Tracking App that lets you log daily hay fever s
   </tr>
 </table>
 
-### Problems to Solve
+### Potential Further Development
 The log data collected could be used to study the personalised pollen-symptom pattern, as well as effectiveness of potential treatments.
 
 ### Potential Treatments to Help Relieve Hay Fever Symptoms
