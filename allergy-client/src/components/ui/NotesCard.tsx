@@ -13,7 +13,7 @@ interface NotesProps {
 
 const NotesCard = ({ notes, setNotes }: NotesProps) => {
   return (
-    <Card className="mb-4">
+    <Card className="mb-6 w-full">
       <CardContent>
         <Typography
           variant="caption"

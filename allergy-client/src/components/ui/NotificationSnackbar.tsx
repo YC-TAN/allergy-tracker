@@ -19,14 +19,17 @@ const NotificationSnackbar = () => {
         open={notification !== null}
         autoHideDuration={5000}
         onClose={close}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         {notification ? (
           <Alert
             onClose={close}
             severity={notification.severity}
-            variant="filled"
-            sx={{ width: "100%" }}
+            sx={{
+              width: "100%",
+              border: 1,
+              borderColor: "notification.severity.main",
+            }}
           >
             {notification.message}
           </Alert>

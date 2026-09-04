@@ -33,8 +33,8 @@ const CheckIn = () => {
       {/* Headline */}
       <div className="text-center flex-1 mb-6">
         <Typography variant="h5" gutterBottom>
-          How's the pollen
-          <br />
+          How's the pollen{' '}
+          <br className="md:hidden"/>
           treating you today?
         </Typography>
       </div>

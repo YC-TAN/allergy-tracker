@@ -67,9 +67,9 @@ const EntryForm = ({ existing }: EntryFormProps) => {
   };
 
   return (
-    <div className="flex flex-col px-5 pb-6">
-      <div className="flex items-center gap-2 py-4">
-        <Typography variant="h5" className="w-100 text-center">
+    <>
+      <div className="flex-1 text-center mb-6">
+        <Typography variant="h5" gutterBottom>
           Log Symptoms
         </Typography>
       </div>
@@ -79,7 +79,7 @@ const EntryForm = ({ existing }: EntryFormProps) => {
 
       <Button
         variant="outlined"
-        color="secondary"
+        color="primary"
         className="mb-4"
         fullWidth
         onClick={handleNoSymptoms}
@@ -95,7 +95,7 @@ const EntryForm = ({ existing }: EntryFormProps) => {
       >
         Save Entry
       </Button>
-    </div>
+    </>
   );
 };
 

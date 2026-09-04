@@ -67,7 +67,7 @@ const SymptomCard = ({ symptoms, setSymptoms }: SymptomCardProps) => {
     );
   }
   return (
-    <Card className="mb-3">
+    <Card className="mb-4 w-full">
       <CardContent>
         <Typography
           variant="caption"
