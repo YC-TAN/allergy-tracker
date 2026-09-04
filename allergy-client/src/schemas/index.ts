@@ -79,7 +79,7 @@ export const EntryLocalSchema = EntrySchema.extend({
 
 export const EntryResponseSchema = EntrySchema.extend({
   id: z.uuid(),
-  user_id: z.uuid(),
+  // user_id: z.uuid(),
   created_at: z.string(),
 });
 
