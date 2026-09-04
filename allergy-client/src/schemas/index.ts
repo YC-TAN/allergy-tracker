@@ -59,7 +59,6 @@ export type Symptom = z.infer<typeof SymptomSchema>;
 const ENTRY_LOCAL_SCHEMA_VERSION = 1;
 
 export const EntrySchema = z.object({
-  // user_id: z.uuid().optional(),
   // use arrow function getTodayDate so that it is called fresh each time
   date: z.iso
     .date()
@@ -80,7 +79,7 @@ export const EntryLocalSchema = EntrySchema.extend({
 
 export const EntryResponseSchema = EntrySchema.extend({
   id: z.uuid(),
-  user_id: z.uuid(),
+  // user_id: z.uuid(),
   created_at: z.string(),
 });
 
@@ -108,28 +107,16 @@ export type Settings = z.infer<typeof SettingsSchema>;
 export type SettingsInput = z.input<typeof SettingsSchema>;
 
 // ---- Pollen schema and type
-export const PollenLevel = {
-  unknown: 0,
-  imminent: 1,
-  low: 2,
-  moderate: 3,
-  high: 4,
-} as const;
+export const PollenRiskLevelSchema = z.enum(['imminent', 'high', 'moderate', 'low'])
+export type PollenRiskLevel = z.infer<typeof PollenRiskLevelSchema>
 
-export const PollenLevelSchema = z.union([
-  z.literal(PollenLevel.unknown),
-  z.literal(PollenLevel.imminent),
-  z.literal(PollenLevel.low),
-  z.literal(PollenLevel.moderate),
-  z.literal(PollenLevel.high),
-]);
-
-export type PollenLevelType = z.infer<typeof PollenLevelSchema>;
-
-export const PollenDataSchema = z.object({
-  overallPollenLevel: PollenLevelSchema,
+export const PollenForecastSchema = z.object({
+  date: z.string(),       // ISO date 'YYYY-MM-DD'
   location: z.string(),
-  date: z.iso.date(),
-});
+  imminent: z.array(z.string()),
+  low: z.array(z.string()),
+  moderate: z.array(z.string()),
+  high: z.array(z.string()),
+})
 
-export type PollenData = z.infer<typeof PollenDataSchema>;
+export type PollenForecast = z.infer<typeof PollenForecastSchema>

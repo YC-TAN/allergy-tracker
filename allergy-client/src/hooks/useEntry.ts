@@ -39,6 +39,7 @@ export const useEntry = (date: string = getTodayDate()) => {
     retry: (failureCount, err) => {
       // 404/400 won't fix itself, no need retry
       if (err instanceof ApiError && err.statusCode < 500) return false;
+      if (err instanceof ZodError) return false;
       return failureCount < 2; // allow up to 2 retries for 5xx failures
     },
     staleTime: 5 * 60 * 1000, // 5 minuteslocal-first, so don't hammer the network re-checking
@@ -83,6 +84,8 @@ export const useEntry = (date: string = getTodayDate()) => {
   return {
     entry: result.data,
     isPending: result.isPending,
+    isError: result.isError,
+    error: result.error,
     save: (input: EntryInput) => saveMutation.mutate(input),
   };
 };

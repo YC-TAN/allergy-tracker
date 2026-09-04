@@ -32,9 +32,9 @@ export const theme = createTheme({
     warning: {
       main: '#f59e0b',
     },
-    success: {
-      main: green,
-    },
+    // success: {
+    //   main: '#f0f7f0',
+    // },
     background: {
       default: '#f8faf8', // surface2
       paper:   '#ffffff',
@@ -72,6 +72,10 @@ export const theme = createTheme({
       fontSize:   '0.875rem',
       lineHeight: 1.55,
       color:      '#4a6741',
+    },
+    subtitle2: {
+      fontSize:   '1rem',
+      color: '#4a6741'
     },
     caption: {
       fontSize: '0.75rem',

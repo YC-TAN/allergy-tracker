@@ -10,9 +10,9 @@ router = APIRouter(
 )
 
 @router.get("/{location}")
-def get_pollen_forecast(location: str, db: SessionDep):
+async def get_pollen_forecast(location: str, db: SessionDep):
     """
     Call sync pollen data to get pollen data stored in db
     if no data, sync will call external API.
     """
-    return sync_allergen_data(location, db)
+    return await sync_allergen_data(location, db)
