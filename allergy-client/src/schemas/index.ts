@@ -59,7 +59,6 @@ export type Symptom = z.infer<typeof SymptomSchema>;
 const ENTRY_LOCAL_SCHEMA_VERSION = 1;
 
 export const EntrySchema = z.object({
-  // user_id: z.uuid().optional(),
   // use arrow function getTodayDate so that it is called fresh each time
   date: z.iso
     .date()
