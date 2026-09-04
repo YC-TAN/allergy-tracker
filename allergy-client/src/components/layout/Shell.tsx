@@ -8,17 +8,17 @@
 
 import { Outlet, Link } from "react-router-dom";
 import {
-    Box,
-    AppBar,
-    Toolbar,
-    Typography,
-    BottomNavigation,
-    BottomNavigationAction,
- } from "@mui/material";
+  Box,
+  AppBar,
+  Toolbar,
+  Typography,
+  BottomNavigation,
+  BottomNavigationAction,
+} from "@mui/material";
 import {
-    HomeOutlined,
-    BarChartOutlined,
-    SettingsOutlined,
+  HomeOutlined,
+  BarChartOutlined,
+  SettingsOutlined,
 } from "@mui/icons-material";
 
 import AuthButton from "./AuthButton";
@@ -27,24 +27,46 @@ import SyncIcon from "./SyncIcon";
 const Shell = () => {
   return (
     <Box
-      className="flex flex-col mx-auto h-dvh max-w-97.5" // 97.5 = 390px
-      sx={{ bgcolor: 'background.default' }}
+      className="flex flex-col mx-auto h-dvh w-full lg:max-w-180" // 97.5 = 390px
+      sx={{ bgcolor: "background.default" }}
     >
       <AppBar position="static">
         <Toolbar className="flex justify-between">
-          <Typography variant="h6">Allergy Tracker</Typography>
+          <Typography
+            variant="h6"
+            component={Link}
+            to="/"
+            className="no-underline text-inherit cursor-pointer"
+          >
+            Allergy Tracker
+          </Typography>
           <SyncIcon />
         </Toolbar>
       </AppBar>
-      
+
       <main className="flex-1">
         <Outlet />
       </main>
-      
+
       <BottomNavigation>
-        <BottomNavigationAction label="Home" icon={<HomeOutlined />} component={Link} to="/" />
-        <BottomNavigationAction label="Trends" icon={<BarChartOutlined />} component={Link} to="/trends" />
-        <BottomNavigationAction label="Settings" icon={<SettingsOutlined />} component={Link} to="/settings" />
+        <BottomNavigationAction
+          label="Home"
+          icon={<HomeOutlined />}
+          component={Link}
+          to="/"
+        />
+        <BottomNavigationAction
+          label="Trends"
+          icon={<BarChartOutlined />}
+          component={Link}
+          to="/trends"
+        />
+        <BottomNavigationAction
+          label="Settings"
+          icon={<SettingsOutlined />}
+          component={Link}
+          to="/settings"
+        />
         <AuthButton />
       </BottomNavigation>
     </Box>
