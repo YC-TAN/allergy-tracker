@@ -86,7 +86,7 @@ interface Props {
 
 const SeverityCard = ({ severity, setSeverity }: Props) => {
   return (
-    <Card className="mb-3">
+    <Card className="mb-4 w-full">
       <CardContent>
         <Typography
           variant="caption"
