@@ -11,4 +11,4 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Call pollen forecast endpoint
-              run: curl -sS -f --max-time 90 -X GET https://allergy-tracker-q0vb.onrender.com/api/pollen_forecast/christchurch_central 
+              run: curl -sS -f --max-time 90 -X GET https://allergy-tracker-q0vb.onrender.com/api/pollen_forecast/Christchurch%20Central
