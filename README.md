@@ -10,8 +10,11 @@ A New Zealand focused Hay Fever Tracking App that lets you log daily hay fever s
 
 <p align="center">
   <img src="./assets/screenshot_homepage_check_in.png" width="250">
+  <em>Daily check-in screen</em>
   <img src="./assets/screenshot_log_form.png" width="250">
+  <em>Log Form screen</em>
   <img src="./assets/screenshot_record.png" width="250">
+  <em>Daily Record screen</em>
 </p>
 
 ### Problems to Solve
