@@ -31,6 +31,8 @@ export const useEntry = (date: string = getTodayDate()) => {
       const local = getLocalEntry(date);
       if (local) return local;
 
+      if (!isSignedIn()) return null;
+
       // Nothing local — try the server
       const remote = await getEntry(date); // throws ApiError on real failures, returns null on 404
       if (remote) return saveEntry({ ...remote, _synced: true }); // hydrate localStorage
