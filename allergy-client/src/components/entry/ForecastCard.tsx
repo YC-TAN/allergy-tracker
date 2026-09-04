@@ -1,6 +1,6 @@
 import { Card, CardContent, Typography } from "@mui/material";
 
-const TomorrowCard = () => {
+const ForecastCard = () => {
 
   const forecast = {
     pollenRisk: "Low",
@@ -27,4 +27,4 @@ const TomorrowCard = () => {
   );
 };
 
-export default TomorrowCard;
+export default ForecastCard;
