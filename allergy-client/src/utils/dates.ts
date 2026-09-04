@@ -1,8 +1,8 @@
+/** 'en-CA' locale formats as YYYY-MM-DD
+ * using NZ time regardless of device timezone. 
+ */
 const formatLocalDate = (d: Date): string => {
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+  return d.toLocaleDateString('en-CA', { timeZone: 'Pacific/Auckland' }); 
 };
 
 export const getTodayDate = (): string => {

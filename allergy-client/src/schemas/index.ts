@@ -61,7 +61,12 @@ const ENTRY_LOCAL_SCHEMA_VERSION = 1;
 export const EntrySchema = z.object({
   // user_id: z.uuid().optional(),
   // use arrow function getTodayDate so that it is called fresh each time
-  date: z.iso.date().default(() => getTodayDate()), //TODO add constraint: unique - once a day, cannot record for older than 3 days (in case of incorrect memory), cannot record future date
+  date: z.iso
+    .date()
+    .default(() => getTodayDate())
+    .refine((val) => val <= getTodayDate(), {
+      message: "Entry date cannot be in the future",
+    }), //TODO add constraint: cannot record for older than 3 days (in case of incorrect memory)
   severity: SeveritySchema,
   symptoms: z.array(SymptomSchema).default([]),
   notes: z.string().default(""),
@@ -75,7 +80,7 @@ export const EntryLocalSchema = EntrySchema.extend({
 
 export const EntryResponseSchema = EntrySchema.extend({
   id: z.uuid(),
-  // user_id: z.uuid(),
+  user_id: z.uuid(),
   created_at: z.string(),
 });
 
