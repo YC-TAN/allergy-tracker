@@ -60,7 +60,7 @@ export const useAuth = () => {
     mutationFn: () => supabase.auth.signOut(),
     onSuccess: () => {
       queryClient.clear();
-      show("Signed out - tap the cloud icon to sign in", "success");
+      show("Signed out - sign in to sync your entries", "success");
     },
     onError: (error) => show(`Couldn't sign out: ${error.message}`, "error")
   });
@@ -68,6 +68,7 @@ export const useAuth = () => {
   return {
     user: result.data,
     userIsPending: result.isPending,
+    isSignedIn: result.data != null,
     signIn: (email: string) => signInMutation.mutate(email),
     isSigningIn: signInMutation.isPending,
     signInError: signInMutation.error,
