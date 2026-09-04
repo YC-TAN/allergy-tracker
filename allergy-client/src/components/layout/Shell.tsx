@@ -22,6 +22,7 @@ import {
 } from "@mui/icons-material";
 
 import AuthButton from "./AuthButton";
+import SyncIcon from "./SyncIcon";
 
 const Shell = () => {
   return (
@@ -32,7 +33,7 @@ const Shell = () => {
       <AppBar position="static">
         <Toolbar className="flex justify-between">
           <Typography variant="h6">Allergy Tracker</Typography>
-          <AuthButton />
+          <SyncIcon />
         </Toolbar>
       </AppBar>
       
@@ -44,6 +45,7 @@ const Shell = () => {
         <BottomNavigationAction label="Home" icon={<HomeOutlined />} component={Link} to="/" />
         <BottomNavigationAction label="Trends" icon={<BarChartOutlined />} component={Link} to="/trends" />
         <BottomNavigationAction label="Settings" icon={<SettingsOutlined />} component={Link} to="/settings" />
+        <AuthButton />
       </BottomNavigation>
     </Box>
   );
