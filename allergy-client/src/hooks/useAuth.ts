@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../lib/supabase";
 import { useNotificationActions } from "./useNotificationStore";
+import { useSyncEntries } from "./useSyncEntries";
 
 async function getSession() {
   const {
@@ -23,6 +24,12 @@ export const AUTH_USER_KEY = ["auth", "user"] as const;
 export const useAuth = () => {
   const queryClient = useQueryClient();
   const { show } = useNotificationActions();
+  const { sync } = useSyncEntries();
+
+  const syncRef = useRef(sync);
+  useEffect(() => {
+    syncRef.current = sync;
+  }, [sync]);
 
   const result = useQuery({
     queryKey: AUTH_USER_KEY,
@@ -33,8 +40,12 @@ export const useAuth = () => {
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
       queryClient.setQueryData(["auth", "user"], session?.user ?? null);
+
+      if (event === "SIGNED_IN") {
+        syncRef.current();
+      }
     });
     return () => subscription.unsubscribe();
   }, [queryClient]);

@@ -20,9 +20,9 @@ registerSW({
   },
 })
 
-import { seedMockEntries } from './utils/seedData'
+import { resetMockEntries } from './utils/seedData'
 if (import.meta.env.DEV) {
-  seedMockEntries()
+  resetMockEntries()
 }
 
 const queryClient = new QueryClient();
