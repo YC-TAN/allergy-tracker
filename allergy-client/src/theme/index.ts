@@ -16,6 +16,7 @@ const lightGreen = '#4caf50'; // green-500
 
 export const theme = createTheme({
   palette: {
+    mode: 'light',
     primary: {
       light:        lightGreen, 
       main:         green, 
