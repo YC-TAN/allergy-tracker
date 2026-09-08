@@ -19,10 +19,13 @@ const HomePage = () => {
     return <div>Couldn't load today's entry — check your connection</div>;
 }
   return (
-    <div className="flex flex-col items-center px-5 pt-8 pb-6">
+    // <div className="flex flex-col items-center px-5 pt-8 pb-6">
+      <>
       {entry ? (<DailyLog />) : (<CheckIn />)}
       <ForecastCard />
-    </div>
+      </>
+      
+    // </div>
   )
 }
 

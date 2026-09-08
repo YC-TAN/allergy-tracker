@@ -14,9 +14,9 @@ const LogPage = () => {
   if (isPending) return <div>loading...</div>;
 
   return (
-  <div className="flex flex-col items-center px-5 pt-8 pb-6">
+  <>
     <EntryForm existing={entry} />
-  </div>
+  </>
   )
 };
 
