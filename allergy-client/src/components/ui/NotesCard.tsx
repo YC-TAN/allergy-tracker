@@ -3,8 +3,9 @@
  * 
  * It captures extra details for today's log and updates parent form state.
  */
-import { Box, Card, CardContent, Typography, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import type React from "react";
+import BaseCard from "./BaseCard";
 
 interface NotesProps {
   notes: string;
@@ -13,8 +14,8 @@ interface NotesProps {
 
 const NotesCard = ({ notes, setNotes }: NotesProps) => {
   return (
-    <Card className="mb-6 w-full">
-      <CardContent>
+    <BaseCard cardHeader="Notes" optional={true}>
+      {/* <CardContent>
         <Typography
           variant="caption"
           className="block mb-2"
@@ -36,7 +37,7 @@ const NotesCard = ({ notes, setNotes }: NotesProps) => {
           >
             (optional)
           </Box>
-        </Typography>
+        </Typography> */}
 
         <TextField
           multiline
@@ -49,8 +50,8 @@ const NotesCard = ({ notes, setNotes }: NotesProps) => {
             input: { inputProps: { "aria-label": "Additional notes" } },
           }}
         />
-      </CardContent>
-    </Card>
+      {/* </CardContent> */}
+    </BaseCard>
   );
 };
 

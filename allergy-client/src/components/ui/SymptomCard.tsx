@@ -7,6 +7,7 @@ import { Box, Card, CardContent, Chip, Typography } from "@mui/material";
 
 import { SymptomSchema, type Symptom } from "../../schemas";
 import type React from "react";
+import BaseCard from "./BaseCard";
 
 const symptomOptions = SymptomSchema.options;
 
@@ -67,8 +68,8 @@ const SymptomCard = ({ symptoms, setSymptoms }: SymptomCardProps) => {
     );
   }
   return (
-    <Card className="mb-4 w-full">
-      <CardContent>
+    <BaseCard cardHeader="Symptoms">
+      {/* <CardContent>
         <Typography
           variant="caption"
           sx={{
@@ -89,7 +90,7 @@ const SymptomCard = ({ symptoms, setSymptoms }: SymptomCardProps) => {
               color: "#7a9e77",
             }}
           ></Box>
-        </Typography>
+        </Typography> */}
 
         <div className="flex flex-wrap gap-2">
           {symptomOptions.map((sym) => (
@@ -101,8 +102,8 @@ const SymptomCard = ({ symptoms, setSymptoms }: SymptomCardProps) => {
             />
           ))}
         </div>
-      </CardContent>
-    </Card>
+      {/* </CardContent> */}
+    </BaseCard>
   );
 };
 

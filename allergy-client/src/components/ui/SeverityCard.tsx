@@ -7,6 +7,7 @@ import { Box, ButtonBase, Card, CardContent, Typography } from "@mui/material";
 
 import { SeverityRating, type SeverityRatingType } from "../../schemas";
 import { SeverityLabel } from "../../schemas/labels";
+import BaseCard from "./BaseCard";
 
 const SEVERITY_OPTIONS: {
   value: SeverityRatingType;
@@ -15,22 +16,28 @@ const SEVERITY_OPTIONS: {
   activeBg: string;
 }[] = [
   {
+    value: SeverityRating.NoSymptom,
+    emoji: "😊",
+    activeColor: "#9ccc65", //"#2e7d32",
+    activeBg: '#f1f8e9', //"#f0fdf4",
+  },
+  {
     value: SeverityRating.Mild,
     emoji: "😐",
-    activeColor: "#16a34a",
-    activeBg: "#f0fdf4",
+    activeColor: "#ffca28", //"#16a34a",
+    activeBg: "#fff8e1", //"#f0fdf4",
   },
   {
     value: SeverityRating.Moderate,
     emoji: "😣",
-    activeColor: "#d97706",
-    activeBg: "#fffbeb",
+    activeColor: "#ffa726", //"#d97706",
+    activeBg: "#fff3e0" //"#fffbeb",
   },
   {
     value: SeverityRating.Severe,
     emoji: "🤧",
-    activeColor: "#dc2626",
-    activeBg: "#fff5f5",
+    activeColor: "#ef5350", // "#dc2626",
+    activeBg: "#ffebee" //"#fff5f5",
   },
 ];
 
@@ -68,13 +75,17 @@ const SeverityButton = ({
       <Box component="span" className="block mb-1" sx={{ fontSize: 22 }}>
         {emoji}
       </Box>
-      <Box
+      <Typography variant="body2">
+        {SeverityLabel[value]}
+      </Typography>
+      {/* <Box
         component="span"
         className="font-medium"
-        sx={{ fontSize: 11, color: isActive ? activeColor : "#4a6741" }}
+        sx={{ fontSize: '0.75rem', color: "#4a6741", fontWeight: 500 }}
+        // sx={{ fontSize: 11, color: isActive ? activeColor : "#4a6741" }}
       >
         {SeverityLabel[value]}
-      </Box>
+      </Box> */}
     </ButtonBase>
   );
 };
@@ -86,22 +97,17 @@ interface Props {
 
 const SeverityCard = ({ severity, setSeverity }: Props) => {
   return (
-    <Card className="mb-4 w-full">
-      <CardContent>
+    <BaseCard cardHeader={"Severity Level"} >
+      {/* <CardContent>
         <Typography
           variant="caption"
           className="block mb-2.5"
-          sx={{
-            fontWeight: 600,
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-          }}
         >
           Severity Level
-        </Typography>
+        </Typography> */}
 
         <div
-          className="grid grid-cols-3 gap-2"
+          className="grid grid-cols-4 gap-2"
           role="group"
           aria-label="Severity Level"
         >
@@ -117,8 +123,8 @@ const SeverityCard = ({ severity, setSeverity }: Props) => {
             />
           ))}
         </div>
-      </CardContent>
-    </Card>
+      {/* </CardContent> */}
+    </BaseCard>
   );
 };
 
