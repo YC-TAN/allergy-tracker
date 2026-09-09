@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSyncEntries } from "./useSyncEntries";
 import { useNotificationActions } from "./useNotificationStore";
-import { AUTH_USER_KEY } from "./useAuth";
+import { checkIsSignedIn } from "../utils/auth";
 
 /**
  * Mount ONCE at the app root. Listens for the browser regaining
@@ -13,7 +13,7 @@ export const useSyncOnReconnect = () => {
   const { show } = useNotificationActions();
   const { sync, isSyncing } = useSyncEntries();
 
-  const isSignedIn = () => queryClient.getQueryData(AUTH_USER_KEY) != null;
+  const isSignedIn = () => checkIsSignedIn(queryClient);
 
   useEffect(() => {
     const handleOnline = () => {

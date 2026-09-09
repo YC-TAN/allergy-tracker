@@ -2,7 +2,7 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { migrateEntries } from "../services/entry";
 import { useNotificationActions } from "./useNotificationStore";
 import { getUnsyncedEntries, saveEntry } from "../utils/storage";
-import { AUTH_USER_KEY } from "./useAuth";
+import { checkIsSignedIn } from "../utils/auth";
 import { ZodError } from "zod";
 
 type SyncOutcome =
@@ -16,7 +16,7 @@ export const useSyncEntries = () => {
   const queryClient = useQueryClient();
   const { show } = useNotificationActions();
 
-  const isSignedIn = () => queryClient.getQueryData(AUTH_USER_KEY) != null;
+  const isSignedIn = () => checkIsSignedIn(queryClient);
 
   const syncMutation = useMutation({
     mutationFn: async (): Promise<SyncOutcome> => {

@@ -16,13 +16,13 @@ import type { EntryInput, EntryLocal } from "../schemas";
 import { useNotificationActions } from "./useNotificationStore";
 import { ApiError } from "../lib/error";
 import { ZodError } from "zod";
-import { AUTH_USER_KEY } from "./useAuth";
+import { checkIsSignedIn } from "../utils/auth";
 
 export const useEntry = (date: string = getTodayDate()) => {
   const queryClient = useQueryClient();
   const { show } = useNotificationActions();
 
-  const isSignedIn = () => queryClient.getQueryData(AUTH_USER_KEY) != null;
+  const isSignedIn = () => checkIsSignedIn(queryClient);
 
   const result = useQuery({
     queryKey: ["entry", date],
