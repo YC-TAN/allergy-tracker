@@ -4,6 +4,11 @@ import { supabase } from "../lib/supabase";
 import { useNotificationActions } from "./useNotificationStore";
 import { useSyncEntries } from "./useSyncEntries";
 
+/**
+ * Reads the current Supabase session and returns the authenticated user.
+ *
+ * @returns The current user object, or null if no active session exists.
+ */
 async function getSession() {
   const {
     data: { session },
@@ -11,16 +16,37 @@ async function getSession() {
   return session?.user ?? null;
 }
 
+/**
+ * Sends a Supabase magic-link sign-in request for the provided email.
+ *
+ * @param email The email address that should receive the sign-in link.
+ * @throws {Error} When Supabase rejects the requested OTP delivery.
+ */
 async function sendMagicLink(email: string) {
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: window.location.origin }, // to send the user back after they click the link in their email inbox.
+    options: { 
+      // to send the user back after they click the link in their email inbox.
+      emailRedirectTo: window.location.origin 
+    }, 
   });
   if (error) throw error;
 }
 
+/**
+ * React Query key used to cache the currently authenticated user.
+ */
 export const AUTH_USER_KEY = ["auth", "user"] as const;
 
+/**
+ * Provides the App's authentication state and mutation helpers.
+ *
+ * The hook keeps the user query synchronized with Supabase auth events and
+ * triggers an entry sync after a successful sign-in event.
+ *
+ * @returns An auth object containing the signed-in user,
+ *         loading flags, sign-in/sign-out actions, and notification state.
+ */
 export const useAuth = () => {
   const queryClient = useQueryClient();
   const { show } = useNotificationActions();
@@ -34,7 +60,9 @@ export const useAuth = () => {
   const result = useQuery({
     queryKey: AUTH_USER_KEY,
     queryFn: getSession,
-    staleTime: Infinity, // Because Supabase auth state is actively managed and synchronized via the event listener, preventing unnecessary refetches via React Query's default background refetching mechanisms.
+    staleTime: Infinity, 
+    // Because Supabase auth state is actively managed and synchronized via the event listener, 
+    // preventing unnecessary refetches via React Query's default background refetching mechanisms.
   });
 
   useEffect(() => {
@@ -74,5 +102,6 @@ export const useAuth = () => {
     signInError: signInMutation.error,
     signInSent: signInMutation.isSuccess,
     signOut: () => signOutMutation.mutate(),
+    isSigningOut: signOutMutation.isPending
   };
 };
