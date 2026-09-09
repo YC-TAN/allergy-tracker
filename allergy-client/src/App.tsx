@@ -17,7 +17,7 @@
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { RouterProvider } from "react-router-dom";
 
-import { theme } from "./theme/index";
+import theme from "./theme/index";
 import { router } from "./router";
 import NotificationSnackbar from "./components/ui/NotificationSnackbar";
 import { useSyncOnReconnect } from "./hooks/useSyncOnReconnect";
