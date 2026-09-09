@@ -170,6 +170,15 @@ const theme = createTheme({
       fontSize: "0.9375rem",
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 640,   // Tailwind's default 'sm'
+      md: 768,   // Tailwind's default 'md'
+      lg: 1024,  // Tailwind's default 'lg'
+      xl: 1280,  // Tailwind's default 'xl'
+    },
+  },
   components: {
     MuiButton: {
       styleOverrides: {
