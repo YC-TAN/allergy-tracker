@@ -7,7 +7,7 @@ import { Chip, Typography } from "@mui/material";
 
 import { SymptomSchema, type Symptom } from "../../schemas";
 import type React from "react";
-import BaseCard from "./BaseCard";
+import BaseCard from "../ui/BaseCard";
 
 const symptomOptions = SymptomSchema.options;
 

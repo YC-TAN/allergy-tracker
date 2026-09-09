@@ -7,7 +7,7 @@ import { Box, ButtonBase, Typography } from "@mui/material";
 
 import { SeverityRating, type SeverityRatingType } from "../../schemas";
 import { SeverityLabel } from "../../schemas/labels";
-import BaseCard from "./BaseCard";
+import BaseCard from "../ui/BaseCard";
 
 const SEVERITY_OPTIONS: {
   value: SeverityRatingType;
@@ -72,9 +72,9 @@ const SeverityButton = ({
         background: isActive ? activeBg : "#fff",
         transition: "all 0.15s",
         fontFamily: "inherit",
-        "&:hover": {
-          backgroundColor: !isActive && activeBg,
-        },
+        // "&:hover": {
+        //   backgroundColor: !isActive && activeBg,
+        // },
       }}
     >
       <Box component="span" className="block mb-1" sx={{ fontSize: 24 }}>
