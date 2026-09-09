@@ -1,9 +1,9 @@
 /**
  * SeverityCard shows three severity selections used in the symptom entry form.
- * 
+ *
  * It lets users choose the allergy severity level for today's log and updates parent form state.
  */
-import { Box, ButtonBase, Card, CardContent, Typography } from "@mui/material";
+import { Box, ButtonBase, Typography } from "@mui/material";
 
 import { SeverityRating, type SeverityRatingType } from "../../schemas";
 import { SeverityLabel } from "../../schemas/labels";
@@ -19,7 +19,7 @@ const SEVERITY_OPTIONS: {
     value: SeverityRating.NoSymptom,
     emoji: "😊",
     activeColor: "#9ccc65", //"#2e7d32",
-    activeBg: '#f1f8e9', //"#f0fdf4",
+    activeBg: "#f1f8e9", //"#f0fdf4",
   },
   {
     value: SeverityRating.Mild,
@@ -31,13 +31,13 @@ const SEVERITY_OPTIONS: {
     value: SeverityRating.Moderate,
     emoji: "😣",
     activeColor: "#ffa726", //"#d97706",
-    activeBg: "#fff3e0" //"#fffbeb",
+    activeBg: "#fff3e0", //"#fffbeb",
   },
   {
     value: SeverityRating.Severe,
     emoji: "🤧",
     activeColor: "#ef5350", // "#dc2626",
-    activeBg: "#ffebee" //"#fff5f5",
+    activeBg: "#ffebee", //"#fff5f5",
   },
 ];
 
@@ -65,27 +65,30 @@ const SeverityButton = ({
       onClick={onClick}
       className="flex flex-col items-center text-center w-full py-3 px-1"
       sx={{
-        border: `1.5px solid ${isActive ? activeColor : "#e2ece2"}`,
+        border: 1.5,
+        borderStyle: "solid",
+        borderColor: isActive ? activeColor : "divider",
         borderRadius: "12px",
         background: isActive ? activeBg : "#fff",
         transition: "all 0.15s",
         fontFamily: "inherit",
+        "&:hover": {
+          backgroundColor: !isActive && activeBg,
+        },
       }}
     >
-      <Box component="span" className="block mb-1" sx={{ fontSize: 22 }}>
+      <Box component="span" className="block mb-1" sx={{ fontSize: 24 }}>
         {emoji}
       </Box>
-      <Typography variant="body2">
-        {SeverityLabel[value]}
-      </Typography>
-      {/* <Box
-        component="span"
-        className="font-medium"
-        sx={{ fontSize: '0.75rem', color: "#4a6741", fontWeight: 500 }}
-        // sx={{ fontSize: 11, color: isActive ? activeColor : "#4a6741" }}
+      <Typography
+        variant="body2"
+        // color={isActive? activeColor: "textSecondary"}
+        sx={{ fontWeight: isActive ? 600 : 400,
+          color: isActive? activeColor: "textSecondary"
+         }}
       >
         {SeverityLabel[value]}
-      </Box> */}
+      </Typography>
     </ButtonBase>
   );
 };
@@ -97,33 +100,24 @@ interface Props {
 
 const SeverityCard = ({ severity, setSeverity }: Props) => {
   return (
-    <BaseCard cardHeader={"Severity Level"} >
-      {/* <CardContent>
-        <Typography
-          variant="caption"
-          className="block mb-2.5"
-        >
-          Severity Level
-        </Typography> */}
-
-        <div
-          className="grid grid-cols-4 gap-2"
-          role="group"
-          aria-label="Severity Level"
-        >
-          {SEVERITY_OPTIONS.map(({ value, emoji, activeColor, activeBg }) => (
-            <SeverityButton
-              key={value}
-              value={value}
-              emoji={emoji}
-              activeColor={activeColor}
-              activeBg={activeBg}
-              isActive={severity === value}
-              onClick={() => setSeverity(value)}
-            />
-          ))}
-        </div>
-      {/* </CardContent> */}
+    <BaseCard cardHeader={"Severity Level"}>
+      <div
+        className="grid grid-cols-4 gap-2"
+        role="group"
+        aria-label="Severity Level"
+      >
+        {SEVERITY_OPTIONS.map(({ value, emoji, activeColor, activeBg }) => (
+          <SeverityButton
+            key={value}
+            value={value}
+            emoji={emoji}
+            activeColor={activeColor}
+            activeBg={activeBg}
+            isActive={severity === value}
+            onClick={() => setSeverity(value)}
+          />
+        ))}
+      </div>
     </BaseCard>
   );
 };

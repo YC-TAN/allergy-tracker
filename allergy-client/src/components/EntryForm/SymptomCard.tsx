@@ -3,7 +3,7 @@
  * 
  * It captures allergy symptoms occurred today.
  */
-import { Box, Card, CardContent, Chip, Typography } from "@mui/material";
+import { Chip, Typography } from "@mui/material";
 
 import { SymptomSchema, type Symptom } from "../../schemas";
 import type React from "react";
@@ -31,7 +31,7 @@ function SymptomChip({ symptom, selected, onToggle }: SymptomChipProps) {
 
   return (
     <Chip
-      label={<span className="flex items-center gap-1">{label}</span>}
+      label={<Typography variant="body2" component="span" className="flex items-center gap-1">{label}</Typography>}
       onClick={() => onToggle(symptom)}
       variant={selected ? "filled" : "outlined"}
       color={selected ? "primary" : "default"}
@@ -39,9 +39,9 @@ function SymptomChip({ symptom, selected, onToggle }: SymptomChipProps) {
       sx={{
         borderWidth: "1.5px",
         borderRadius: "20px",
-        fontWeight: selected ? 500 : 400,
+        fontWeight: selected ? 600 : 400,
         backgroundColor: selected ? "primary.light" : "transparent",
-        color: selected ? "primary.dark" : "text.secondary",
+        color: selected ? "text.primary" : "text.secondary",
         borderColor: selected ? "primary.main" : "divider",
         "&:hover": {
           backgroundColor: selected ? "#c8e6c9" : "#f0f7f0",
@@ -69,29 +69,6 @@ const SymptomCard = ({ symptoms, setSymptoms }: SymptomCardProps) => {
   }
   return (
     <BaseCard cardHeader="Symptoms">
-      {/* <CardContent>
-        <Typography
-          variant="caption"
-          sx={{
-            fontWeight: 600,
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-            display: "block",
-            mb: 1.25,
-          }}
-        >
-          Symptoms{" "}
-          <Box
-            component="span"
-            sx={{
-              fontWeight: 400,
-              textTransform: "none",
-              letterSpacing: 0,
-              color: "#7a9e77",
-            }}
-          ></Box>
-        </Typography> */}
-
         <div className="flex flex-wrap gap-2">
           {symptomOptions.map((sym) => (
             <SymptomChip
@@ -102,7 +79,6 @@ const SymptomCard = ({ symptoms, setSymptoms }: SymptomCardProps) => {
             />
           ))}
         </div>
-      {/* </CardContent> */}
     </BaseCard>
   );
 };

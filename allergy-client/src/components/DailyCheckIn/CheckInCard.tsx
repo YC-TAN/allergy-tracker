@@ -10,7 +10,7 @@ import { useEntry } from "../../hooks/useEntry";
 import { SeverityRating, type EntryInput } from "../../schemas";
 import { useSettings } from "../../hooks/useSettings";
 
-const CheckIn = () => {
+const CheckInCard = () => {
 
   const {save} = useEntry();
   const { settings, settingsIsPending } = useSettings();
@@ -75,4 +75,4 @@ const CheckIn = () => {
   );
 };
 
-export default CheckIn;
+export default CheckInCard;

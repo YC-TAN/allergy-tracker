@@ -4,7 +4,7 @@
  * It is used by the /log and /log/:date routes for creating or editing a log.
  */
 import { useParams } from "react-router-dom";
-import EntryForm from "../components/entry/EntryForm";
+import EntryForm from "../components/EntryForm";
 import { useEntry } from "../hooks/useEntry";
 
 const LogPage = () => {

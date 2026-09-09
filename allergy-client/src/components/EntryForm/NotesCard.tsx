@@ -5,7 +5,7 @@
  */
 import { TextField } from "@mui/material";
 import type React from "react";
-import BaseCard from "./BaseCard";
+import BaseCard from "../ui/BaseCard";
 
 interface NotesProps {
   notes: string;
@@ -15,30 +15,6 @@ interface NotesProps {
 const NotesCard = ({ notes, setNotes }: NotesProps) => {
   return (
     <BaseCard cardHeader="Notes" optional={true}>
-      {/* <CardContent>
-        <Typography
-          variant="caption"
-          className="block mb-2"
-          sx={{
-            fontWeight: 600,
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-          }}
-        >
-          Notes{" "}
-          <Box
-          component="span"
-          sx={{
-              fontWeight: 400,
-              textTransform: "none",
-              letterSpacing: 0,
-              color: "#7a9e77",
-            }}
-          >
-            (optional)
-          </Box>
-        </Typography> */}
-
         <TextField
           multiline
           rows={3}
@@ -50,7 +26,6 @@ const NotesCard = ({ notes, setNotes }: NotesProps) => {
             input: { inputProps: { "aria-label": "Additional notes" } },
           }}
         />
-      {/* </CardContent> */}
     </BaseCard>
   );
 };

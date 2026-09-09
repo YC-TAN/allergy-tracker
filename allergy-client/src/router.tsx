@@ -8,7 +8,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Shell from "./components/layout/Shell";
 import HomePage from "./pages/HomePage";
-import LogPage from "./pages/LogPage";
+import LogPage from "./pages/EntryFormPage";
 import TrendsPage from "./pages/TrendsPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";

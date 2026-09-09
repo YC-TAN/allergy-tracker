@@ -8,7 +8,7 @@
  */
 
 import { useState } from "react";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 
 import {
   SeverityRating,
@@ -17,11 +17,12 @@ import {
 } from "../../schemas";
 import { useEntry } from "../../hooks/useEntry";
 import { useSettings } from "../../hooks/useSettings";
-import SeverityCard from "../ui/SeverityCard";
-import NotesCard from "../ui/NotesCard";
-import SymptomCard from "../ui/SymptomCard";
+import SeverityCard from "./SeverityCard";
+import NotesCard from "./NotesCard";
+import SymptomCard from "./SymptomCard";
 import { useNavigate } from "react-router-dom";
 import type { Entry, EntryInput } from "../../schemas";
+import PageTitle from "../ui/PageTitle";
 
 interface EntryFormProps {
   existing?: Entry | null;
@@ -68,11 +69,7 @@ const EntryForm = ({ existing }: EntryFormProps) => {
 
   return (
     <>
-      <div className="flex-1 text-center mb-6">
-        <Typography variant="h5" gutterBottom>
-          Log Symptoms
-        </Typography>
-      </div>
+      <PageTitle>Log Symptoms</PageTitle>
       <SeverityCard severity={severity} setSeverity={setSeverity} />
       <SymptomCard symptoms={symptoms} setSymptoms={setSymptoms} />
       <NotesCard notes={notes} setNotes={setNotes} />
