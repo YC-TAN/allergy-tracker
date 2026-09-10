@@ -30,7 +30,7 @@ def test_entry_create_accepts_full_valid_payload():
     assert entry.symptoms == payload["symptoms"]
     assert entry.notes == payload["notes"]
     assert entry.location == test_location
-    assert entry.honey == True
+    assert entry.honey
 
 
 # --- severity ---
@@ -221,4 +221,4 @@ def test_location_rejects_wrong_type():
 # -- honey --
 def test_honey_default_false():
     entry = EntryUpsert(date=test_date, severity=0, location=test_location)
-    assert entry.honey == False
+    assert not entry.honey

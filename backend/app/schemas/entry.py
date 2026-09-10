@@ -14,7 +14,7 @@ from enum import Enum
 from typing import Literal
 from sqlmodel import SQLModel, Field
 from pydantic import field_validator
-from sqlalchemy import Integer, String, false
+from sqlalchemy import Integer, String
 from sqlalchemy.dialects.postgresql import JSONB
 from datetime import datetime, timezone
 from uuid import UUID, uuid4

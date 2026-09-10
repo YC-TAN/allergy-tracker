@@ -90,7 +90,7 @@ def test_create_entry_defaults_symptoms_and_notes_and_honey(client):
     assert res.status_code == 201
     assert result["symptoms"] == []
     assert result["notes"] == ""
-    assert result["honey"] == False
+    assert not result["honey"]
 
 
 # POST: Negative cases (wrong date format, future date, no severity, severity not in range, symptoms not in range)
@@ -158,7 +158,7 @@ def test_upsert_entry_when_exist_success(client: TestClient, session: Session):
     assert data["severity"] == 2
     assert data["symptoms"] == ["nose", "eyes"]
     assert data["notes"] == "Contact with pets, outdoor"
-    assert data["honey"] == True
+    assert data["honey"]
     assert data["id"] == str(db_entry.id)  # same row, not a new one
     assert normalize_timestamp(data["created_at"]) == initial_created_at.isoformat() # created_at should not change
     assert normalize_timestamp(data["updated_at"]) != initial_updated_at.isoformat()
