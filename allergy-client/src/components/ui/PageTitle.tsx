@@ -1,14 +1,14 @@
 import { Typography } from "@mui/material";
 
 interface PageTitleProps {
-  children: string;
+  title: string;
 }
 
-const PageTitle = ({ children }: PageTitleProps) => {
+const PageTitle = ({ title }: PageTitleProps) => {
   return (
-    <div className="flex flex-col px-5 pb-6">
-      <Typography variant="h5" gutterBottom>
-        {children}
+    <div className="flex flex-col pb-3">
+      <Typography variant="h6" gutterBottom>
+        {title}
       </Typography>
     </div>
   );
