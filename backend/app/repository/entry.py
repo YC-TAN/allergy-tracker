@@ -54,6 +54,7 @@ def upsert_entry(
             "symptoms": stmt.excluded.symptoms,
             "notes": stmt.excluded.notes,
             "location": stmt.excluded.location,
+            "honey": stmt.excluded.honey,
             "updated_at": datetime.now(timezone.utc)
         }).returning(Entry)
 
