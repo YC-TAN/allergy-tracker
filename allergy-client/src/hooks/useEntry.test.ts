@@ -1,6 +1,7 @@
 import { renderHook, act, waitFor } from '@testing-library/react'
 import { useEntry } from './useEntry'
 import * as storage from '../utils/storage'
+// import * as entryService from '../services/entry';
 import {createWrapper} from '../test-utils'
 import type { EntryInput } from '../schemas'
 
@@ -9,6 +10,8 @@ const mockEntry: EntryInput = {
   severity: 2,
   symptoms: ['nose'],
   notes: '',
+  location: 'Christchurch Central',
+  honey: true,
 }
 
 beforeEach(() => {
@@ -30,7 +33,10 @@ describe('useEntry', () => {
     act(() => { result.current.save(mockEntry) })
 
     await waitFor(() =>
-      expect(result.current.entry).toMatchObject({ severity: 2, date: '2026-06-25' })
+      expect(result.current.entry).toMatchObject({ severity: 2, date: '2026-06-25', symptoms: ['nose'],
+  notes: '',
+  location: 'Christchurch Central',
+  honey: true })
     )
   })
 
@@ -45,6 +51,19 @@ describe('useEntry', () => {
     // getEntry called once on mount, not again after save (cache was set directly)
     expect(spy).toHaveBeenCalledTimes(1)
   })
+
+  // it("shows a success notification after saving", async () => {
+  // const spy = vi.spyOn(storage, 'getLocalEntry')
+  //   const { result } = renderHook(() => useEntry('2026-06-25'), { wrapper: createWrapper() })
+  //   await waitFor(() => expect(result.current.isPending).toBe(false))
+
+  //   act(() => { result.current.save(mockEntry) })
+
+  // expect(useNotificationStore.getState().notification).toEqual({
+  //   message: "Saved on device",
+  //   severity: "success",
+  // });
+// });
 
   it('defaults to today when no date passed', async () => {
     const spy = vi.spyOn(storage, 'getLocalEntry')

@@ -41,7 +41,7 @@ describe("saveEntry", () => {
     const result = saveEntry(mockEntry, test_entry_key);
     expect(result).toMatchObject({ date: today, severity: 2 });
     expect(result._synced).toBe(false);
-    expect(result._v).toBe(1);
+    expect(result._v).toBe(2);
   });
 
   it("overwrites an existing entry for the same date", () => {

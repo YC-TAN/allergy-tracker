@@ -1,8 +1,5 @@
 import {
   FormControlLabel,
-  FormControl,
-  FormGroup,
-  Switch,
   Checkbox
 } from "@mui/material";
 import BaseCard from "../ui/BaseCard";
