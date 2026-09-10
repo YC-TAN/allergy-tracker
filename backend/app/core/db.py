@@ -22,7 +22,7 @@ def get_engine():
         settings.pooler_database_url,
         pool_size=5,
         max_overflow=5,
-        echo=settings.environment == 'development'
+        # echo=settings.environment == 'development'
     )
 def get_session():
     with Session(get_engine()) as session:
