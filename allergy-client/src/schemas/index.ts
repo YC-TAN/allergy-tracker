@@ -75,6 +75,7 @@ export const EntrySchema = z.object({
   severity: SeveritySchema,
   symptoms: z.array(SymptomSchema).default([]),
   notes: z.string().default(""),
+  honey: z.boolean().default(false),
   location: z.string().default('Christchurch Central')
 });
 
