@@ -1,24 +1,31 @@
-import { useState } from "react";
 import {
   FormControlLabel,
   FormControl,
   FormGroup,
   Switch,
-  // Checkbox
+  Checkbox
 } from "@mui/material";
 import BaseCard from "../ui/BaseCard";
 
-const TreatmentsCard = () => {
-  const [honey, setHoney] = useState(false);
+interface TreatmentCardProps {
+  honey: boolean;
+  setHoney: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const TreatmentsCard = ({honey, setHoney} : TreatmentCardProps) => {
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setHoney(event.target.checked);
+  };
   return (
     <BaseCard>
-      <FormControl className="w-full md:px-[5%]">
+      {/* <FormControl className="w-full md:px-[5%]">
         <FormGroup>
           <FormControlLabel
             control={
               <Switch
                 checked={honey}
-                onChange={(e) => setHoney(e.target.checked)}
+                onChange={handleChange}
                 name="honey"
               />
             }
@@ -30,16 +37,20 @@ const TreatmentsCard = () => {
             }}
           />
         </FormGroup>
-      </FormControl>
-      {/* <FormControlLabel
+      </FormControl> */}
+      <FormControlLabel
           control={
             <Checkbox
               checked={honey}
-              onChange={(e) => setHoney(e.target.checked)}
+              onChange={handleChange}
             />
           }
-          label="Took honey"
-        /> */}
+          className="w-full md:px-[5%]"
+          label="Took Honey"
+          slotProps={{
+              typography: { variant: "body1", color: "textSecondary" },
+            }}
+        />
     </BaseCard>
   );
 };

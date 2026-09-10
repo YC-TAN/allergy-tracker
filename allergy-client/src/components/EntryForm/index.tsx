@@ -40,7 +40,7 @@ const EntryForm = ({ existing }: EntryFormProps) => {
   );
   const [symptoms, setSymptoms] = useState<Symptom[]>(existing?.symptoms ?? []);
   const [notes, setNotes] = useState<string>(existing?.notes ?? "");
-  // const [honey, setHoney] = useState<boolean>(existing?.honey ?? false);
+  const [honey, setHoney] = useState<boolean>(existing?.honey ?? false);
 
   if (settingsIsPending) return <div>loading...</div>;
 
@@ -53,6 +53,7 @@ const EntryForm = ({ existing }: EntryFormProps) => {
       symptoms,
       notes,
       location,
+      honey
     };
     save(entry);
     navigate("/");
@@ -64,7 +65,7 @@ const EntryForm = ({ existing }: EntryFormProps) => {
       <SeverityCard severity={severity} setSeverity={setSeverity} />
       <SymptomCard symptoms={symptoms} setSymptoms={setSymptoms} />      
       <NotesCard notes={notes} setNotes={setNotes} />
-      <TreatmentsCard />
+      <TreatmentsCard honey={honey} setHoney={setHoney} />
       <Button
         variant="contained"
         color="primary"
