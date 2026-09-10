@@ -36,7 +36,7 @@ const SEVERITY_OPTIONS: {
   },
   {
     value: SeverityRating.Severe,
-    emoji: "😫😖",
+    emoji: "😖",
     activeColor: "#ef5350", // "#dc2626",
     activeBg: "#ffebee", //"#fff5f5",
   },
