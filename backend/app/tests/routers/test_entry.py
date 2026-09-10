@@ -16,7 +16,8 @@ VALID_PAYLOAD = {
     "severity": 1, 
     "symptoms": ["nose"], 
     "notes": "Contact with pets", 
-    "location": test_location
+    "location": test_location,
+    "honey": True
 }
 
 def create_existing_entry(session: Session):
@@ -39,6 +40,7 @@ def test_get_entry_by_date_success(client, session):
     assert result["symptoms"] == VALID_PAYLOAD["symptoms"]
     assert result["notes"] == VALID_PAYLOAD["notes"]
     assert result["location"] == VALID_PAYLOAD["location"]
+    assert result["honey"] == VALID_PAYLOAD["honey"]
 
 
 # GET: Negative case
@@ -68,6 +70,7 @@ def test_create_entry_success(client, session):
     assert post_result["severity"] == VALID_PAYLOAD["severity"]
     assert post_result["symptoms"] == VALID_PAYLOAD["symptoms"]
     assert post_result["notes"] == VALID_PAYLOAD["notes"]
+    assert post_result["honey"] == VALID_PAYLOAD["honey"]
     assert post_result["location"] == VALID_PAYLOAD["location"]
 
     get_res = client.get("/api/entries/2026-08-01")
@@ -79,7 +82,7 @@ def test_create_entry_success(client, session):
 
 
 # POST: default notes and symptoms
-def test_create_entry_defaults_symptoms_and_notes(client):
+def test_create_entry_defaults_symptoms_and_notes_and_honey(client):
     payload = {"date": "2026-08-03", "severity": 0, "location": test_location}   # no symptoms, no notes
     res = client.post("/api/entries", json=payload)
     result = res.json()
@@ -87,6 +90,7 @@ def test_create_entry_defaults_symptoms_and_notes(client):
     assert res.status_code == 201
     assert result["symptoms"] == []
     assert result["notes"] == ""
+    assert result["honey"] == False
 
 
 # POST: Negative cases (wrong date format, future date, no severity, severity not in range, symptoms not in range)
@@ -140,6 +144,7 @@ def test_upsert_entry_when_exist_success(client: TestClient, session: Session):
         "severity": 2,
         "symptoms": ["nose", "eyes"],
         "notes": "Contact with pets, outdoor",
+        "honey": True,
         "location": test_location
     }
 
@@ -153,6 +158,7 @@ def test_upsert_entry_when_exist_success(client: TestClient, session: Session):
     assert data["severity"] == 2
     assert data["symptoms"] == ["nose", "eyes"]
     assert data["notes"] == "Contact with pets, outdoor"
+    assert data["honey"] == True
     assert data["id"] == str(db_entry.id)  # same row, not a new one
     assert normalize_timestamp(data["created_at"]) == initial_created_at.isoformat() # created_at should not change
     assert normalize_timestamp(data["updated_at"]) != initial_updated_at.isoformat()
@@ -169,6 +175,7 @@ def test_upsert_when_not_exists(client: TestClient):
     assert result["symptoms"] == VALID_PAYLOAD["symptoms"]
     assert result["notes"] == VALID_PAYLOAD["notes"]
     assert result["location"] == VALID_PAYLOAD["location"]
+    assert result["honey"] == VALID_PAYLOAD["honey"]
 
 
 def test_upsert_ignore_date_on_update(client: TestClient, session: Session):

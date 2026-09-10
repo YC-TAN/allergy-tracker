@@ -9,11 +9,6 @@ from functools import lru_cache
 from sqlmodel import create_engine, Session
 from .config import get_settings
 
-# settings = get_settings()
-# database_url = settings.pooler_database_url
-# echo: bool = settings.environment == 'development' 
-# engine = create_engine(database_url, pool_size=5, max_overflow=5, echo = echo)
-
 
 @lru_cache
 def get_engine():

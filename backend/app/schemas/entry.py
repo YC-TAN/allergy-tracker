@@ -14,7 +14,7 @@ from enum import Enum
 from typing import Literal
 from sqlmodel import SQLModel, Field
 from pydantic import field_validator
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, false
 from sqlalchemy.dialects.postgresql import JSONB
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
@@ -53,7 +53,8 @@ class EntryBase(SQLModel):
     )
 
     location: Valid_locations = Field(sa_type=String)
-
+    honey: bool = Field(default=False)
+ 
     @field_validator("notes", mode="before")
     @classmethod
     def normalize_notes(cls, v: str | None) -> str:
