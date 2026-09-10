@@ -8,6 +8,7 @@ import { Box, ButtonBase, Typography } from "@mui/material";
 import { SeverityRating, type SeverityRatingType } from "../../schemas";
 import { SeverityLabel } from "../../schemas/labels";
 import BaseCard from "../ui/BaseCard";
+import CardTitle from "../ui/CardTitle";
 
 const SEVERITY_OPTIONS: {
   value: SeverityRatingType;
@@ -35,7 +36,7 @@ const SEVERITY_OPTIONS: {
   },
   {
     value: SeverityRating.Severe,
-    emoji: "🤧",
+    emoji: "😫😖",
     activeColor: "#ef5350", // "#dc2626",
     activeBg: "#ffebee", //"#fff5f5",
   },
@@ -66,15 +67,14 @@ const SeverityButton = ({
       className="flex flex-col items-center text-center w-full py-3 px-1"
       sx={{
         border: 1.5,
-        borderStyle: "solid",
         borderColor: isActive ? activeColor : "divider",
         borderRadius: "12px",
         background: isActive ? activeBg : "#fff",
         transition: "all 0.15s",
         fontFamily: "inherit",
-        // "&:hover": {
-        //   backgroundColor: !isActive && activeBg,
-        // },
+        "&:hover": {
+          ...(!isActive && { backgroundColor: activeBg }),
+        },
       }}
     >
       <Box component="span" className="block mb-1" sx={{ fontSize: 24 }}>
@@ -82,10 +82,7 @@ const SeverityButton = ({
       </Box>
       <Typography
         variant="body2"
-        // color={isActive? activeColor: "textSecondary"}
-        sx={{ fontWeight: isActive ? 600 : 400,
-          color: isActive? activeColor: "textSecondary"
-         }}
+        color={isActive ? activeColor : "textSecondary"}
       >
         {SeverityLabel[value]}
       </Typography>
@@ -100,9 +97,10 @@ interface Props {
 
 const SeverityCard = ({ severity, setSeverity }: Props) => {
   return (
-    <BaseCard cardHeader={"Severity Level"}>
+    <BaseCard>
+      <CardTitle title={"Severity"} />
       <div
-        className="grid grid-cols-4 gap-2"
+        className="grid grid-cols-4 gap-2 md:px-[5%] w-full"
         role="group"
         aria-label="Severity Level"
       >

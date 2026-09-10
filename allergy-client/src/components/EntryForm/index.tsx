@@ -8,21 +8,23 @@
  */
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
 import {
   SeverityRating,
   type SeverityRatingType,
   type Symptom,
+  type Entry, 
+  type EntryInput,
 } from "../../schemas";
 import { useEntry } from "../../hooks/useEntry";
 import { useSettings } from "../../hooks/useSettings";
 import SeverityCard from "./SeverityCard";
 import NotesCard from "./NotesCard";
 import SymptomCard from "./SymptomCard";
-import { useNavigate } from "react-router-dom";
-import type { Entry, EntryInput } from "../../schemas";
 import PageTitle from "../ui/PageTitle";
+import TreatmentsCard from "./TreatmentsCard";
 
 interface EntryFormProps {
   existing?: Entry | null;
@@ -38,6 +40,7 @@ const EntryForm = ({ existing }: EntryFormProps) => {
   );
   const [symptoms, setSymptoms] = useState<Symptom[]>(existing?.symptoms ?? []);
   const [notes, setNotes] = useState<string>(existing?.notes ?? "");
+  // const [honey, setHoney] = useState<boolean>(existing?.honey ?? false);
 
   if (settingsIsPending) return <div>loading...</div>;
 
@@ -55,42 +58,20 @@ const EntryForm = ({ existing }: EntryFormProps) => {
     navigate("/");
   };
 
-  const handleNoSymptoms = () => {
-    const entry: EntryInput = {
-      ...existing,
-      location,
-      severity: SeverityRating.NoSymptom,
-      symptoms: [],
-      notes: "",      
-    };
-    save(entry);
-    navigate("/");
-  };
-
   return (
     <>
-      <PageTitle>Log Symptoms</PageTitle>
+      <PageTitle title="Today's log" />
       <SeverityCard severity={severity} setSeverity={setSeverity} />
-      <SymptomCard symptoms={symptoms} setSymptoms={setSymptoms} />
+      <SymptomCard symptoms={symptoms} setSymptoms={setSymptoms} />      
       <NotesCard notes={notes} setNotes={setNotes} />
-
-      <Button
-        variant="outlined"
-        color="primary"
-        className="mb-4"
-        fullWidth
-        onClick={handleNoSymptoms}
-      >
-        Actually, no symptoms today
-      </Button>
-
+      <TreatmentsCard />
       <Button
         variant="contained"
         color="primary"
         fullWidth
         onClick={handleSubmit}
       >
-        Save Entry
+        {existing? "Update Entry" : "Save Entry"}
       </Button>
     </>
   );

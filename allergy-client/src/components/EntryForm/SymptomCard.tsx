@@ -1,6 +1,6 @@
 /**
  * SymptomCard renders selectable symptom chips used in the symptom entry form.
- * 
+ *
  * It captures allergy symptoms occurred today.
  */
 import { Chip, Typography } from "@mui/material";
@@ -8,6 +8,7 @@ import { Chip, Typography } from "@mui/material";
 import { SymptomSchema, type Symptom } from "../../schemas";
 import type React from "react";
 import BaseCard from "../ui/BaseCard";
+import CardTitle from "../ui/CardTitle";
 
 const symptomOptions = SymptomSchema.options;
 
@@ -17,7 +18,7 @@ const SymptomLabel: Record<Symptom, { label: string; icon?: string }> = {
   throat: { label: "Throat" },
   energy: { label: "Low Energy" },
   headache: { label: "Headache" },
-  other: {label: "Other (Please specify in Notes)"}
+  other: { label: "Other (Please specify in Notes)" },
 };
 
 interface SymptomChipProps {
@@ -31,7 +32,15 @@ function SymptomChip({ symptom, selected, onToggle }: SymptomChipProps) {
 
   return (
     <Chip
-      label={<Typography variant="body2" component="span" className="flex items-center gap-1">{label}</Typography>}
+      label={
+        <Typography
+          variant="body2"
+          component="span"
+          className="flex items-center gap-1"
+        >
+          {label}
+        </Typography>
+      }
       onClick={() => onToggle(symptom)}
       variant={selected ? "filled" : "outlined"}
       color={selected ? "primary" : "default"}
@@ -68,17 +77,18 @@ const SymptomCard = ({ symptoms, setSymptoms }: SymptomCardProps) => {
     );
   }
   return (
-    <BaseCard cardHeader="Symptoms">
-        <div className="flex flex-wrap gap-2">
-          {symptomOptions.map((sym) => (
-            <SymptomChip
-              key={sym}
-              symptom={sym}
-              selected={symptoms.includes(sym)}
-              onToggle={toggleSymptom}
-            />
-          ))}
-        </div>
+    <BaseCard>
+      <CardTitle title={"Symptoms"} />
+      <div className="flex flex-wrap gap-2 md:px-[5%] w-full">
+        {symptomOptions.map((sym) => (
+          <SymptomChip
+            key={sym}
+            symptom={sym}
+            selected={symptoms.includes(sym)}
+            onToggle={toggleSymptom}
+          />
+        ))}
+      </div>
     </BaseCard>
   );
 };
