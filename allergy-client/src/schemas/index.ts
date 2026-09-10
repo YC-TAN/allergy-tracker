@@ -56,7 +56,13 @@ export const SymptomSchema = z.enum([
 
 export type Symptom = z.infer<typeof SymptomSchema>;
 
-const ENTRY_LOCAL_SCHEMA_VERSION = 1;
+const ENTRY_LOCAL_SCHEMA_VERSION = 2;
+const clearSymptomsIfNoSymptoms = <T extends { severity: number; symptoms: string[] }>(data: T): T => {
+  if (data.severity === 0) {
+    return { ...data, symptoms: [] };
+  }
+  return data;
+}
 
 export const EntrySchema = z.object({
   // use arrow function getTodayDate so that it is called fresh each time
@@ -75,13 +81,13 @@ export const EntrySchema = z.object({
 export const EntryLocalSchema = EntrySchema.extend({
   _synced: z.boolean().default(false),
   _v: z.literal(ENTRY_LOCAL_SCHEMA_VERSION).default(ENTRY_LOCAL_SCHEMA_VERSION),
-})
+}).transform(clearSymptomsIfNoSymptoms)
 
 export const EntryResponseSchema = EntrySchema.extend({
   id: z.uuid(),
   // user_id: z.uuid(),
   created_at: z.string(),
-});
+}).transform(clearSymptomsIfNoSymptoms);
 
 export type Entry = z.infer<typeof EntrySchema>;
 // z.input<> - to allow fields with default value to be optional in forms, can be omitted before parsing
