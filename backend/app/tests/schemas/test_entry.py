@@ -18,7 +18,8 @@ payload = {
         "severity": 2,
         "symptoms": ["eyes", "nose", "headache"],
         "notes": "pets",
-        "location": test_location
+        "location": test_location,
+        "honey": "true"
     }
 
 def test_entry_create_accepts_full_valid_payload():
@@ -29,6 +30,7 @@ def test_entry_create_accepts_full_valid_payload():
     assert entry.symptoms == payload["symptoms"]
     assert entry.notes == payload["notes"]
     assert entry.location == test_location
+    assert entry.honey == True
 
 
 # --- severity ---
@@ -216,3 +218,7 @@ def test_location_rejects_wrong_type():
     with pytest.raises(ValidationError):
         EntryUpsert(**{**payload, "location": 123})
 
+# -- honey --
+def test_honey_default_false():
+    entry = EntryUpsert(date=test_date, severity=0, location=test_location)
+    assert entry.honey == False
