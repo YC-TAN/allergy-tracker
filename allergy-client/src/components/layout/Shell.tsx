@@ -47,7 +47,7 @@ const Shell = () => {
         </Toolbar>
       </AppBar>
 
-      <main className="flex-1 flex flex-col items-center px-5 pt-8 pb-6 md:px-[10%] md:py-[5%]">
+      <main className="flex-1 flex flex-col items-center px-5 py-4 md:px-[10%] md:py-[5%]">
         <Outlet />
       </main>
 
