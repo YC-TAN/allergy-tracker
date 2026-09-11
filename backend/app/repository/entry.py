@@ -63,13 +63,27 @@ def upsert_entry(
     # scalar_one will strip the outer Row tuple wrapper returned by exec
     return session.exec(stmt).scalar_one() 
 
-    # db_entry = get_entry_by_date(session, entry_date, user_id)
 
-    # if db_entry:
-    #     data = payload.model_dump(exclude={"date"})  # date can never be updated
-    #     db_entry.sqlmodel_update(data, update={"updated_at": datetime.now(timezone.utc)})
-    # else:
-    #     db_entry = Entry.model_validate(payload, update={"user_id": user_id})
+def get_entries_range(session: SessionDep, user_id: UUID, start_date: date, end_date: date) -> list[Entry]:
+    """Fetch all entries for a user within an inclusive date range.
 
-    # session.add(db_entry)
-    # return db_entry
+    Args:
+        session (SessionDep): Database session dependency.
+        user_id (UUID): The authenticated user requesting the read.
+        start_date (date): Inclusive lower bound, computed by the caller
+            (e.g. NZ "today" minus N days) — not derived from the DB server's
+            own clock/timezone.
+        end_date (date): Inclusive upper bound.
+
+    Returns:
+        list[Entry]: Matching entries ordered chronologically.
+    """
+    
+    stmt = (
+        select(Entry)
+        .where(Entry.user_id == user_id)
+        .where(Entry.date >= start_date)
+        .where(Entry.date <= end_date)
+        .order_by(Entry.date)
+    )
+    return session.exec(stmt).all()

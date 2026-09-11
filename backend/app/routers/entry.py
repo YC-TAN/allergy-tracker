@@ -1,9 +1,10 @@
 from datetime import date
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Query, status
 
 from app.core.deps import SessionDep, CurrentUserDep
 from app.schemas.entry import Entry, EntryUpsert, EntryResponse, MigrateRequest, MigrateResponse
 from app.repository import entry as entry_repo
+from app.services import entry_service
 from app.errors.app_error import EntryNotFoundError
 from app.utils.date_utils import NotFutureDate
 
@@ -11,21 +12,6 @@ router = APIRouter(
     prefix="/entries", 
     tags=["entries"]
 )
-
-@router.post("", response_model=EntryResponse, status_code=status.HTTP_201_CREATED)
-def create_entry(
-    payload: EntryUpsert, 
-    session: SessionDep,
-    user_id: CurrentUserDep,
-):
-    """
-    Convert payload into db object then save into database and return the db object
-    """
-    db_item = Entry.model_validate(payload, update={"user_id": user_id})
-    session.add(db_item)
-    session.commit()
-    session.refresh(db_item)
-    return db_item
 
 
 @router.get("/{entry_date}", response_model=EntryResponse)
@@ -68,15 +54,26 @@ def migrate_entries(body: MigrateRequest, session: SessionDep, user_id: CurrentU
     synced, failed = [], []
     for entry in body.entries:
         try:
-            db_entry = entry_repo.upsert_entry(session, user_id, entry.date, entry)
-            session.flush()          # push to DB within the transaction, get any errors now, without committing yet
-            session.refresh(db_entry)
-            synced.append(db_entry)
+            # Create a savepoint per entry so a failure only unwind that entry
+            with session.begin_nested():
+                db_entry = entry_repo.upsert_entry(session, user_id, entry.date, entry)
+                synced.append(db_entry.model_dump()) # convert back to response
         except Exception:
-            session.rollback()       # undo just this entry's partial state, keep the transaction usable
+            # Rolls back only to the begin_nested() savepoint, preserving previous loop items
             failed.append(str(entry.date))
     session.commit()                 # commit everything that succeeded, in one transaction
+
     return {"synced": synced, "failed": failed}
+
+
+@router.get("/", response_model=list[EntryResponse])
+def get_entries(
+    session: SessionDep,
+    user_id: CurrentUserDep,
+    # start_date: NotFutureDate,
+    days: int = Query(default=7, ge=1, le=120),
+):
+    return entry_service.get_entries_range(session, user_id, days)
 
 # @router.put("/{entry_date}", response_model=EntryResponse)
 # def update_entry(entry_date: date, payload: EntryUpdate, session: SessionDep, user_id: CurrentUserDep,):
@@ -97,3 +94,18 @@ def migrate_entries(body: MigrateRequest, session: SessionDep, user_id: CurrentU
 #     session.commit()
 #     session.refresh(db_entry)
 #     return db_entry
+
+@router.post("", response_model=EntryResponse, status_code=status.HTTP_201_CREATED)
+def create_entry(
+    payload: EntryUpsert, 
+    session: SessionDep,
+    user_id: CurrentUserDep,
+):
+    """
+    Convert payload into db object then save into database and return the db object
+    """
+    db_item = Entry.model_validate(payload, update={"user_id": user_id})
+    session.add(db_item)
+    session.commit()
+    session.refresh(db_item)
+    return db_item
