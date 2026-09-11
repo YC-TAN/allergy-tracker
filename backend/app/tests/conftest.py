@@ -2,19 +2,21 @@ import pytest
 import os
 import subprocess
 from pathlib import Path
-from uuid import uuid4
+from unittest.mock import patch
 from sqlmodel import create_engine, Session
-from sqlalchemy import text
 from fastapi.testclient import TestClient
 
 from app.main import app
 from app.core.db import get_session
 from app.core.auth import get_current_user_id
+from app.tests.utils import create_test_user, TEST_USER_ID, FIXED_TODAY
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 TEST_DB_URL = os.environ["TEST_DB_URL"]
-TEST_USER_ID = uuid4()
+# TEST_USER_ID = uuid4()
+# FIXED_TODAY = date(2026, 8, 1)
+
 
 @pytest.fixture(
     scope="session", 
@@ -55,14 +57,16 @@ def session(engine):
     session = Session(bind=connection, join_transaction_mode="create_savepoint")
 
     # Seed the FK-referenced user row so entries.user_id can point at it
-    session.exec(
-        text("""
-            INSERT INTO auth.users (id, email, encrypted_password, aud, role)
-            VALUES (:id, :email, '', 'authenticated', 'authenticated')
-        """),
-        params={"id": TEST_USER_ID, "email": f"{TEST_USER_ID}@test.local"},
-    )
-    session.commit()  # commits into the savepoint, still rolled back at teardown
+    create_test_user(session, TEST_USER_ID)
+    
+    # session.exec(
+    #     text("""
+    #         INSERT INTO auth.users (id, email, encrypted_password, aud, role)
+    #         VALUES (:id, :email, '', 'authenticated', 'authenticated')
+    #     """),
+    #     params={"id": TEST_USER_ID, "email": f"{TEST_USER_ID}@test.local"},
+    # )
+    # session.commit()  
 
     yield session
 
@@ -88,3 +92,10 @@ def client(session):
         yield c
 
     app.dependency_overrides.clear()
+
+
+@pytest.fixture(autouse=True)
+def frozen_today():
+    """Freeze get_today_NZT in entry_service namespace for every test in this file"""
+    with patch("app.services.entry_service.get_today_NZT", return_value=FIXED_TODAY):
+        yield
