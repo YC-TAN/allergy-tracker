@@ -10,6 +10,7 @@ from typing import get_args
 
 from app.schemas.entry import EntryUpsert
 from app.schemas.locations_literal import Valid_locations
+from app.utils.date_utils import get_today_NZT
 
 test_date = "2026-08-01"
 test_location = get_args(Valid_locations)[0] # "Alexandra"
@@ -176,9 +177,15 @@ def test_date_rejects_invalid_format(date_input):
         data = {**payload, "date": date_input}
         EntryUpsert(**data)
 
+def test_date_accepts_today():
+    today = get_today_NZT()
+    data = {**payload, "date": today}
+    entry = EntryUpsert(**data)  # should not raise
+    assert entry.date == today
+
 
 def test_date_rejects_future_date():
-    tomorrow = date.today() + timedelta(days=1)
+    tomorrow = get_today_NZT() + timedelta(days=1)
 
     with pytest.raises(ValueError, match="Date cannot be in the future"):
         data = {**payload, "date": tomorrow}
