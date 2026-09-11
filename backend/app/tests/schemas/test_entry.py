@@ -11,8 +11,10 @@ from typing import get_args
 from app.schemas.entry import EntryUpsert
 from app.schemas.locations_literal import Valid_locations
 from app.utils.date_utils import get_today_NZT
+from app.tests.utils import FIXED_TODAY
 
-test_date = "2026-08-01"
+
+test_date = FIXED_TODAY.isoformat()
 test_location = get_args(Valid_locations)[0] # "Alexandra"
 payload = {
         "date": test_date,
