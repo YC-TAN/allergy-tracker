@@ -1,12 +1,28 @@
-/** 'en-CA' locale formats as YYYY-MM-DD
- * using NZ time regardless of device timezone. 
+/** 'en-CA' locale formats as YYYY-MM-DD, same as ISO string
+ * using NZ time regardless of device timezone.
  */
 const formatLocalDate = (d: Date): string => {
-  return d.toLocaleDateString('en-CA', { timeZone: 'Pacific/Auckland' }); 
+  return d.toLocaleDateString("en-CA", { timeZone: "Pacific/Auckland" });
 };
 
 export const getTodayDate = (): string => {
   return formatLocalDate(new Date());
+};
+
+export const getNZTodayDateString = (): string => {
+  return new Date().toLocaleDateString("en-NZ", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Pacific/Auckland",
+  });
+};
+
+export const getNZTodayDayOfWeek = (): string => {
+  return new Date().toLocaleDateString("en-NZ", {
+    weekday: "long",
+    timeZone: "Pacific/Auckland",
+  });
 };
 
 export const getLast7Days = (): string[] => {
