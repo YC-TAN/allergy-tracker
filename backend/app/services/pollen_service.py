@@ -110,13 +110,17 @@ def build_forecast_payload(parsed: list[tuple[str, list[str]]], location: str) -
     return payload
 
 
-async def sync_allergen_data(location: str, db: SessionDep) -> PollenForecast:
+async def sync_allergen_data(location: str, session: SessionDep) -> PollenForecast:
     today = get_today_NZT()
-    todays_forecast = pollen_repo.get_allergen_data(today, location, db)
+    todays_forecast = pollen_repo.get_allergen_data(today, location, session)
+
     if todays_forecast is None:
         allergen_data = await extract_allergen_data(location)
         payload = build_forecast_payload(allergen_data, location)
-        todays_forecast = pollen_repo.create_allergen_data(payload, db)
+        todays_forecast = pollen_repo.create_allergen_data(payload, session)
+
+        session.commit()
+
     return todays_forecast
 
     

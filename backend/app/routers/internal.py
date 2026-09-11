@@ -13,22 +13,22 @@ router = APIRouter()
 
 
 @router.get("/health/db")
-def db_health(db: SessionDep):
+def db_health(session: SessionDep):
     """
         This is a cron-triggered endpoint.
         It automatically check db health at a set time.
     """
     try:
-        db.exec(text("SELECT 1"))
+        session.exec(text("SELECT 1"))
         return {"status": "ok"}
     except Exception as e:
         raise HTTPException(status_code=503, detail=f"Postgres unreachable: {e}")
 
 
 @router.post("/pollen_forecast/{location}")
-def fetch_and_save_pollen_forecast(location: str, db: SessionDep):
+async def fetch_and_save_pollen_forecast(location: str, session: SessionDep):
     """
         This is a cron-triggered endpoint.
         It automatically fetch data daily.
     """
-    return sync_allergen_data(location, db)
+    return await sync_allergen_data(location, session)
