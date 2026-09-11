@@ -4,7 +4,7 @@ Verify that validation rules are configured as intended.
 """
 
 import pytest
-from datetime import date, timedelta
+from datetime import timedelta
 from pydantic import ValidationError
 from typing import get_args
 
