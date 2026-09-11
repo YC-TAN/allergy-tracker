@@ -116,7 +116,7 @@ const theme = createTheme({
       paper: "#ffffff",
     },
     text: {
-      primary: "#1a2e1a", // Deep forest Charcoal Green
+      primary: "#1b5e20", //"#1a2e1a", // Deep forest Charcoal Green
       secondary: "#4a6741",
       disabled: "#7a9e77",
     },
