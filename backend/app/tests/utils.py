@@ -6,7 +6,7 @@ from sqlalchemy import text
 
 from app.schemas.locations_literal import Valid_locations
 from app.schemas.entry import Entry
-# from app.tests.conftest import FIXED_TODAY, TEST_USER_ID
+
 
 TEST_USER_ID = uuid4()
 FIXED_TODAY = date(2026, 8, 1)

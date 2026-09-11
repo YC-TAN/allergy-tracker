@@ -4,28 +4,6 @@ from app.services.entry_service import get_entries_range
 from app.tests.utils import create_existing_entry, TEST_USER_ID, FIXED_TODAY
 
 
-# FIXED_TODAY = date(2026, 8, 10)
-
-# def make_entry(session, user_id, entry_date, severity=1):
-#     payload = EntryUpsert(
-#         date=entry_date,
-#         severity=severity,
-#         location=test_location,
-#     )
-#     entry = entry_repo.upsert_entry(session, user_id, entry_date, payload)
-#     session.commit()
-#     return entry
-
-
-# @pytest.fixture(autouse=True)
-# def frozen_today():
-#     """Freeze get_today_NZT in entry_service namespace for every test in this file"""
-#     with patch("app.services.entry_service.get_today_NZT", return_value=FIXED_TODAY):
-#         yield
-
-
-# --- defaulting behaviour ---
-
 def test_last_7_days_ending_today(session):
     create_existing_entry(session, FIXED_TODAY)                      # in range
     create_existing_entry(session, FIXED_TODAY - timedelta(days=6))  # in range (boundary)

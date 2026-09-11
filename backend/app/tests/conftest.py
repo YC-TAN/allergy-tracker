@@ -14,8 +14,6 @@ from app.tests.utils import create_test_user, TEST_USER_ID, FIXED_TODAY
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 TEST_DB_URL = os.environ["TEST_DB_URL"]
-# TEST_USER_ID = uuid4()
-# FIXED_TODAY = date(2026, 8, 1)
 
 
 @pytest.fixture(
@@ -58,15 +56,6 @@ def session(engine):
 
     # Seed the FK-referenced user row so entries.user_id can point at it
     create_test_user(session, TEST_USER_ID)
-    
-    # session.exec(
-    #     text("""
-    #         INSERT INTO auth.users (id, email, encrypted_password, aud, role)
-    #         VALUES (:id, :email, '', 'authenticated', 'authenticated')
-    #     """),
-    #     params={"id": TEST_USER_ID, "email": f"{TEST_USER_ID}@test.local"},
-    # )
-    # session.commit()  
 
     yield session
 
