@@ -6,18 +6,19 @@
 import { useParams } from "react-router-dom";
 import EntryForm from "../components/EntryForm";
 import { useEntry } from "../hooks/useEntry";
+import ProgressBox from "../components/ui/ProgressBox";
+import PageTitle from "../components/ui/PageTitle";
 
-const LogPage = () => {
+const EntryFormPage = () => {
   const { date } = useParams<{ date: string }>();
   const { entry, isPending } = useEntry(date);
 
-  if (isPending) return <div>loading...</div>;
-
   return (
   <>
-    <EntryForm existing={entry} />
+    <PageTitle title="Today's Symptoms" />
+    {isPending? <ProgressBox /> : <EntryForm existing={entry} />}
   </>
   )
 };
 
-export default LogPage;
+export default EntryFormPage;

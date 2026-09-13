@@ -1,6 +1,6 @@
 /**
- * Entry form component for logging allergy data.
- * Renders severity, symptom, and notes inputs.
+ * Entry form component for logging symptoms and notes.
+ * Renders severity, symptom, notes inputs, took honey checkbox.
  * Handles both creation and update.
  *
  * This component manages local form state and delegates
@@ -23,8 +23,8 @@ import { useSettings } from "../../hooks/useSettings";
 import SeverityCard from "./SeverityCard";
 import NotesCard from "./NotesCard";
 import SymptomCard from "./SymptomCard";
-import PageTitle from "../ui/PageTitle";
 import TreatmentsCard from "./TreatmentsCard";
+import ProgressBox from "../ui/ProgressBox";
 
 interface EntryFormProps {
   existing?: Entry | null;
@@ -36,13 +36,13 @@ const EntryForm = ({ existing }: EntryFormProps) => {
   const navigate = useNavigate();
 
   const [severity, setSeverity] = useState<SeverityRatingType>(
-    existing?.severity ?? SeverityRating.Mild,
+    existing?.severity ?? SeverityRating.NoSymptoms,
   );
   const [symptoms, setSymptoms] = useState<Symptom[]>(existing?.symptoms ?? []);
   const [notes, setNotes] = useState<string>(existing?.notes ?? "");
   const [honey, setHoney] = useState<boolean>(existing?.honey ?? false);
 
-  if (settingsIsPending) return <div>loading...</div>;
+  if (settingsIsPending) return <ProgressBox />;
 
   const location = settings?.location;
 
@@ -61,7 +61,6 @@ const EntryForm = ({ existing }: EntryFormProps) => {
 
   return (
     <>
-      <PageTitle title="Today's log" />
       <SeverityCard severity={severity} setSeverity={setSeverity} />
       <SymptomCard symptoms={symptoms} setSymptoms={setSymptoms} />      
       <NotesCard notes={notes} setNotes={setNotes} />
