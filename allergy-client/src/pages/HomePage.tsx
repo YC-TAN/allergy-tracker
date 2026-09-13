@@ -1,26 +1,22 @@
 /**
  * HomePage the app's main landing page.
  *
- * It shows DailyLog when today's entry exists, and CheckIn Prompt otherwise.
+ * It shows today's entry record when exists, and check in prompt otherwise.
+ * It also displays today's local pollen forecast from MetService.
  */
-
-import { useEntry } from "../hooks/useEntry";
-
-import CheckInCard from "../components/DailyCheckIn/CheckInCard";
-import DailyLog from "../components/DailyCheckIn/DailyLog"
-import ForecastCard from "../components/DailyCheckIn/ForecastCard";
+import CheckInCard from "../components/CheckIn/CheckInCard";
+import ForecastCard from "../components/CheckIn/ForecastCard";
+import { getNZTodayDateString, getNZTodayDayOfWeek } from "../utils/dates";
+import PageTitle from "../components/ui/PageTitle";
 
 const HomePage = () => {
-  const { entry, isPending, isError, error } = useEntry();
+  const today = getNZTodayDateString();
+  const dayOfWeek = getNZTodayDayOfWeek();
 
-  if (isPending) return <div>loading...</div>
-  if (isError) {
-    console.error("Entry fetch failed:", error); 
-    return <div>Couldn't load today's entry — check your connection</div>;
-}
   return (
       <>
-      {entry ? (<DailyLog />) : (<CheckInCard />)}
+      <PageTitle title={today + ", " + dayOfWeek} />
+      <CheckInCard />
       <ForecastCard />
       </>
   )
