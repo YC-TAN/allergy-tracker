@@ -16,25 +16,6 @@ const TreatmentsCard = ({honey, setHoney} : TreatmentCardProps) => {
   };
   return (
     <BaseCard>
-      {/* <FormControl className="w-full md:px-[5%]">
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={honey}
-                onChange={handleChange}
-                name="honey"
-              />
-            }
-            label="Took Honey"
-            labelPlacement="start"
-            className="ml-0 justify-between"
-            slotProps={{
-              typography: { variant: "caption", color: "textSecondary" },
-            }}
-          />
-        </FormGroup>
-      </FormControl> */}
       <FormControlLabel
           control={
             <Checkbox
