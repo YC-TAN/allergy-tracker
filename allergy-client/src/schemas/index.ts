@@ -30,14 +30,14 @@ import { z } from "zod";
 import { getTodayDate } from "../utils/dates";
 
 export const SeverityRating = {
-  NoSymptom: 0,
+  NoSymptoms: 0,
   Mild: 1,
   Moderate: 2,
   Severe: 3,
 } as const;
 
 export const SeveritySchema = z.union([
-  z.literal(SeverityRating.NoSymptom),
+  z.literal(SeverityRating.NoSymptoms),
   z.literal(SeverityRating.Mild),
   z.literal(SeverityRating.Moderate),
   z.literal(SeverityRating.Severe),
