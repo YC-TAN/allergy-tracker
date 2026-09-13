@@ -1,7 +1,7 @@
 /**
- * CheckIn renders the quick daily check-in card shown on the Homepage.
+ * CheckInCard renders prompt and button to EntryForm if no entry recorded today.
+ * Otherwise it renders today's record and Edit button.
  *
- * Users can mark today as symptom-free or navigate to the symptom entry form.
  */
 import { Button, Typography } from "@mui/material";
 import { AddOutlined, EditOutlined } from "@mui/icons-material";
@@ -48,7 +48,8 @@ const CheckInCard = () => {
 
     const symptoms =
       entry.symptoms?.length > 0 ? " - " + entry.symptoms.join(", ") : "";
-    const message =
+    
+      const message =
       entry.severity === 0
         ? "No symptoms"
         : `${SeverityLabel[entry.severity]}${symptoms}`;
@@ -84,24 +85,6 @@ const CheckInCard = () => {
       <BaseCard>
         <LeafGraphic />
         {renderContent()}
-        {/* <Typography
-          variant="body1"
-          color="textSecondary"
-          className="mb-4 text-center"
-        >
-          How's today been?
-        </Typography>
-
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          startIcon={<AddOutlined />}
-          component={Link}
-          to="/entry"
-        >
-          Log today's symptoms
-        </Button> */}
       </BaseCard>
     </>
   );
