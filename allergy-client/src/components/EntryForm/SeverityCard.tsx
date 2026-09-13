@@ -17,7 +17,7 @@ const SEVERITY_OPTIONS: {
   activeBg: string;
 }[] = [
   {
-    value: SeverityRating.NoSymptom,
+    value: SeverityRating.NoSymptoms,
     emoji: "😊",
     activeColor: "#9ccc65", //"#2e7d32",
     activeBg: "#f1f8e9", //"#f0fdf4",
