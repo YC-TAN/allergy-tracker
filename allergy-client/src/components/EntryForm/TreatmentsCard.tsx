@@ -26,7 +26,7 @@ const TreatmentsCard = ({honey, setHoney} : TreatmentCardProps) => {
           className="w-full md:px-[5%]"
           label="Took Honey"
           slotProps={{
-              typography: { variant: "body1", color: "textSecondary" },
+              typography: { variant: "caption", color: "textSecondary" },
             }}
         />
     </BaseCard>
