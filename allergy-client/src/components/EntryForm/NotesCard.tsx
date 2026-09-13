@@ -19,10 +19,10 @@ const NotesCard = ({ notes, setNotes }: NotesProps) => {
       <CardTitle title="Notes" optional={true} />
       <TextField
         multiline
-        rows={3}
+        rows={2}
         fullWidth
         className="md:px-[5%]"
-        placeholder="e.g. took antihistamine, windows open all day, pets, indoor drying, air purifier…"
+        placeholder="e.g. took antihistamine, pets, …"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
         slotProps={{
