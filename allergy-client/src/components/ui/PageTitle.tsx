@@ -6,7 +6,7 @@ interface PageTitleProps {
 
 const PageTitle = ({ title }: PageTitleProps) => {
   return (
-    <div className="flex flex-col pb-3">
+    <div className="flex flex-col mb-6">
       <Typography variant="h6" gutterBottom>
         {title}
       </Typography>
