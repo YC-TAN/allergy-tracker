@@ -10,26 +10,27 @@
 import { createTheme } from "@mui/material/styles";
 import type {} from "@mui/x-charts/themeAugmentation";
 import { green, lightGreen, yellow, red, orange } from "@mui/material/colors";
+import { chartsGridClasses } from "@mui/x-charts/ChartsGrid";
 
 declare module "@mui/material/styles" {
   // Palette defines what is available on the theme object when accessing theme.palette
   // Add neutral and severity colors to the theme.palette
   interface Palette {
     neutral?: Palette["primary"];
-    severityBorder?: {
-      noSymptom: string;
+    severityBorder: {
+      noSymptoms: string;
       mild: string;
       moderate: string;
       severe: string;
     };
-    severityBg?: {
-      noSymptom: string;
+    severityBg: {
+      noSymptoms: string;
       mild: string;
       moderate: string;
       severe: string;
     };
-    severity?: {
-      noSymptom: string;
+    severity: {
+      noSymptoms: string;
       mild: string;
       moderate: string;
       severe: string;
@@ -39,24 +40,9 @@ declare module "@mui/material/styles" {
   // PaletteOptions defines what you are allowed to pass into createTheme({ palette: { ... } })
   interface PaletteOptions {
     neutral?: PaletteOptions["primary"];
-    severityBorder?: {
-      noSymptom: string;
-      mild: string;
-      moderate: string;
-      severe: string;
-    };
-    severityBg?: {
-      noSymptom: string;
-      mild: string;
-      moderate: string;
-      severe: string;
-    };
-    severity?: {
-      noSymptom: string;
-      mild: string;
-      moderate: string;
-      severe: string;
-    };
+    severityBorder?: Palette["severityBorder"];
+    severityBg?: Palette["severityBg"];
+    severity?: Palette["severity"];
   }
 
   // Add additional text color to palette
@@ -81,30 +67,20 @@ const theme = createTheme({
       main: "#7d2e79",
       contrastText: "#ffffff",
     },
-    // error: {
-    //   main: '#ef4444',
-    // },
-    // warning: {
-    //   main: '#f59e0b',
-    // },
-    // info: {},
-    // success: {
-    //   main: '#f0f7f0',
-    // },
     severity: {
-      noSymptom: lightGreen[400], //#9ccc65
+      noSymptoms: lightGreen[400], //#9ccc65
       mild: yellow[400],
       moderate: orange[400],
       severe: red[400],
     },
     severityBorder: {
-      noSymptom: lightGreen[800],
+      noSymptoms: lightGreen[800],
       mild: yellow[800],
       moderate: orange[800],
       severe: red[800],
     },
     severityBg: {
-      noSymptom: lightGreen[50],
+      noSymptoms: lightGreen[50],
       mild: yellow[50],
       moderate: orange[50],
       severe: red[50],
@@ -239,11 +215,25 @@ const theme = createTheme({
     },
     MuiChartsAxis: {
       styleOverrides: {
-        root: {
+        root: ({theme})  => ({
           "& .MuiChartsAxis-tick": {
-            stroke: green[900],
+            stroke: theme.palette.primary.main,
           },
-        },
+          "& .MuiChartsAxis-tickLabel": {
+            fill: theme.palette.text.secondary,
+            fontSize: 11,
+          }
+      }),
+      },
+    },
+    MuiChartsGrid: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          [`& .${chartsGridClasses.horizontalLine}`]: {
+            strokeDasharray: "3 3",
+            stroke: theme.palette.divider,
+          },
+        }),
       },
     },
   },
