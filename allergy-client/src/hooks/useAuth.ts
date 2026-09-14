@@ -80,7 +80,6 @@ export const useAuth = () => {
 
   const signInMutation = useMutation({
     mutationFn: (email: string) => sendMagicLink(email),
-    onSuccess: () => show("Check your email for sign-in link", "success"),
     onError: (error) => show(`Couldn't send login link: ${error.message}`, "error"),
   });
 
