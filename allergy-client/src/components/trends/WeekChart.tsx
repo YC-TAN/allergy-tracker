@@ -4,6 +4,7 @@ import { loadAll } from "../../utils/storage";
 import { getRelativeDays } from "../../utils/dates";
 import BaseCard from "../ui/BaseCard";
 import { BarChart } from "@mui/x-charts";
+import { PiecewiseColorLegend } from "@mui/x-charts/ChartsLegend";
 import { useTheme } from "@mui/material/styles";
 
 
@@ -37,7 +38,7 @@ const WeekChart = () => {
   return (
     <BaseCard>
       <BarChart
-        className="h-[40dvh]"
+        className="h-[40dvh] pt-2"
         dataset={sevenDayEntries}
         series={[
           {
@@ -85,8 +86,23 @@ const WeekChart = () => {
           },
         ]}
         grid={{ horizontal: true }}
-        // hideLegend
+        slots={{ legend: PiecewiseColorLegend }}
+      slotProps={{
+        legend: {
+          axisDirection: "y",
+          direction: "horizontal",
+          position: {
+            vertical: "bottom"
+          },
+          sx: { padding: 0 },
+          labelFormatter: ({ index }) =>
+            index !== null
+              ? (SeverityLabel[index as SeverityRatingType] ?? null)
+              : null,
+        },
+      }}
       />
+      
     </BaseCard>
   );
 };
