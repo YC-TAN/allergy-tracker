@@ -1,3 +1,5 @@
+import { DataSaverOff } from "@mui/icons-material";
+
 /** 'en-CA' locale formats as YYYY-MM-DD, same as ISO string
  * using NZ time regardless of device timezone.
  */
@@ -32,3 +34,15 @@ export const getLast7Days = (): string[] => {
     return formatLocalDate(d);
   });
 };
+
+export const getRelativeDays = (
+  numOfDays: number = 7,
+  includeToday: boolean = true
+): string[] => {
+  return Array.from({length: numOfDays}, (_, i) => {
+    const d = new Date();
+    const offset = includeToday ? numOfDays - 1- i: numOfDays - i;
+    d.setDate(d.getDate() - offset);
+    return formatLocalDate(d);
+  })
+}
