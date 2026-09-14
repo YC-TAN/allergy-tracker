@@ -21,7 +21,7 @@ const Shell = () => {
       className="flex flex-col mx-auto h-dvh w-full lg:max-w-180" // 97.5 = 390px
     >
       <AppBar position="static">
-        <Toolbar className="flex justify-between">
+        <Toolbar className="flex justify-between px-5 md:px-auto">
           <Typography
             variant="h5"
             component={Link}
