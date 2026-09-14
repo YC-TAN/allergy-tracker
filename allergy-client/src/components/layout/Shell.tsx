@@ -1,26 +1,13 @@
 /**
  * Main application shell and navigation layout.
- * 
+ *
  * Renders the shared application layout with the top bar,
  * bottom navigation, route outlet, and auth control.
  */
 
 import { Outlet, Link } from "react-router-dom";
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  Typography,
-  BottomNavigation,
-  BottomNavigationAction,
-} from "@mui/material";
-import {
-  HomeOutlined,
-  BarChartOutlined,
-  SettingsOutlined,
-} from "@mui/icons-material";
-
-import AuthButton from "./AuthButton";
+import { Box, AppBar, Toolbar, Typography } from "@mui/material";
+import BottomNav from "./BottomNav";
 import SyncIcon from "./SyncIcon";
 import { useAuth } from "../../hooks/useAuth";
 import { useSyncEntries } from "../../hooks/useSyncEntries";
@@ -43,7 +30,11 @@ const Shell = () => {
           >
             Allergy Tracker
           </Typography>
-          <SyncIcon user={user} userIsPending={userIsPending} isSyncing={isSyncing} />
+          <SyncIcon
+            user={user}
+            userIsPending={userIsPending}
+            isSyncing={isSyncing}
+          />
         </Toolbar>
       </AppBar>
 
@@ -51,27 +42,12 @@ const Shell = () => {
         <Outlet />
       </main>
 
-      <BottomNavigation>
-        <BottomNavigationAction
-          label="Home"
-          icon={<HomeOutlined />}
-          component={Link}
-          to="/"
-        />
-        <BottomNavigationAction
-          label="Trends"
-          icon={<BarChartOutlined />}
-          component={Link}
-          to="/trends"
-        />
-        <BottomNavigationAction
-          label="Settings"
-          icon={<SettingsOutlined />}
-          component={Link}
-          to="/settings"
-        />
-        <AuthButton user={user} userIsPending={userIsPending} signOut={signOut} isSigningOut={isSigningOut}/>
-      </BottomNavigation>
+      <BottomNav
+        user={user}
+        userIsPending={userIsPending}
+        signOut={signOut}
+        isSigningOut={isSigningOut}
+      />
     </Box>
   );
 };
