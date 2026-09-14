@@ -13,6 +13,13 @@ const KEYS = {
   settings: 'allergy_settings'
 } as const;
 
+// const migrateEntry = (record: any): EntryLocal => {
+//   if (record._v === 1) {
+//     record = { ...record, honey: null, _v: 2 };
+//   }
+//   return EntryLocalSchema.parse(record);
+// }
+
 // Returns all entries from localStorage, or empty object if none
 export const loadAll = (key: string = KEYS.entry): Record<string, EntryLocal>  => {
   try {
@@ -39,9 +46,6 @@ export const getLocalEntry = (date: string, key: string = KEYS.entry): EntryLoca
 export const saveEntry = (entry: EntryInput, key: string = KEYS.entry): EntryLocal => {
   const parsed = EntryLocalSchema.parse(entry)
   const entries = loadAll(key)
-  // if (entries[parsed.date]) {
-  //   throw new Error(`Entry for ${parsed.date} already exists`)
-  // }
   entries[parsed.date] = parsed
   saveAll(entries, key)
   return parsed
@@ -51,19 +55,6 @@ export const getUnsyncedEntries = (key: string = KEYS.entry): EntryLocal[] => {
   const entries = loadAll(key);
   return Object.values(entries).filter((entry) => !entry._synced);
 }
-
-// export const updateEntry(entry: Entry): Entry {
-//   const parsed = EntrySchema.parse(entry)
-//   const entries = loadAll()
-
-//   if (!entries[parsed.date]) {
-//     throw new Error(`No entry found for ${parsed.date}`)
-//   }
-
-//   entries[parsed.date] = parsed
-//   saveAll(entries)
-//   return parsed
-// }
 
 // Get entries for a date range (inclusive), sorted oldest → newest
 export function getEntriesInRange(from: string, to: string): EntryLocal[] {

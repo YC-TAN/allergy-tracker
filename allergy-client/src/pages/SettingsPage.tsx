@@ -16,7 +16,7 @@ const SettingsPage = () => {
 
   return (
     <>
-      <PageTitle>Settings</PageTitle>
+      <PageTitle title="Settings" />
       <NotificationToggleCard />
       <NotificationTimeCard />
     </>
