@@ -13,10 +13,12 @@ import TrendsPage from "./pages/TrendsPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
+import ErrorPage from "./pages/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     element: <Shell />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
       { path: "entry", element: <EntryFormPage /> },
