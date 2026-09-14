@@ -1,27 +1,48 @@
-import { LineChart } from "@mui/x-charts/LineChart";
 import { SeverityLabel } from "../../schemas/labels";
 import type { SeverityRatingType } from "../../schemas";
 import { loadAll } from "../../utils/storage";
-import { getLast7Days } from "../../utils/dates";
+import { getRelativeDays } from "../../utils/dates";
+import BaseCard from "../ui/BaseCard";
+import { BarChart } from "@mui/x-charts";
+import { useTheme } from "@mui/material/styles";
+
+
+const NO_SYMPTOM_DISPLAY_VALUE = 0.15;
 
 const WeekChart = () => {
+  const theme = useTheme();
   const allEntries = loadAll();
-  const sevenDayEntries = getLast7Days().map((date) => ({
-    date,
-    severity: allEntries[date]?.severity ?? null,
-  }));
+
+  const sevenDayEntries = getRelativeDays().map((date) => {
+    const severity = allEntries[date]?.severity ?? null;
+    return {
+      date,
+      severity,
+      displayValue:
+        severity === null
+          ? null
+          : severity === 0
+            ? NO_SYMPTOM_DISPLAY_VALUE
+            : severity,
+    };
+  });
+
+  const severityColors = [
+    theme.palette.severity.noSymptoms,     // 0 - green
+    theme.palette.severity.mild,           // 1 - yellow
+    theme.palette.severity.moderate,       // 2 - orange
+    theme.palette.severity.severe,         // 3 - red
+  ];
 
   return (
-    <div className="w-full h-[40dvh] mt-4">
-      <LineChart
+    <BaseCard>
+      <BarChart
+        className="h-[40dvh]"
         dataset={sevenDayEntries}
         series={[
           {
-            dataKey: "severity",
-            label: "Severity",
-            showMark: true,
-            connectNulls: false,
-            curve: "monotoneX",
+            dataKey: "displayValue",
+            label: "Severity Level",
             valueFormatter: (v: number | null) => {
               if (v === null) return "No entry";
               return SeverityLabel[v as SeverityRatingType] ?? "";
@@ -30,41 +51,43 @@ const WeekChart = () => {
         ]}
         xAxis={[
           {
-            scaleType: "point",
+            scaleType: "band",
             dataKey: "date",
             valueFormatter: (dateStr: string) =>
               new Date(dateStr).toLocaleDateString("en-NZ", {
+                weekday: "short",
                 day: "numeric",
-                month: "short", // '16 Jun'
               }),
             tickLabelStyle: {
-              angle: -90,
-              textAnchor: "end",
-              dominantBaseline: "central",
+              fontSize: 11,
             },
-            height: "auto",
           },
         ]}
         yAxis={[
           {
             min: 0,
             max: 3,
+            tickMinStep: 1,
             tickNumber: 4,
             // Replace numeric ticks with severity labels
             valueFormatter: (value: SeverityRatingType) =>
               SeverityLabel[value] ?? "",
             tickLabelStyle: {
-              angle: -45,
+              fontSize: 11,
               textAnchor: "end",
-              dominantBaseline: "central",
             },
-            width: 80,
+            width: 4,
+            colorMap: {
+              type: "piecewise",
+              thresholds: [0.5, 1.5, 2.5],
+              colors: severityColors,
+            },
           },
         ]}
         grid={{ horizontal: true }}
-        hideLegend
+        // hideLegend
       />
-    </div>
+    </BaseCard>
   );
 };
 

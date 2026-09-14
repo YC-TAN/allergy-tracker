@@ -5,10 +5,15 @@
  */
 
 import WeekChart from "../components/trends/WeekChart";
+import PageTitle from "../components/ui/PageTitle";
 
 const TrendsPage = () => {
   return (
+    <>
+    <PageTitle title="7-Day Trend"></PageTitle>
     <WeekChart/>
+    </>
+    
   )
 }
 
