@@ -5,9 +5,10 @@
  */
 
 import { useSettings } from "../hooks/useSettings";
-import NotificationToggleCard from "../components/settings/NotificationToggleCard";
-import NotificationTimeCard from "../components/settings/NotificationTimeCard";
+// import NotificationToggleCard from "../components/settings/NotificationToggleCard";
+// import NotificationTimeCard from "../components/settings/NotificationTimeCard";
 import PageTitle from "../components/ui/PageTitle";
+import LocationCard from "../components/settings/LocationCard";
 
 const SettingsPage = () => {
   const { settingsIsPending } = useSettings();
@@ -17,8 +18,9 @@ const SettingsPage = () => {
   return (
     <>
       <PageTitle title="Settings" />
-      <NotificationToggleCard />
-      <NotificationTimeCard />
+      {/* <NotificationToggleCard />
+      <NotificationTimeCard /> */}
+      <LocationCard />
     </>
   );
 };

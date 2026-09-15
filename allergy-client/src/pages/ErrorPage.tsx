@@ -1,5 +1,5 @@
 import { useRouteError, isRouteErrorResponse, useNavigate } from "react-router-dom";
-import { Typography, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import ErrorTypography from "../components/ui/ErrorTypography";
 
 const ErrorPage = () => {
