@@ -103,4 +103,4 @@ erDiagram
 
 Relationship notes
 - Each `entries` row belongs to one `auth.users` record.
-- `daily_pollen_forecasts` is a separate read-only public dataset for pollutant forecast data by date and location.
+- `daily_pollen_forecasts` is a separate read-only public dataset for pollen forecast data by date and location.
