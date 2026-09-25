@@ -5,11 +5,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from .routers import pollen_forecast, internal, entry
 from .core.logging_config import setup_logging
 from .core.exception_handlers import register_exception_handlers
-
+from .core.config import get_settings
 
 setup_logging()
+settings = get_settings()
+is_production = settings.environment == "production"
 
-app = FastAPI()
+app = FastAPI(
+    docs_url=None if is_production else "/docs",
+    redoc_url=None if is_production else "/redoc"
+)
 
 register_exception_handlers(app)
 api = APIRouter(prefix="/api")
