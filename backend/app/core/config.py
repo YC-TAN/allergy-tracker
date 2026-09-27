@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     pooler_database_url: str
     # supabase_jwt_secret: str
     supabase_jwks_url: str
+    supabase_issuer: AnyHttpUrl
 
     # Metservice API
     metservice_base_url: AnyHttpUrl = "https://www.metservice.com"
