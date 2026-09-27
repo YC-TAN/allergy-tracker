@@ -42,10 +42,6 @@ logger = logging.getLogger(__name__)
 def main():
     logger.info("Hello from backend!")
 
-@app.get("/health-check")
-def read_root():
-    return {"message": "Hello from backend"}
-
 
 if __name__ == "__main__":
     main()
