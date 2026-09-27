@@ -1,4 +1,4 @@
-from fastapi import Header, HTTPException
+from fastapi import Header
 import jwt
 from jwt import PyJWKClient
 from uuid import UUID
