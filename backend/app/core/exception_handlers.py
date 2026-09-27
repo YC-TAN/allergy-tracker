@@ -79,7 +79,11 @@ async def app_error_handler(request: Request, exc: AppError):
     """
     log = logger.warning if exc.status_code < 500 else logger.error
     log("%s: %s (%s %s)", type(exc).__name__, exc.detail, request.method, request.url)
-    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+    return JSONResponse(
+        status_code=exc.status_code, 
+        content={"detail": exc.detail},
+        headers=exc.headers
+    )
 
 
 def register_exception_handlers(app: FastAPI) -> None:
