@@ -8,6 +8,7 @@ from .core.exception_handlers import register_exception_handlers
 from .core.config import get_settings
 
 setup_logging()
+
 settings = get_settings()
 is_production = settings.environment == "production"
 

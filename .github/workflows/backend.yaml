@@ -24,6 +24,7 @@ jobs:
             ENVIRONMENT: "development"
             TEST_DB_URL: "postgresql+psycopg://postgres:postgres@127.0.0.1:54322/postgres"
             SUPABASE_JWKS_URL: "https://example.com/auth/v1/.well-known/jwks.json"
+            SUPABASE_ISSUER: "https://placeholder.supabase.co/auth/v1"
 
         steps:
             - uses: actions/checkout@v7
