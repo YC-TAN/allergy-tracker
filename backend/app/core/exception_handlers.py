@@ -18,6 +18,8 @@ from app.errors.app_error import AppError
 logger = logging.getLogger(__name__)
 
 
+# NOTE FastAPI default handlers are coroutines (async def),
+# without await they will return an unawaited coroutine object instead of a response.
 async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
     """
     Handles HTTP exceptions raised by route handler.
@@ -49,7 +51,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     return await request_validation_exception_handler(request, exc)
 
 
-async def unhandled_exception_handler(request: Request, exc: Exception):
+def unhandled_exception_handler(request: Request, exc: Exception):
     """
     Catches all unhandled exceptions.
 
@@ -64,7 +66,7 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
     return JSONResponse(status_code=500, content={"detail": "Internal server error"})
 
 
-async def app_error_handler(request: Request, exc: AppError):
+def app_error_handler(request: Request, exc: AppError):
     """Handle AppError and its subclasses, logging and returning a JSON response.
 
     Logs at WARNING level for client errors (status_code < 500) and ERROR
