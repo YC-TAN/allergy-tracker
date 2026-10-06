@@ -1,37 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../lib/supabase";
+import { getCurrentUser, sendMagicLink, signOut } from "../services/auth";
 import { useNotificationActions } from "./useNotificationStore";
 import { useSyncEntries } from "./useSyncEntries";
-
-/**
- * Reads the current Supabase session and returns the authenticated user.
- *
- * @returns The current user object, or null if no active session exists.
- */
-async function getSession() {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  return session?.user ?? null;
-}
-
-/**
- * Sends a Supabase magic-link sign-in request for the provided email.
- *
- * @param email The email address that should receive the sign-in link.
- * @throws {Error} When Supabase rejects the requested OTP delivery.
- */
-async function sendMagicLink(email: string) {
-  const { error } = await supabase.auth.signInWithOtp({
-    email,
-    options: { 
-      // to send the user back after they click the link in their email inbox.
-      emailRedirectTo: window.location.origin 
-    }, 
-  });
-  if (error) throw error;
-}
 
 /**
  * React Query key used to cache the currently authenticated user.
@@ -39,13 +11,27 @@ async function sendMagicLink(email: string) {
 export const AUTH_USER_KEY = ["auth", "user"] as const;
 
 /**
- * Provides the App's authentication state and mutation helpers.
+ * Provides the app's authentication state and mutation helpers.
  *
- * The hook keeps the user query synchronized with Supabase auth events and
- * triggers an entry sync after a successful sign-in event.
+ * The current user is cached in React Query and kept synchronized with
+ * Supabase authentication events, including sign-in, sign-out, and token
+ * refresh events. A successful sign-in also triggers synchronization of local
+ * entries with the server.
  *
- * @returns An auth object containing the signed-in user,
- *         loading flags, sign-in/sign-out actions, and notification state.
+ * Signing out removes the Supabase session, clears the cached authenticated
+ * user, and removes cached entry queries from server. Locally stored entries are retained
+ * so unsynced entries can be synchronized after the next sign-in.
+ *
+ * @returns Authentication state and actions:
+ *   - `user`: The current authenticated user, or null.
+ *   - `userIsPending`: Whether the current user query is still loading.
+ *   - `isSignedIn`: Whether a user is currently signed in.
+ *   - `signIn`: Sends a magic-link sign-in email.
+ *   - `isSigningIn`: Whether the sign-in request is pending.
+ *   - `signInError`: The sign-in error, if the request failed.
+ *   - `signInSent`: Whether the sign-in request completed successfully.
+ *   - `signOut`: Signs out the current user.
+ *   - `isSigningOut`: Whether the sign-out request is pending.
  */
 export const useAuth = () => {
   const queryClient = useQueryClient();
@@ -59,9 +45,9 @@ export const useAuth = () => {
 
   const result = useQuery({
     queryKey: AUTH_USER_KEY,
-    queryFn: getSession,
-    staleTime: Infinity, 
-    // Because Supabase auth state is actively managed and synchronized via the event listener, 
+    queryFn: getCurrentUser,
+    staleTime: Infinity,
+    // Because Supabase auth state is actively managed and synchronized via the event listener,
     // preventing unnecessary refetches via React Query's default background refetching mechanisms.
   });
 
@@ -69,7 +55,7 @@ export const useAuth = () => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      queryClient.setQueryData(["auth", "user"], session?.user ?? null);
+      queryClient.setQueryData(AUTH_USER_KEY, session?.user ?? null);
 
       if (event === "SIGNED_IN") {
         syncRef.current();
@@ -79,28 +65,34 @@ export const useAuth = () => {
   }, [queryClient]);
 
   const signInMutation = useMutation({
-    mutationFn: (email: string) => sendMagicLink(email),
-    onError: (error) => show(`Couldn't send login link: ${error.message}`, "error"),
+    mutationFn: (email: string) => sendMagicLink(email, window.location.origin),
+    onError: (error) =>
+      show(`Couldn't send login link: ${error.message}`, "error"),
   });
 
   const signOutMutation = useMutation({
-    mutationFn: () => supabase.auth.signOut(),
+    mutationFn: signOut,
     onSuccess: () => {
-      queryClient.clear();
+      queryClient.setQueryData(AUTH_USER_KEY, null);
+      /** clears stale in-memory server data */
+      queryClient.removeQueries({
+        queryKey: ["entry"],
+      });
       show("Signed out - sign in to sync your entries", "success");
     },
-    onError: (error) => show(`Couldn't sign out: ${error.message}`, "error")
+    onError: (error) => show(`Couldn't sign out: ${error.message}`, "error"),
   });
 
   return {
     user: result.data,
     userIsPending: result.isPending,
     isSignedIn: result.data != null,
-    signIn: (email: string) => signInMutation.mutate(email),
+    signIn: (email: string) =>
+      signInMutation.mutate(email),
     isSigningIn: signInMutation.isPending,
     signInError: signInMutation.error,
     signInSent: signInMutation.isSuccess,
     signOut: () => signOutMutation.mutate(),
-    isSigningOut: signOutMutation.isPending
+    isSigningOut: signOutMutation.isPending,
   };
 };
