@@ -46,9 +46,11 @@ export const useAuth = () => {
   const result = useQuery({
     queryKey: AUTH_USER_KEY,
     queryFn: getCurrentUser,
+    /** Supabase auth state is actively managed and synchronized via the event listener,
+    * infinity stale time preventing unnecessary refetches via React Query's default background refetching mechanisms 
+    */
     staleTime: Infinity,
-    // Because Supabase auth state is actively managed and synchronized via the event listener,
-    // preventing unnecessary refetches via React Query's default background refetching mechanisms.
+    
   });
 
   useEffect(() => {
