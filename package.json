@@ -4,6 +4,10 @@
   },
   "devDependencies": {
     "concurrently": "^10.0.4",
+    "fake-indexeddb": "^6.2.5",
     "supabase": "^2.109.0"
+  },
+  "dependencies": {
+    "dexie": "^4.4.6"
   }
 }
