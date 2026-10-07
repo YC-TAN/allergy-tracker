@@ -36,6 +36,7 @@ A New Zealand focused Hay Fever Tracking App that lets you log daily hay fever s
 1. Race condition
 2. State management
 3. Upsert
+4. Dexie/ IndexedDB - async, capacity, indexed queries, offline storage
 
 ---
 
