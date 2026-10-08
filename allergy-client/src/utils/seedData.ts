@@ -3,16 +3,48 @@ import { getRelativeDays } from "./dates";
 import { saveEntry, clearAllEntries } from "./storage";
 
 const MOCK_ENTRIES = [
-  { severity: 0, symptoms: [], notes: "" },
-  { severity: 1, symptoms: ["nose"], notes: "" },
-  { severity: 2, symptoms: ["eyes", "nose", "throat"], notes: "Windy" },
+  {
+    severity: 0,
+    symptoms: [],
+    notes: "",
+    honey: false,
+    location: "Christchurch Central",
+  },
+  {
+    severity: 1,
+    symptoms: ["nose"],
+    notes: "",
+    honey: true,
+    location: "Riccarton",
+  },
+  {
+    severity: 2,
+    symptoms: ["eyes", "nose", "throat"],
+    notes: "Windy",
+    honey: false,
+    location: "Christchurch Central",
+  },
   {
     severity: 0,
     symptoms: ["eyes", "nose", "headache"],
     notes: "Drying clothes indoor",
+    honey: true,
+    location: "New Brighton",
   },
-  { severity: 1, symptoms: ["nose"], notes: "" },
-  { severity: 3, symptoms: [], notes: "" },
+  {
+    severity: 1,
+    symptoms: ["nose"],
+    notes: "",
+    honey: false,
+    location: "Riccarton",
+  },
+  {
+    severity: 3,
+    symptoms: [],
+    notes: "",
+    honey: true,
+    location: "Christchurch Central",
+  },
 ] as const;
 
 export const seedMockEntries = () => {
