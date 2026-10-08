@@ -15,7 +15,7 @@ const MOCK_ENTRIES = [
     symptoms: ["nose"],
     notes: "",
     honey: true,
-    location: "Riccarton",
+    location: "Upper Hutt",
   },
   {
     severity: 2,
@@ -29,14 +29,14 @@ const MOCK_ENTRIES = [
     symptoms: ["eyes", "nose", "headache"],
     notes: "Drying clothes indoor",
     honey: true,
-    location: "New Brighton",
+    location: "Upper Hutt",
   },
   {
     severity: 1,
     symptoms: ["nose"],
     notes: "",
     honey: false,
-    location: "Riccarton",
+    location: "Upper Hutt",
   },
   {
     severity: 3,

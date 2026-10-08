@@ -16,13 +16,15 @@ const test_settings_key: string = "test_settings";
 const mockEntry: EntryInput = {
   date: today,
   severity: 2,
-  symptoms: ["nose", "eyes"],
+  symptoms: ["nose"],
   notes: "taken antihistamine",
+  honey: false,
+  location: "Christchurch Central",
 };
 
 beforeEach(() => {
   clearAllEntries(test_entry_key); // fresh localStorage for every test
-  clearSettings(test_settings_key)
+  clearSettings(test_settings_key);
 });
 
 describe("getEntry", () => {
@@ -66,6 +68,20 @@ describe("Settings", () => {
 
   it("set and get settings correctly", () => {
     setSettings({ notify: true, notify_time: "08:00" });
-    expect(getSettings()).toEqual({ notify: true, notify_time: "08:00", location: "Christchurch Central" });
+    expect(getSettings()).toEqual({
+      notify: true,
+      notify_time: "08:00",
+      location: "Christchurch Central",
+    });
   });
 });
+
+// A missing entry returns null
+// Saving an entry persists it
+// Saving the same date overwrites it
+// Invalid entries are rejected
+// Unsynced entries are returned
+// Deleting an entry removes only that entry
+// Existing data survives a reload-like operation
+// Malformed localStorage data does not crash the application
+// severity 0 remove the symptoms
