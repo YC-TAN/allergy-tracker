@@ -1,8 +1,11 @@
 /**
+ * IndexedDB is asynchronous, non blocking in-browser transactional database.
  * Dexie is a wrapper of IndexedDB, it create and open IndexedDB database.
  * EntityTable is a type that describes a table containing object with a known primary key.
+ * 
+ * Migrate to IndexedDB to support better offline and sync experience.
+ * IndexedDB is not persist, sync backend for persist data
  */
-
 import Dexie, { type EntityTable } from "dexie";
 import type { EntryLocal } from "../schemas";
 
