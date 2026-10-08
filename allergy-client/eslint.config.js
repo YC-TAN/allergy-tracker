@@ -23,5 +23,20 @@ export default defineConfig([
       }
     },
   },
+  // Dexie guard
+  // Only src/db/ may import the Dexie client
+  // everything else goes through db/entries etc.
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/db/**', 'src/**/*.test.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': ['error', {
+        patterns: [{
+          group: ['**/db/client'],
+          message: 'Import from db module (e.g. db/entries), not the Dexie client.',
+        }],
+      }],
+    },
+  },
   eslintConfigPrettier,
 ])
