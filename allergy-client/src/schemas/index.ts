@@ -57,7 +57,7 @@ export const SymptomSchema = z.enum([
 
 export type Symptom = z.infer<typeof SymptomSchema>;
 
-const ENTRY_LOCAL_SCHEMA_VERSION = 2;
+export const ENTRY_LOCAL_SCHEMA_VERSION = 2;
 const clearSymptomsIfNoSymptoms = <T extends { severity: number; symptoms: string[] }>(data: T): T => {
   if (data.severity === 0) {
     return { ...data, symptoms: [] };
