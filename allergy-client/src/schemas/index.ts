@@ -88,7 +88,8 @@ export const EntryLocalSchema = EntrySchema.extend({
 export const EntryResponseSchema = EntrySchema.extend({
   id: z.uuid(),
   // user_id: z.uuid(),
-  created_at: z.string(),
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
 }).transform(clearSymptomsIfNoSymptoms);
 
 export type Entry = z.infer<typeof EntrySchema>;
