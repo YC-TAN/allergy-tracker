@@ -82,6 +82,7 @@ export const EntrySchema = z.object({
 
 export const EntryLocalSchema = EntrySchema.extend({
   _synced: z.boolean().default(false),
+  _revision: z.number().int().nonnegative().default(0),
   _v: z.literal(ENTRY_LOCAL_SCHEMA_VERSION).default(ENTRY_LOCAL_SCHEMA_VERSION),
 }).transform(clearSymptomsIfNoSymptoms)
 
