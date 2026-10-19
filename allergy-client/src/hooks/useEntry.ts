@@ -9,8 +9,9 @@
  */
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getLocalEntry, saveEntry } from "../utils/storage";
-import { upsertEntry, getEntry } from "../services/entry";
+// import { getLocalEntry, saveEntry } from "../utils/storage";
+import { getLocalEntry, upsertLocalEntry } from "../db/entries";
+import { upsertRemoteEntry, getRemoteEntry } from "../services/entry";
 import { getTodayDate } from "../utils/dates";
 import type { EntryInput, EntryLocal } from "../schemas";
 import { useNotificationActions } from "./useNotificationStore";
@@ -28,14 +29,16 @@ export const useEntry = (date: string = getTodayDate()) => {
     queryKey: ["entry", date],
     // queryFn: () => getLocalEntry(date),
     queryFn: async () => {
-      const local = getLocalEntry(date);
+      const local = await getLocalEntry(date);
+      // return local if exist
       if (local) return local;
 
+      // check sign in before contacting server
       if (!isSignedIn()) return null;
 
       // Nothing local — try the server
-      const remote = await getEntry(date); // throws ApiError on real failures, returns null on 404
-      if (remote) return saveEntry({ ...remote, _synced: true }); // hydrate localStorage
+      const remote = await getRemoteEntry(date); // throws ApiError on real failures, returns null on 404
+      if (remote) return await upsertLocalEntry({ ...remote, _synced: true }); // hydrate localStorage
       return null;
     },
     retry: (failureCount, err) => {
@@ -49,24 +52,31 @@ export const useEntry = (date: string = getTodayDate()) => {
 
   const saveMutation = useMutation({
     mutationFn: async (input: EntryInput): Promise<EntryLocal> => {
-      if (navigator.onLine && isSignedIn()) {
-        try {
-          await upsertEntry(input);
-          return saveEntry({ ...input, _synced: true });
-        } catch (err) {
-          if (err instanceof ZodError) {
+      // local first
+      const local = await upsertLocalEntry({
+        ...input,
+        _synced: false,
+      })
+
+      // Sync if online and signed in
+      try {
+        if (navigator.onLine && isSignedIn()) {
+          await upsertRemoteEntry(input);
+          return await upsertLocalEntry({ ...local, _synced: true });
+        }
+      } catch (err) {
+        if (err instanceof ZodError) {
             console.error(err.issues)
             throw err
           };
           console.error("Sync attempt failed:", err);
-          return saveEntry({ ...input, _synced: false});
-        }
-      }
-      return saveEntry({ ...input, _synced: false });
+      };
+      
+      return local;
     },
-    onSuccess: (saved) => {
-      queryClient.setQueryData(["entry", saved.date], saved);
-      if (saved._synced) {
+    onSuccess: (savedEntry) => {
+      queryClient.setQueryData(["entry", savedEntry.date], savedEntry);
+      if (savedEntry._synced) {
         show("Entry saved and synced", "success");
       } else if (!isSignedIn()) {
         show("Saved on device — please sign in to sync", "success");
