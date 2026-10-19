@@ -11,7 +11,7 @@ import {
 
 const baseUrl = "/entries";
 
-export const upsertEntry = async (entry: EntryInput): Promise<EntryResponse> => {
+export const upsertRemoteEntry = async (entry: EntryInput): Promise<EntryResponse> => {
 // Throws a ZodError with a if the shape is wrong.
   const validated = EntrySchema.parse(entry);
 
@@ -23,7 +23,7 @@ export const upsertEntry = async (entry: EntryInput): Promise<EntryResponse> => 
   return EntryResponseSchema.parse(res);
 }
 
-export async function getEntry(date: string): Promise<EntryResponse | null> {
+export async function getRemoteEntry(date: string): Promise<EntryResponse | null> {
   try {
     const res = await apiFetch<unknown>(`${baseUrl}/${date}`, { method: 'GET' });
     return EntryResponseSchema.parse(res);
@@ -34,7 +34,7 @@ export async function getEntry(date: string): Promise<EntryResponse | null> {
   }  
 }
 
-export async function getEntries(from: string, to: string): Promise<EntryResponse[]> {
+export async function getRemoteEntries(from: string, to: string): Promise<EntryResponse[]> {
   const res = await apiFetch<unknown[]>(`${baseUrl}?from=${from}&to=${to}`, { method: 'GET' });
   return res.map((r) => EntryResponseSchema.parse(r));
 }
