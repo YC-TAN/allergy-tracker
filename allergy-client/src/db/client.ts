@@ -18,9 +18,9 @@ export const db = new Dexie("allergy-tracker") as Dexie & {
 };
 
 /** Version 1 
- * entries table is keyed by date and indexed by sync status
+ * entries table is keyed by date
  */
 db.version(1).stores({
-    entries: "date, _synced",
+    entries: "date",
 });
 
