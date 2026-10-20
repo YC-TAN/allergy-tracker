@@ -21,8 +21,23 @@ import theme from "./theme/index";
 import { router } from "./router";
 import NotificationSnackbar from "./components/ui/NotificationSnackbar";
 import { useSyncOnReconnect } from "./hooks/useSyncOnReconnect";
+import { useInitializeStorage } from "./hooks/useInitializedStorage";
 
 export default function App() {
+  const { isReady, error } = useInitializeStorage();
+
+  if (error) {
+    return <p>Unable to load local data.</p>;
+  }
+
+  if (!isReady) {
+    return <p>Loading local data...</p>;
+  }
+
+  return <InitializedApp />;
+}
+
+const InitializedApp = () => {
   useSyncOnReconnect();
 
   return (
