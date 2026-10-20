@@ -20,11 +20,6 @@ registerSW({
   },
 })
 
-import { resetMockEntries } from './utils/seedData'
-if (import.meta.env.DEV) {
-  await resetMockEntries()
-}
-
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
