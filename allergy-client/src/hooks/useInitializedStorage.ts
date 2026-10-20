@@ -7,26 +7,25 @@ export const useInitializeStorage = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-const initialize = async () => {
-    await migrateLegacyEntries();
+    const initialize = async () => {
+      await migrateLegacyEntries();
 
-    if (import.meta.env.DEV) {
-    await resetMockEntries();
-  }
+      if (import.meta.env.DEV) {
+        await resetMockEntries();
+      }
 
-  setIsReady(true);
-}
+      setIsReady(true);
+    };
 
-    initialize()
-      .catch((reason: unknown) => {
-        const migrationError =
-          reason instanceof Error
-            ? reason
-            : new Error("Failed to migrate local entries");
+    initialize().catch((reason: unknown) => {
+      const migrationError =
+        reason instanceof Error
+          ? reason
+          : new Error("Failed to migrate local entries");
 
-        console.error("Local entry migration failed:", migrationError);
-        setError(migrationError);
-      });
+      console.error("Local entry migration failed:", migrationError);
+      setError(migrationError);
+    });
   }, []);
 
   return { isReady, error };
