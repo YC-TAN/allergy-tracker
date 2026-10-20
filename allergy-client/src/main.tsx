@@ -22,7 +22,7 @@ registerSW({
 
 import { resetMockEntries } from './utils/seedData'
 if (import.meta.env.DEV) {
-  resetMockEntries()
+  await resetMockEntries()
 }
 
 const queryClient = new QueryClient();
