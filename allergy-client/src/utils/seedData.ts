@@ -1,6 +1,9 @@
-import { EntrySchema } from "../schemas";
+/**
+ * Replaced localStorage with IndexedDB
+ */
+
 import { getRelativeDays } from "./dates";
-import { saveEntry, clearAllEntries } from "./storage";
+import { upsertLocalEntries, clearLocalEntries } from "../db/entries";
 
 const MOCK_ENTRIES = [
   {
@@ -47,26 +50,27 @@ const MOCK_ENTRIES = [
   },
 ] as const;
 
-export const seedMockEntries = () => {
+export const seedMockEntries = async (): Promise<void> => {
   const previous7days = getRelativeDays(MOCK_ENTRIES.length, false);
 
   const entries = MOCK_ENTRIES.map((entry, index) => ({
     date: previous7days[index],
     ...entry,
+    symptoms: [...entry.symptoms],
+    _synced: true, // set to true during dev so it will not be uploaded to backend
   }));
-  entries.forEach((e) => {
-    const entry = EntrySchema.parse(e);
-    saveEntry(entry);
-  });
+  
+  await upsertLocalEntries(entries);
+
   console.log(
     "dev mock data seeded",
-    MOCK_ENTRIES.length,
-    "entries to localStorage",
-    entries
+    entries.length,
+    "entries to IndexedDB",
+    entries,
   );
 };
 
-export const resetMockEntries = () => {
-  clearAllEntries();
-  seedMockEntries();
+export const resetMockEntries = async (): Promise<void> => {
+  await clearLocalEntries();
+  await seedMockEntries();
 };
