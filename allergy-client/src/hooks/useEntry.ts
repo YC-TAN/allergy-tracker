@@ -38,7 +38,7 @@ export const useEntry = (date: string = getTodayDate()) => {
 
       // Nothing local — try the server
       const remote = await getRemoteEntry(date); // throws ApiError on real failures, returns null on 404
-      if (remote) return await upsertLocalEntry({ ...remote, _synced: true }); // hydrate localStorage
+      if (remote) return await upsertLocalEntry({ ...remote, _synced: true }); // Cache the server entry in IndexedDB
       return null;
     },
     retry: (failureCount, err) => {
@@ -56,23 +56,24 @@ export const useEntry = (date: string = getTodayDate()) => {
       const local = await upsertLocalEntry({
         ...input,
         _synced: false,
-      })
+      });
+
+      if (!navigator.onLine || !isSignedIn()) {
+        return local;
+      }
 
       // Sync if online and signed in
       try {
-        if (navigator.onLine && isSignedIn()) {
-          await upsertRemoteEntry(input);
-          return await upsertLocalEntry({ ...local, _synced: true });
-        }
+        await upsertRemoteEntry(input);
+        return await upsertLocalEntry({ ...local, _synced: true });
       } catch (err) {
         if (err instanceof ZodError) {
-            console.error(err.issues)
-            throw err
-          };
-          console.error("Sync attempt failed:", err);
-      };
-      
-      return local;
+          console.error(err.issues);
+          throw err;
+        }
+        console.error("Sync attempt failed:", err);
+        return local;
+      }
     },
     onSuccess: (savedEntry) => {
       queryClient.setQueryData(["entry", savedEntry.date], savedEntry);
