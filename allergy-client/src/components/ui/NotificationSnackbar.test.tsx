@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import NotificationSnackbar from "./NotificationSnackbar";
-import useNotificationStore from "../../hooks/useNotificationStore";
+import useNotificationStore from "../../stores/useNotificationStore";
 
 it("shows a notification message", async () => {
   useNotificationStore.setState({

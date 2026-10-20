@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSyncEntries } from "./useSyncEntries";
-import { useNotificationActions } from "./useNotificationStore";
+import { useNotificationActions } from "../stores/useNotificationStore";
 import { checkIsSignedIn } from "../utils/auth";
 
 /**

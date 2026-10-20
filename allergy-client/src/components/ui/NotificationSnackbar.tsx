@@ -8,7 +8,7 @@ import { Snackbar, Alert } from "@mui/material";
 import {
   useNotification,
   useNotificationActions,
-} from "../../hooks/useNotificationStore";
+} from "../../stores/useNotificationStore";
 
 const NotificationSnackbar = () => {
   const notification = useNotification();

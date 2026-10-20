@@ -14,7 +14,7 @@ import { getLocalEntry, upsertLocalEntry } from "../db/entries";
 import { upsertRemoteEntry, getRemoteEntry } from "../services/entry";
 import { getTodayDate } from "../utils/dates";
 import type { EntryInput, EntryLocal } from "../schemas";
-import { useNotificationActions } from "./useNotificationStore";
+import { useNotificationActions } from "../stores/useNotificationStore";
 import { ApiError } from "../lib/error";
 import { ZodError } from "zod";
 import { checkIsSignedIn } from "../utils/auth";

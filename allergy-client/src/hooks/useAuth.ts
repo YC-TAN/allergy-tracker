@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../lib/supabase";
 import { getCurrentUser, sendMagicLink, signOut } from "../services/auth";
-import { useNotificationActions } from "./useNotificationStore";
+import { useNotificationActions } from "../stores/useNotificationStore";
 import { useSyncEntries } from "./useSyncEntries";
 
 /**

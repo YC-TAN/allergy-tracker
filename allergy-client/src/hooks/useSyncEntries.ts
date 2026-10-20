@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { migrateEntries } from "../services/entry";
-import { useNotificationActions } from "./useNotificationStore";
+import { useNotificationActions } from "../stores/useNotificationStore";
 // import { getUnsyncedEntries, saveEntry } from "../utils/storage";
 import { getUnsyncedEntries, markEntriesSynced } from "../db/entries";
 import { checkIsSignedIn } from "../utils/auth";
