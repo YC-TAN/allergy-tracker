@@ -1,7 +1,8 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { migrateEntries } from "../services/entry";
 import { useNotificationActions } from "./useNotificationStore";
-import { getUnsyncedEntries, saveEntry } from "../utils/storage";
+// import { getUnsyncedEntries, saveEntry } from "../utils/storage";
+import { getUnsyncedEntries, markEntriesSynced } from "../db/entries";
 import { checkIsSignedIn } from "../utils/auth";
 import { ZodError } from "zod";
 
@@ -20,23 +21,14 @@ export const useSyncEntries = () => {
 
   const syncMutation = useMutation({
     mutationFn: async (): Promise<SyncOutcome> => {
-      const unsynced = getUnsyncedEntries();
+      const unsynced = await getUnsyncedEntries();
 
       if (unsynced.length === 0) return { status: "nothing-pending" };
       if (!isSignedIn()) return { status: "needs-sign-in" };
 
       const result = await migrateEntries(unsynced);
 
-      for (const entry of result.synced) {
-        try {
-          saveEntry({ ...entry, _synced: true });
-        } catch (err) {
-          console.error(
-            `Failed to save synced entry ${entry.date} locally:`,
-            err,
-          );
-        }
-      }
+      await markEntriesSynced(result.synced.map((entry) => entry.date));
 
       if (result.failed.length === 0) return { status: "all-synced" };
       if (result.synced.length === 0)
@@ -70,9 +62,7 @@ export const useSyncEntries = () => {
     },
     onError: (err) => {
       if (err instanceof ZodError) {
-        console.error(
-          err.issues
-        );
+        console.error(err.issues);
         show(
           "Something went wrong with the entry data — please try again",
           "error",
