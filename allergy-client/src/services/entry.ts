@@ -34,14 +34,14 @@ export async function getRemoteEntry(date: string): Promise<EntryResponse | null
   }  
 }
 
-export async function getRemoteEntries(from: string, to: string): Promise<EntryResponse[]> {
-  const res = await apiFetch<unknown[]>(`${baseUrl}?from=${from}&to=${to}`, { method: 'GET' });
+export async function getRemoteEntries(days: number): Promise<EntryResponse[]> {
+  const res = await apiFetch<unknown[]>(`${baseUrl}?days=${days}`, { method: 'GET' });
   return res.map((r) => EntryResponseSchema.parse(r));
 }
 
 export async function migrateEntries(entries: EntryInput[]): Promise<MigrateResponse> {
   const validated = entries.map((e) => EntrySchema.parse(e));
-  const res = await apiFetch<unknown>('/entries/migrate', {
+  const res = await apiFetch<unknown>(`${baseUrl}/migrate`, {
     method: 'POST',
     body: JSON.stringify({ entries: validated }),
   });
