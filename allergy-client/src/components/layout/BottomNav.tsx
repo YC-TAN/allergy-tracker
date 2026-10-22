@@ -14,22 +14,15 @@ import {
   LogoutOutlined,
 } from "@mui/icons-material";
 import LogoutDialog from "./LogoutDialog";
+import { useAuth } from "../../hooks/useAuth";
+import { useUser, useAuthLoading } from "../../stores/useAuthStore";
 
-interface BottomNavProps {
-  user: User | null | undefined;
-  userIsPending: boolean;
-  signOut: () => void;
-  isSigningOut: boolean;
-}
-
-const BottomNav = ({
-  user,
-  userIsPending,
-  signOut,
-  isSigningOut,
-}: BottomNavProps) => {
+const BottomNav = () => {
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const location = useLocation();
+  const user = useUser();
+  const userIsPending = useAuthLoading();
+  const { signOut, isSigningOut } = useAuth();
 
   const handleConfirmLogout = () => {
     setLogoutDialogOpen(false);
@@ -70,24 +63,24 @@ const BottomNav = ({
   };
   return (
     <>
-      <BottomNavigation 
-      showLabels 
-      value={location.pathname}
-      sx={{
-            height: "auto",
-            py: 1,
-            "& .MuiBottomNavigationAction-root": {
-              py: 0.5,
-              minWidth: "auto",
-            },
-            "& .MuiSvgIcon-root": {
-              fontSize: "1.25rem", // Shrinks icons from standard 1.5rem (24px) to 20px
-              mb: 0.125, // Spacing between icon and label
-            },
-            "& .MuiBottomNavigationAction-label": {
-              fontSize: "0.75rem",
-            },
-          }}
+      <BottomNavigation
+        showLabels
+        value={location.pathname}
+        sx={{
+          height: "auto",
+          py: 1,
+          "& .MuiBottomNavigationAction-root": {
+            py: 0.5,
+            minWidth: "auto",
+          },
+          "& .MuiSvgIcon-root": {
+            fontSize: "1.25rem", // Shrinks icons from standard 1.5rem (24px) to 20px
+            mb: 0.125, // Spacing between icon and label
+          },
+          "& .MuiBottomNavigationAction-label": {
+            fontSize: "0.75rem",
+          },
+        }}
       >
         <BottomNavigationAction
           label="Home"

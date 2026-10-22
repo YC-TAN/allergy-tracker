@@ -9,11 +9,9 @@ import { Outlet, Link } from "react-router-dom";
 import { Box, AppBar, Toolbar, Typography } from "@mui/material";
 import BottomNav from "./BottomNav";
 import SyncIcon from "./SyncIcon";
-import { useAuth } from "../../hooks/useAuth";
 import { useSyncEntries } from "../../hooks/useSyncEntries";
 
 const Shell = () => {
-  const { user, userIsPending, signOut, isSigningOut } = useAuth();
   const { isSyncing } = useSyncEntries();
 
   return (
@@ -31,8 +29,6 @@ const Shell = () => {
             Allergy Tracker
           </Typography>
           <SyncIcon
-            user={user}
-            userIsPending={userIsPending}
             isSyncing={isSyncing}
           />
         </Toolbar>
@@ -42,12 +38,7 @@ const Shell = () => {
         <Outlet />
       </main>
 
-      <BottomNav
-        user={user}
-        userIsPending={userIsPending}
-        signOut={signOut}
-        isSigningOut={isSigningOut}
-      />
+      <BottomNav/>
     </Box>
   );
 };

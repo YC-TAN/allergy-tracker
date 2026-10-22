@@ -42,6 +42,14 @@ export const useUser = () => useAuthStore((s) => s.user);
 export const useAuthLoading = () => useAuthStore((s) => s.loading);
 
 /**
+ * Selects whether a user is currently signed in.
+ *
+ * @returns True once auth has resolved and a user exists.
+ */
+export const useIsSignedIn = () =>
+  useAuthStore((s) => !s.loading && s.user != null);
+
+/**
  * Selects authentication actions from the auth store.
  *
  * @returns The actions used to update authentication state.
