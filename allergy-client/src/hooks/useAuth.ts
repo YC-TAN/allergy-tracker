@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { sendMagicLink, signOut } from "../services/auth";
 import { useNotificationActions } from "../stores/useNotificationStore";
-import { useAuthLoading, useUser } from "../stores/useAuthStore";
 
 /**Provides the app's authentication state and sign-in, sign-out mutations.
  *
@@ -18,8 +17,6 @@ import { useAuthLoading, useUser } from "../stores/useAuthStore";
  */
 export const useAuth = () => {
   const { show } = useNotificationActions();
-  const user = useUser();
-  const loading = useAuthLoading();
 
   const signInMutation = useMutation({
     mutationFn: (email: string) => sendMagicLink(email, window.location.origin),
@@ -35,9 +32,6 @@ export const useAuth = () => {
   });
 
   return {
-    user,
-    userIsPending: loading,
-    isSignedIn: !loading && user != null,
     signIn: (email: string) => signInMutation.mutate(email),
     isSigningIn: signInMutation.isPending,
     signInError: signInMutation.error,
