@@ -20,8 +20,10 @@ import { RouterProvider } from "react-router-dom";
 import theme from "./theme/index";
 import { router } from "./router";
 import NotificationSnackbar from "./components/ui/NotificationSnackbar";
-import { useSyncOnReconnect } from "./hooks/useSyncOnReconnect";
 import { useInitializeStorage } from "./hooks/useInitializedStorage";
+import { useUser } from "./stores/useAuthStore";
+import { useSync } from "./hooks/useSync";
+import { AuthListener } from "./components/layout/AuthListener";
 
 export default function App() {
   const { isReady, error } = useInitializeStorage();
@@ -38,11 +40,13 @@ export default function App() {
 }
 
 const InitializedApp = () => {
-  useSyncOnReconnect();
+  const userId = useUser()?.id;
+  useSync(userId);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <AuthListener />
       <RouterProvider router={router} />
       <NotificationSnackbar />
     </ThemeProvider>
