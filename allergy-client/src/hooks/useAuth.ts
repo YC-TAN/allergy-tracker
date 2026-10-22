@@ -7,7 +7,7 @@ import { useAuthLoading, useUser } from "../stores/useAuthStore";
  *
  * @returns Authentication state and actions:
  *   - `user`: The current authenticated user, or null.
- *   - `userIsPending`: Whether the current user query is still loading.
+ *   - `userIsPending`: Whether the initial auth state is still being resolved.
  *   - `isSignedIn`: Whether a user is currently signed in.
  *   - `signIn`: Sends a magic-link sign-in email.
  *   - `isSigningIn`: Whether the sign-in request is pending.
@@ -37,7 +37,7 @@ export const useAuth = () => {
   return {
     user,
     userIsPending: loading,
-    isSignedIn: user != null,
+    isSignedIn: !loading && user != null,
     signIn: (email: string) => signInMutation.mutate(email),
     isSigningIn: signInMutation.isPending,
     signInError: signInMutation.error,
