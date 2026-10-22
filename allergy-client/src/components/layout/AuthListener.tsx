@@ -1,10 +1,8 @@
 import { useEffect } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../../lib/supabase";
 import { useAuthActions } from "../../stores/useAuthStore";
 
 export const AuthListener = () => {
-  const queryClient = useQueryClient();
   const { setUser } = useAuthActions();
 
   useEffect(() => {
@@ -15,7 +13,7 @@ export const AuthListener = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [queryClient, setUser]);
+  }, [setUser]);
 
   return null;
 }
