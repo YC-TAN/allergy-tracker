@@ -1,9 +1,14 @@
 /**
  * Reads and Writes entries into Dexie
  */
-
 import { db } from "./client";
-import { EntryLocalSchema, type EntryInput, type EntryLocal } from "../schemas";
+import {
+  EntryLocalSchema,
+  type EntryInput,
+  type EntryLocal,
+  type EntryResponse,
+  type PushedRef,
+} from "../schemas";
 
 export const getLocalEntry = async (
   date: string,
@@ -18,19 +23,27 @@ export const getLocalEntry = async (
  * @returns parsed entry
  */
 export const upsertLocalEntry = async (
-  entry: EntryInput,
+  input: EntryInput,
 ): Promise<EntryLocal> => {
-  const parsedEntry = EntryLocalSchema.parse(entry);
-  await db.entries.put(parsedEntry);
-  return parsedEntry;
+  const parsedEntry = EntryLocalSchema.parse(input);
+  return await db.transaction("rw", db.entries, async () => {
+    const existing = await db.entries.get(parsedEntry.date);
+
+    const next: EntryLocal = {
+      ...parsedEntry,
+      _revision: (existing?._revision ?? 0) + 1, // update revision for every edit
+      _synced: false,
+    };
+
+    await db.entries.put(next);
+    return next;
+  });
 };
 
 export const upsertLocalEntries = async (
   entries: EntryInput[],
 ): Promise<EntryLocal[]> => {
-  const parsedEntries = entries.map((entry) =>
-    EntryLocalSchema.parse(entry),
-  );
+  const parsedEntries = entries.map((entry) => EntryLocalSchema.parse(entry));
 
   await db.transaction("rw", db.entries, async () => {
     await db.entries.bulkPut(parsedEntries);
@@ -43,27 +56,38 @@ export const clearLocalEntries = async (): Promise<void> => {
   await db.entries.clear();
 };
 
-export const getUnsyncedEntries = async (): Promise<EntryLocal[]> => {
-  const entries = await db.entries.filter((entry) => entry._synced === false).toArray();
+export const getUnsyncedLocalEntries = async (): Promise<EntryLocal[]> => {
+  const entries = await db.entries
+    .filter((entry) => entry._synced === false)
+    .toArray();
 
   return entries.map((entry) => EntryLocalSchema.parse(entry));
 };
 
-export const markEntriesSynced = async (dates: string[]): Promise<void> => {
-  if (dates.length === 0) return;
+export const markLocalEntriesSynced = async (
+  snapshot: PushedRef[],
+): Promise<void> => {
+  if (snapshot.length === 0) return;
   // rw - read write transaction
   await db.transaction("rw", db.entries, async () => {
-    for (const date of dates) {
-      const entry = await db.entries.get(date);
-
-      if (!entry) continue;
-
-      const parsedEntry = EntryLocalSchema.parse({
-        ...entry,
-        _synced: true,
-      });
-
-      await db.entries.put(parsedEntry);
+    for (const { date, _revision } of snapshot) {
+      await db.entries
+        .where("date")
+        .equals(date)
+        .and((cur) => cur._revision === _revision) // same revision since we read it?
+        .modify({ _synced: true });
     }
+  });
+};
+
+export const saveRemoteEntries = async (remote: EntryResponse[]): Promise<void> => {
+  if (remote.length === 0) return;
+
+  await db.transaction("rw", db.entries, async () => {
+    const existing = await db.entries.bulkGet(remote.map((r) => r.date));
+    const toSave = remote
+      .filter((_, i) => !existing[i]) // only dates still missing at write time
+      .map((r) => EntryLocalSchema.parse({ ...r, _synced: true }));
+    await db.entries.bulkPut(toSave);
   });
 };
