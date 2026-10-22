@@ -10,9 +10,8 @@ export const AuthListener = () => {
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
-      if (event === "SIGNED_OUT") queryClient.clear();
     });
 
     return () => subscription.unsubscribe();
