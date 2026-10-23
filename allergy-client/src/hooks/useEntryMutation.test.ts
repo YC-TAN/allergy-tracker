@@ -1,10 +1,11 @@
 import { renderHook, act, waitFor } from "@testing-library/react";
-import { useEntry } from "./useEntry";
-// import * as storage from '../utils/storage'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEntry } from "./useEntryMutation";
 import * as entryService from "../services/entry";
 import * as dexie from "../db/entries";
 import { createWrapper } from "../test-utils";
 import type { EntryInput, EntryLocal } from "../schemas";
+import { AUTH_USER_KEY } from "./useAuth";
 
 const mockEntry: EntryInput = {
   date: "2026-06-25",
@@ -19,6 +20,16 @@ beforeEach(() => {
   // localStorage.clear()
   vi.restoreAllMocks();
 });
+
+const createSignedInWrapper = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+  queryClient.setQueryData(AUTH_USER_KEY, { id: "user-1" });
+  return ({ children }: { children: React.ReactNode }) => (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+};
 
 describe("useEntry", () => {
   it("returns null when no entry exists", async () => {
@@ -91,7 +102,7 @@ describe("useEntry", () => {
     );
   });
 
-  it("returns the local entry without fetching remotely", async () => {
+  it("returns an unsynced local entry without fetching remotely", async () => {
     const localEntry: EntryLocal = {
       date: "2026-06-25",
       severity: 2,
@@ -118,6 +129,60 @@ describe("useEntry", () => {
     expect(result.current.entry).toEqual(localEntry);
     expect(localSpy).toHaveBeenCalledWith("2026-06-25");
     expect(remoteSpy).not.toHaveBeenCalled();
+  });
+
+  it("refreshes a synced local entry from the server when signed in", async () => {
+    const localEntry: EntryLocal = {
+      date: "2026-06-25",
+      severity: 1,
+      symptoms: ["nose"],
+      notes: "",
+      location: "Christchurch Central",
+      honey: false,
+      _synced: true,
+      _revision: 0,
+      _v: 2,
+    };
+    const remoteEntry = { ...localEntry, severity: 3, _synced: true };
+
+    vi.spyOn(dexie, "getLocalEntry").mockResolvedValue(localEntry);
+    const remoteSpy = vi
+      .spyOn(entryService, "getRemoteEntry")
+      .mockResolvedValue(remoteEntry);
+
+    const { result } = renderHook(() => useEntry("2026-06-25"), {
+      wrapper: createSignedInWrapper(),
+    });
+
+    await waitFor(() => expect(result.current.entry?.severity).toBe(3));
+    expect(remoteSpy).toHaveBeenCalledWith("2026-06-25");
+  });
+
+  it("falls back to a cached entry when the network request fails", async () => {
+    const localEntry: EntryLocal = {
+      date: "2026-06-25",
+      severity: 2,
+      symptoms: ["nose"],
+      notes: "",
+      location: "Christchurch Central",
+      honey: true,
+      _synced: true,
+      _revision: 0,
+      _v: 2,
+    };
+
+    vi.spyOn(dexie, "getLocalEntry").mockResolvedValue(localEntry);
+    vi.spyOn(entryService, "getRemoteEntry").mockRejectedValue(
+      new TypeError("Failed to fetch"),
+    );
+
+    const { result } = renderHook(() => useEntry("2026-06-25"), {
+      wrapper: createSignedInWrapper(),
+    });
+
+    await waitFor(() => expect(result.current.isPending).toBe(false));
+    expect(result.current.entry).toEqual(localEntry);
+    expect(result.current.isError).toBe(false);
   });
 });
 

@@ -1,15 +1,14 @@
 /**
  * Loads the daily allergy entry for a date and exposes a save mutation.
  *
- * If the app is online, it attempts to sync the entry first and falls back to
- * local storage on sync failure.
+ * When signed in and online, the server is the source of truth. 
+ * IndexedDB as source if offline or when a network request cannot be completed.
  *
  * Successful saves new entry/ updates entry will show a success notification;
  * failures show an error notification.
  */
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-// import { getLocalEntry, saveEntry } from "../utils/storage";
 import { getLocalEntry, upsertLocalEntry } from "../db/entries";
 import { upsertRemoteEntry, getRemoteEntry } from "../services/entry";
 import { getTodayDate } from "../utils/dates";
@@ -17,29 +16,37 @@ import type { EntryInput, EntryLocal } from "../schemas";
 import { useNotificationActions } from "../stores/useNotificationStore";
 import { ApiError } from "../lib/error";
 import { ZodError } from "zod";
-import { checkIsSignedIn } from "../utils/auth";
+import { useIsSignedIn } from "../stores/useAuthStore";
 
-export const useEntry = (date: string = getTodayDate()) => {
+export const useEntryMutation = (date: string = getTodayDate()) => {
   const queryClient = useQueryClient();
   const { show } = useNotificationActions();
-
-  const isSignedIn = () => checkIsSignedIn(queryClient);
+  const isSignedIn = useIsSignedIn();
 
   const result = useQuery({
     queryKey: ["entry", date],
-    // queryFn: () => getLocalEntry(date),
     queryFn: async () => {
       const local = await getLocalEntry(date);
-      // return local if exist
-      if (local) return local;
 
-      // check sign in before contacting server
-      if (!isSignedIn()) return null;
+      // Unsynced local edits must not be replaced by an older server value.
+      if (!isSignedIn || !navigator.onLine || local?._synced === false) {
+        return local;
+      }
 
-      // Nothing local — try the server
-      const remote = await getRemoteEntry(date); // throws ApiError on real failures, returns null on 404
-      if (remote) return await upsertLocalEntry({ ...remote, _synced: true }); // Cache the server entry in IndexedDB
-      return null;
+      try {
+        const remote = await getRemoteEntry(date);
+        if (remote) {
+          return await upsertLocalEntry({ ...remote, _synced: true });
+        }
+        return null;
+      } catch (error) {
+        // Keep showing the cached entry when the request failed due to a
+        // network outage. API and validation errors should remain visible.
+        if (!(error instanceof ApiError) && !(error instanceof ZodError)) {
+          return local;
+        }
+        throw error;
+      }
     },
     retry: (failureCount, err) => {
       // 404/400 won't fix itself, no need retry
@@ -47,7 +54,7 @@ export const useEntry = (date: string = getTodayDate()) => {
       if (err instanceof ZodError) return false;
       return failureCount < 2; // allow up to 2 retries for 5xx failures
     },
-    staleTime: 5 * 60 * 1000, // 5 minuteslocal-first, so don't hammer the network re-checking
+    staleTime: 5 * 60 * 1000, // Avoid repeatedly checking the server within 5 minutes.
   });
 
   const saveMutation = useMutation({
@@ -64,8 +71,8 @@ export const useEntry = (date: string = getTodayDate()) => {
 
       // Sync if online and signed in
       try {
-        await upsertRemoteEntry(input);
-        return await upsertLocalEntry({ ...local, _synced: true });
+        const remote = await upsertRemoteEntry(input);
+        return await upsertLocalEntry({ ...remote, _synced: true });
       } catch (err) {
         if (err instanceof ZodError) {
           console.error(err.issues);
@@ -99,6 +106,7 @@ export const useEntry = (date: string = getTodayDate()) => {
     isPending: result.isPending,
     isError: result.isError,
     error: result.error,
+    isSaving: saveMutation.isPending,
     save: (input: EntryInput) => saveMutation.mutate(input),
   };
 };
