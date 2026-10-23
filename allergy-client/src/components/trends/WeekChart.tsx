@@ -1,32 +1,34 @@
 import { SeverityLabel } from "../../schemas/labels";
 import type { SeverityRatingType } from "../../schemas";
-import { loadAll } from "../../utils/storage";
 import { getRelativeDays } from "../../utils/dates";
 import BaseCard from "../ui/BaseCard";
 import { BarChart } from "@mui/x-charts";
 import { PiecewiseColorLegend } from "@mui/x-charts/ChartsLegend";
 import { useTheme } from "@mui/material/styles";
+import { useEntries } from "../../hooks/useEntries";
 
 
 const NO_SYMPTOM_DISPLAY_VALUE = 0.15;
 
 const WeekChart = () => {
   const theme = useTheme();
-  const allEntries = loadAll();
+  const dates = getRelativeDays();
+  const last7DaysEntries = useEntries(dates);
 
-  const sevenDayEntries = getRelativeDays().map((date) => {
-    const severity = allEntries[date]?.severity ?? null;
+  const formatted7DaysEntries = dates.map((date) => {
+    const entry = last7DaysEntries?.find(e => e?.date === date);
+    const severity = entry?.severity ?? null;
     return {
       date,
       severity,
       displayValue:
-        severity === null
-          ? null
-          : severity === 0
-            ? NO_SYMPTOM_DISPLAY_VALUE
-            : severity,
-    };
-  });
+      severity === null
+        ? null
+        : severity === 0
+          ? NO_SYMPTOM_DISPLAY_VALUE
+          : severity,
+    }
+  } )
 
   const severityColors = [
     theme.palette.severity.noSymptoms,     // 0 - green
@@ -39,7 +41,7 @@ const WeekChart = () => {
     <BaseCard>
       <BarChart
         className="h-[40dvh] pt-2"
-        dataset={sevenDayEntries}
+        dataset={formatted7DaysEntries}
         series={[
           {
             dataKey: "displayValue",

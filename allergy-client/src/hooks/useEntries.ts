@@ -1,6 +1,5 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { getLocalEntries, getLocalEntry } from "../db/entries";
-import { getRelativeDays } from "../utils/dates";
 
 // One day. undefined = loading, null = no entry, Entry = logged
 export const useEntry = (date: string) => {
@@ -8,8 +7,7 @@ export const useEntry = (date: string) => {
 }
 
 // Date range for the 7-day chart
-export const useEntries = (days: number = 7) => {
-  const dates = getRelativeDays(days);
+export const useEntries = (dates: string[]) => {
   const key = dates.join(",");
   return useLiveQuery(async () => await getLocalEntries(dates), [key]);
 }
