@@ -17,7 +17,7 @@ import { type PushedRef, type EntryInput, EntrySchema } from "../schemas";
 let running: Promise<void> | null = null;
 
 // Single-flight: overlapping triggers (online + visibility + save) share one run
-export function syncEntries() {
+export const syncEntries = () => {
   running ??= doSync().finally(() => {
     running = null;
   });
@@ -81,7 +81,7 @@ const pushDirty = async () => {
   return { status: "partial", failedDates: response.failed };
 };
 
-async function pullRecent() {
+const pullRecent = async () => {
   const remoteEntries = await getRemoteEntries(7); // last seven days from server
   await saveRemoteEntries(remoteEntries);
 }

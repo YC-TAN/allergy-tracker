@@ -92,7 +92,7 @@ export const saveRemoteEntries = async (remote: EntryResponse[]): Promise<void> 
   });
 };
 
-export const getLocalEntries = async (dates: string[]): Promise<(EntryLocal | null)[]> => {
+export const getLocalEntriesByDates = async (dates: string[]): Promise<(EntryLocal | null)[]> => {
   const entries = await db.entries.bulkGet(dates);
   return entries.map(e => e ? EntryLocalSchema.parse(e): null)
 }
