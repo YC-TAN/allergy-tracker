@@ -5,7 +5,7 @@ import BaseCard from "../ui/BaseCard";
 import { BarChart } from "@mui/x-charts";
 import { PiecewiseColorLegend } from "@mui/x-charts/ChartsLegend";
 import { useTheme } from "@mui/material/styles";
-import { useEntries } from "../../hooks/useEntries";
+import { useEntries } from "../../hooks/useLocalEntries";
 
 
 const NO_SYMPTOM_DISPLAY_VALUE = 0.15;
