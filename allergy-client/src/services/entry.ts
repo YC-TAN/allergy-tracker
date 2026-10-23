@@ -36,26 +36,19 @@ export async function getRemoteEntry(date: string): Promise<EntryResponse | null
 
 export async function getRemoteEntries(days: number): Promise<EntryResponse[]> {
   const res = await apiFetch<unknown[]>(`${baseUrl}?days=${days}`, { method: 'GET' });
-  return res.map((r) => EntryResponseSchema.parse(r));
+  const valid: EntryResponse[] = [];
+  for (const item of res) {
+    const result = EntryResponseSchema.safeParse(item);
+    if (result.success) valid.push(result.data);
+    else console.error("Skipping invalid server entry", result.error);
+  }
+  return valid;
 }
 
 export async function migrateEntries(entries: EntryInput[]): Promise<MigrateResponse> {
-  const validated = entries.map((e) => EntrySchema.parse(e));
   const res = await apiFetch<unknown>(`${baseUrl}/migrate`, {
     method: 'POST',
-    body: JSON.stringify({ entries: validated }),
+    body: JSON.stringify({ entries }),
   });
   return MigrateResponseSchema.parse(res);
 }
-
-// export const updateEntry = async (entry: EntryInput): Promise<EntryResponse> => {
-// // Throws a ZodError if the shape is wrong.
-//   const validated = EntrySchema.parse(entry);
-
-//   const res = await apiFetch<unknown>(`${baseUrl}/${validated.date}`, {
-//     method: 'PUT',
-//     body: JSON.stringify(validated),
-//   });
-
-//   return EntryResponseSchema.parse(res);
-// }
