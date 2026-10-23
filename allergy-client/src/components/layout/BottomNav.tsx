@@ -1,4 +1,3 @@
-import type { User } from "@supabase/supabase-js";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
