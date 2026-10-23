@@ -1,17 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { useLiveQuery } from "dexie-react-hooks";
+import { getLocalEntries, getLocalEntry } from "../db/entries";
 import { getRelativeDays } from "../utils/dates";
-import { getRemoteEntries } from "../services/entry";
-// import { loadAll } from "../utils/storage";
 
-export function useEntries(days: number = 7) {
+// One day. undefined = loading, null = no entry, Entry = logged
+export const useEntry = (date: string) => {
+  return useLiveQuery(async () => (await getLocalEntry(date)) ?? null, [date]);
+}
 
-    const result = useQuery({
-    queryKey: ["entries", {days}],
-    queryFn: () => getRemoteEntries(days),
-  });
-  return {
-    entries: result.data,
-    isPending: result.isPending,
-    isError: result.isError,
-  }
+// Date range for the 7-day chart
+export const useEntries = (days: number = 7) => {
+  const dates = getRelativeDays(days);
+  const key = dates.join(",");
+  return useLiveQuery(async () => await getLocalEntries(dates), [key]);
 }
