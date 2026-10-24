@@ -1,3 +1,4 @@
+import logging
 from datetime import date
 from fastapi import APIRouter, Query, status
 
@@ -8,10 +9,40 @@ from app.services import entry_service
 from app.errors.app_error import EntryNotFoundError
 from app.utils.date_utils import NotFutureDate
 
+
+logger = logging.getLogger(__name__)
+
 router = APIRouter(
     prefix="/entries", 
     tags=["entries"]
 )
+
+@router.get("", response_model=list[EntryResponse])
+def get_entries(
+    session: SessionDep,
+    user_id: CurrentUserDep,
+    # start_date: NotFutureDate,
+    days: int = Query(default=7, ge=1, le=120),
+):
+    return entry_service.get_entries_range(session, user_id, days)
+
+
+@router.post("/migrate", response_model=MigrateResponse)
+def migrate_entries(body: MigrateRequest, session: SessionDep, user_id: CurrentUserDep):
+    synced, failed = [], []
+    for entry in body.entries:
+        try:
+            # Create a savepoint per entry so a failure only unwind that entry
+            with session.begin_nested():
+                db_entry = entry_repo.upsert_entry(session, user_id, entry.date, entry)
+                synced.append(str(db_entry.date))
+        except Exception:
+            # Rolls back only to the begin_nested() savepoint, preserving previous loop items
+            logger.exception("Failed to migrate entry for %s", entry.date)
+            failed.append(str(entry.date))
+    session.commit()                 # commit everything that succeeded, in one transaction
+
+    return {"synced": synced, "failed": failed}
 
 
 @router.get("/{entry_date}", response_model=EntryResponse)
@@ -49,31 +80,10 @@ def upsert_entry(entry_date: NotFutureDate, payload: EntryUpsert, session: Sessi
     return db_entry
 
 
-@router.post("/migrate", response_model=MigrateResponse)
-def migrate_entries(body: MigrateRequest, session: SessionDep, user_id: CurrentUserDep):
-    synced, failed = [], []
-    for entry in body.entries:
-        try:
-            # Create a savepoint per entry so a failure only unwind that entry
-            with session.begin_nested():
-                db_entry = entry_repo.upsert_entry(session, user_id, entry.date, entry)
-                synced.append(db_entry.model_dump()) # convert back to response
-        except Exception:
-            # Rolls back only to the begin_nested() savepoint, preserving previous loop items
-            failed.append(str(entry.date))
-    session.commit()                 # commit everything that succeeded, in one transaction
-
-    return {"synced": synced, "failed": failed}
 
 
-@router.get("/", response_model=list[EntryResponse])
-def get_entries(
-    session: SessionDep,
-    user_id: CurrentUserDep,
-    # start_date: NotFutureDate,
-    days: int = Query(default=7, ge=1, le=120),
-):
-    return entry_service.get_entries_range(session, user_id, days)
+
+
 
 # @router.put("/{entry_date}", response_model=EntryResponse)
 # def update_entry(entry_date: date, payload: EntryUpdate, session: SessionDep, user_id: CurrentUserDep,):
@@ -95,7 +105,7 @@ def get_entries(
 #     session.refresh(db_entry)
 #     return db_entry
 
-@router.post("", response_model=EntryResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=EntryResponse, status_code=status.HTTP_201_CREATED)
 def create_entry(
     payload: EntryUpsert, 
     session: SessionDep,
