@@ -4,6 +4,7 @@ import PageTitle from "../components/ui/PageTitle";
 const LoginPage = () => {
     return (
         <>
+        // TODO Handle offline
         <PageTitle title="Sign in" />
         <Login />
         </>
