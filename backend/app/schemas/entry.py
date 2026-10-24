@@ -100,5 +100,5 @@ class MigrateRequest(SQLModel):
     entries: list[EntryUpsert]
 
 class MigrateResponse(SQLModel):
-    synced: list[EntryResponse]
+    synced: list[str]
     failed: list[str]   # dates still unsynced — client keeps these as _synced: false
