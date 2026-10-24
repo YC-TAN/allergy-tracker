@@ -71,3 +71,8 @@ export default defineConfig([
   },
 ])
 ```
+
+### Offline + Dexie + tanstack
+- Dexie write mutation lives in TanStack Query - useMutation manage async lifecycle (idle, loading, error, success)
+- Dexie read directly in component - useLiveQuery
+- 
