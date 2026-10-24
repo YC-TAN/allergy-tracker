@@ -27,6 +27,8 @@ const useAuthStore = create<AuthState>((set) => ({
     } 
 }));
 
+export default useAuthStore;
+
 /**
  * Selects the currently authenticated user from the auth store.
  *
