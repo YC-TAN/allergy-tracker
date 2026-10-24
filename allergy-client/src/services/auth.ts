@@ -1,18 +1,4 @@
-import type { User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
-
-/**
- * Retrieves the user associated with the current Supabase session.
- *
- * @returns The authenticated user, or null when no active session exists.
- */
-export const getCurrentUser = async (): Promise<User | null> => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  return session?.user ?? null;
-}
 
 /**
  * Sends a passwordless sign-in link to an email address.
