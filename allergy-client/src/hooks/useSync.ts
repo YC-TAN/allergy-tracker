@@ -1,9 +1,14 @@
-import { useEffect} from 'react';
-import { syncEntries } from '../services/sync';
+import { useEffect } from "react";
+import { syncEntries } from "../services/sync";
+import { useSyncActions } from "../stores/useSyncStore";
 
 export const useSync = (userId?: string) => {
+  const { reset } = useSyncActions();
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) {
+      reset();
+      return;
+    }
     const run = () => void syncEntries();
     const onVisible = () => document.visibilityState === "visible" && run();
 
@@ -14,5 +19,5 @@ export const useSync = (userId?: string) => {
       window.removeEventListener("online", run);
       document.removeEventListener("visibilitychange", onVisible);
     };
-  }, [userId]);
-}
+  }, [userId, reset]);
+};
