@@ -18,7 +18,7 @@ import {
   type Entry, 
   type EntryInput,
 } from "../../schemas";
-import { useEntry } from "../../hooks/useEntry";
+import { useEntryMutation } from "../../hooks/useEntryMutation";
 import { useSettings } from "../../hooks/useSettings";
 import SeverityCard from "./SeverityCard";
 import NotesCard from "./NotesCard";
@@ -31,7 +31,7 @@ interface EntryFormProps {
 }
 
 const EntryForm = ({ existing }: EntryFormProps) => {
-  const { save } = useEntry();
+  const { save, isSaving } = useEntryMutation();
   const { settings, settingsIsPending } = useSettings();
   const navigate = useNavigate();
 
@@ -70,6 +70,7 @@ const EntryForm = ({ existing }: EntryFormProps) => {
         color="primary"
         fullWidth
         onClick={handleSubmit}
+        disabled={isSaving}
       >
         {existing? "Update Entry" : "Save Entry"}
       </Button>

@@ -6,23 +6,26 @@
 import { Button, Typography } from "@mui/material";
 import { AddOutlined, EditOutlined } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { useEntry } from "../../hooks/useEntry";
+import { useEntry } from "../../hooks/useLocalEntries";
 import { SeverityLabel } from "../../schemas/labels";
 import BaseCard from "../ui/BaseCard";
 import LeafGraphic from "../ui/LeafGraphic";
 import ProgressBox from "../ui/ProgressBox";
-import ErrorTypography from "../ui/ErrorTypography";
+import { useAuthLoading, useIsSignedIn } from "../../stores/useAuthStore";
+import useSyncStore from "../../stores/useSyncStore";
 
 const CheckInCard = () => {
-  const { entry, isPending, isError, error } = useEntry();
+  const authLoading = useAuthLoading();
+  const isSignedIn = useIsSignedIn();
+  const {hydrated} = useSyncStore();
+  const entry = useEntry();
 
   const renderContent = () => {
-    if (isPending) return <ProgressBox />;
-    if (isError) {
-      console.error("Entry fetch failed:", error);
-      return <ErrorTypography message="Couldn't load today's entry..." />;
-    }
-    if (!entry) {
+    if (entry === undefined) return <ProgressBox />;
+    if (entry === null && (authLoading || (isSignedIn && !hydrated))) return <ProgressBox />;
+    // TODO: Render syncing
+    
+    if (entry === null) {
       return (
         <>
           <Typography

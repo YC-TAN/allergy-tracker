@@ -5,18 +5,17 @@
  */
 import { useParams } from "react-router-dom";
 import EntryForm from "../components/EntryForm";
-import { useEntry } from "../hooks/useEntry";
-import ProgressBox from "../components/ui/ProgressBox";
+import { useEntry } from "../hooks/useLocalEntries";
 import PageTitle from "../components/ui/PageTitle";
 
 const EntryFormPage = () => {
   const { date } = useParams<{ date: string }>();
-  const { entry, isPending } = useEntry(date);
+  const entry = useEntry(date);
 
   return (
   <>
     <PageTitle title="Today's Symptoms" />
-    {isPending? <ProgressBox /> : <EntryForm existing={entry} />}
+    <EntryForm existing={entry} />
   </>
   )
 };
