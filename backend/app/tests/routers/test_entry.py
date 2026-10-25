@@ -229,7 +229,7 @@ def test_get_entries_default_days_returns_last_7_days(client, session):
         session, (FIXED_TODAY - timedelta(days=7)).isoformat()
     )  # out of range
 
-    response = client.get("/api/entries/")
+    response = client.get("/api/entries")
 
     assert response.status_code == 200
     dates = [entry["date"] for entry in response.json()]
@@ -245,7 +245,7 @@ def test_get_entries_custom_days(client, session):
         session, (FIXED_TODAY - timedelta(days=30)).isoformat()
     )  # out of range
 
-    response = client.get("/api/entries/", params={"days": 30})
+    response = client.get("/api/entries", params={"days": 30})
 
     assert response.status_code == 200
     dates = [entry["date"] for entry in response.json()]
@@ -253,7 +253,7 @@ def test_get_entries_custom_days(client, session):
 
 
 def test_get_entries_empty_when_no_entries(client):
-    response = client.get("/api/entries/")
+    response = client.get("/api/entries")
 
     assert response.status_code == 200
     assert response.json() == []
@@ -271,19 +271,19 @@ def test_get_entries_empty_when_no_entries(client):
     ],
 )
 def test_get_entries_rejects_invalid_days(client, days_value):
-    response = client.get("/api/entries/", params={"days": days_value})
+    response = client.get("/api/entries", params={"days": days_value})
     assert response.status_code == 422
 
 
 def test_get_entries_rejects_non_integer_days(client):
-    response = client.get("/api/entries/", params={"days": "a-week"})
+    response = client.get("/api/entries", params={"days": "a-week"})
     assert response.status_code == 422
 
 
 def test_get_entries_boundary_days_accepted(client):
     # days=1 and days=120 are the inclusive edges — should NOT 422
-    response_low = client.get("/api/entries/", params={"days": 1})
-    response_high = client.get("/api/entries/", params={"days": 120})
+    response_low = client.get("/api/entries", params={"days": 1})
+    response_high = client.get("/api/entries", params={"days": 120})
 
     assert response_low.status_code == 200
     assert response_high.status_code == 200
@@ -303,7 +303,7 @@ def test_get_entries_only_returns_current_users_entries(client, session):
     session.add(other_entry)
     session.commit()
 
-    response = client.get("/api/entries/")
+    response = client.get("/api/entries")
 
     assert response.status_code == 200
     data = response.json()
