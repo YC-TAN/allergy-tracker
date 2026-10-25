@@ -22,7 +22,7 @@ import { router } from "./router";
 import NotificationSnackbar from "./components/ui/NotificationSnackbar";
 import StartupError from "./components/layout/StartupError";
 import { useInitializeStorage } from "./hooks/useInitializedStorage";
-import { useUser } from "./stores/useAuthStore";
+import { useUserId } from "./stores/useAuthStore";
 import { useSync } from "./hooks/useSync";
 import { AuthListener } from "./components/layout/AuthListener";
 
@@ -52,7 +52,7 @@ const AppGate = () => {
 };
 
 const InitializedApp = () => {
-  const userId = useUser()?.id;
+  const userId = useUserId();
   useSync(userId);
 
   return (

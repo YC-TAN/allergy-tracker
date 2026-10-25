@@ -14,12 +14,12 @@ import {
 } from "@mui/icons-material";
 import LogoutDialog from "./LogoutDialog";
 import { useAuth } from "../../hooks/useAuth";
-import { useUser, useAuthLoading } from "../../stores/useAuthStore";
+import { useUserId, useAuthLoading } from "../../stores/useAuthStore";
 
 const BottomNav = () => {
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const location = useLocation();
-  const user = useUser();
+  const userId = useUserId();
   const userIsPending = useAuthLoading();
   const { signOut, isSigningOut } = useAuth();
 
@@ -39,7 +39,7 @@ const BottomNav = () => {
       );
     }
 
-    if (user) {
+    if (userId) {
       return (
         <BottomNavigationAction
           label="Sign out"

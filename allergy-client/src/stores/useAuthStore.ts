@@ -32,9 +32,9 @@ export default useAuthStore;
 /**
  * Selects the currently authenticated user from the auth store.
  *
- * @returns The authenticated user, or null when no user is signed in.
+ * @returns The id of authenticated user, or null when no user is signed in.
  */
-export const useUser = () => useAuthStore((s) => s.user);
+export const useUserId = () => useAuthStore((s) => s.user?.id);
 
 /**
  * Selects the initial authentication loading state from the auth store.

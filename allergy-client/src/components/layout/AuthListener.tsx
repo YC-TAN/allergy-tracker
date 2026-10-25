@@ -12,6 +12,7 @@ export const AuthListener = () => {
       setUser(session?.user ?? null);
     });
 
+    // clean up
     return () => subscription.unsubscribe();
   }, [setUser]);
 
