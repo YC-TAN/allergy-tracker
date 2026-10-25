@@ -8,7 +8,7 @@ A New Zealand focused Hay Fever Tracking App that lets you log daily hay fever s
 2. Pollen Forecast pulled from MetService
 3. 7-day Trend Chart
 4. Daily reminder - work in progress
-5. Installable PWA, support offline and sync data when online - work in progress
+5. Installable PWA, support offline fallback and sync data when online and signed in - work in progress
 
 <table>
   <tr>
@@ -34,7 +34,7 @@ A New Zealand focused Hay Fever Tracking App that lets you log daily hay fever s
 ---
 ### What I learned
 1. Race condition
-2. State management
+2. State management - tanStack for async and server states, zustand for client states
 3. Upsert
 4. Dexie/ IndexedDB - async, capacity, indexed queries, offline storage
 
@@ -70,6 +70,34 @@ A New Zealand focused Hay Fever Tracking App that lets you log daily hay fever s
 #### Render
   1. Simplifies early CI/CD by deploying the backend and static SPA together as a single Web Service.
   2. Allows easy decoupling of the frontend to an independent static host when needed.
+
+### Authentication
+Signing in is optional. Entries live on the device if not sign in(Dexie / IndexedDB). Signing in will sync entries to Supabase Postgres through the FastAPI backend.
+
+#### Flow
+1. App loads and `AuthListener` subscribes.
+2. Supabase fires `INITIAL_SESSION`, so `setUser` runs and `loading` becomes `false`.
+3. User requests sign-in, and a TanStack mutation sends the magic link.
+4. A `SIGNED_IN` event arrives, `setUser` runs.
+5. On `SIGNED_OUT`, the user becomes `null`.
+ 
+- **Supabase Auth** (`@supabase/supabase-js`)
+  - Owns the session: magic-link sign-in, token storage (localStorage) and automatic token refresh.
+- **Zustand** (`useAuthStore`)
+  - Holds only global user state: `user` and `loading`.
+  - `loading` starts `true` and is cleared once, on the first auth event. It is never reset, so the UI doesn't flicker on token refresh.
+- **`AuthListener`** (`useEffect` + `onAuthStateChange`)
+  - Mirrors Supabase's session into Zustand.
+  - Single source of truth. Sign-in, sign-out, token refresh and session restore all arrive through the same event.
+  - Cleanup calls `unsubscribe()`, so StrictMode's dev-only double mount leaves exactly one listener.
+- **TanStack Query** (mutations)
+  - Handles the async sign-in and sign-out actions only, giving `isPending` and error states for buttons and messages.
+  - Mutations never touch the user store; the listener does.
+- **FastAPI**
+  - Receives the Supabase access token as a Bearer token and verifies the JWT before any database work.
+  - The token is fetched fresh per request via `supabase.auth.getSession()` because it expires (about an hour), so it is not stored in Zustand.
+
+---
 
 ## ERD
 ```mermaid
