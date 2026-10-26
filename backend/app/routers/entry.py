@@ -105,7 +105,7 @@ def upsert_entry(entry_date: NotFutureDate, payload: EntryUpsert, session: Sessi
 #     session.refresh(db_entry)
 #     return db_entry
 
-@router.post("/", response_model=EntryResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=EntryResponse, status_code=status.HTTP_201_CREATED)
 def create_entry(
     payload: EntryUpsert, 
     session: SessionDep,
