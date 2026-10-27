@@ -9,10 +9,9 @@ import { Outlet, Link } from "react-router-dom";
 import { Box, AppBar, Toolbar, Typography } from "@mui/material";
 import BottomNav from "./BottomNav";
 import SyncIcon from "./SyncIcon";
-import { useSyncEntries } from "../../hooks/useSyncEntries";
 
 const Shell = () => {
-  const { isSyncing } = useSyncEntries();
+  // const { isSyncing } = useSyncEntries();
 
   return (
     <Box
@@ -28,9 +27,7 @@ const Shell = () => {
           >
             Allergy Tracker
           </Typography>
-          <SyncIcon
-            isSyncing={isSyncing}
-          />
+          <SyncIcon />
         </Toolbar>
       </AppBar>
 
