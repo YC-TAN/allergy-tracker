@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "concurrently \"uv --directory backend run fastapi dev app --reload-dir app\" \"npm run dev --prefix allergy-client\""
+    "dev": "concurrently \"uv --directory backend run fastapi dev app/main.py --reload-dir app\" \"npm run dev --prefix allergy-client\""
   },
   "devDependencies": {
     "concurrently": "^10.0.4",
