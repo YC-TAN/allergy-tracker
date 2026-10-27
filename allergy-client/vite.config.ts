@@ -16,14 +16,12 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       scope: '/',
-      registerType: "autoUpdate",
+      registerType: "prompt",
       workbox: {
         cleanupOutdatedCaches: true,
-        globIgnores: [
-          "**/fonts.googleapis.com/**",
-        ],
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2}"],
         navigateFallback: 'index.html',
+        navigateFallbackDenylist: [/^\/api/],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -82,7 +80,7 @@ export default defineConfig({
             purpose: "any",
           },
           {
-            src: "pwa-512x512.png",
+            src: "pwa-maskable-512x512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable",
