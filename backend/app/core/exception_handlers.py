@@ -4,6 +4,7 @@ All handlers log the error and return appropriate JSON responses.
 """
 
 import logging
+
 from fastapi import FastAPI, Request
 from fastapi.exception_handlers import (
     http_exception_handler,

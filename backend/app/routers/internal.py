@@ -5,7 +5,6 @@ Users cannot access these endpoints.
 
 from fastapi import APIRouter
 
-
 router = APIRouter()
 
 

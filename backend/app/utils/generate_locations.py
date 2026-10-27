@@ -22,7 +22,7 @@ def generate_location_data():
             for loc in region:
                 labels.add(loc["label"])
 
-    sorted_labels = sorted(list(labels))
+    sorted_labels = sorted(labels)
 
     # Build the Python code content string
     code_content = '''# AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY.

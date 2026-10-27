@@ -1,10 +1,11 @@
 import json
-import pytest
 from pathlib import Path
 
+import pytest
+
+from app.errors.app_error import PollenFetchError
 from app.services import pollen_service
 from app.utils.date_utils import get_today_NZT
-from app.errors.app_error import PollenFetchError
 
 FIXTURE_DIR = Path(__file__).parent.parent / "fixtures"
 

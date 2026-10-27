@@ -3,16 +3,16 @@ Test the schema's business logic.
 Verify that validation rules are configured as intended.
 """
 
-import pytest
 from datetime import timedelta
-from pydantic import ValidationError
 from typing import get_args
+
+import pytest
+from pydantic import ValidationError
 
 from app.schemas.entry import EntryUpsert
 from app.schemas.locations_literal import Valid_locations
-from app.utils.date_utils import get_today_NZT
 from app.tests.utils import FIXED_TODAY
-
+from app.utils.date_utils import get_today_NZT
 
 test_date = FIXED_TODAY.isoformat()
 test_location = get_args(Valid_locations)[0] # "Alexandra"

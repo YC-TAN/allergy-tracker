@@ -3,6 +3,7 @@
 from datetime import date, datetime
 from typing import Annotated
 from zoneinfo import ZoneInfo
+
 from pydantic import AfterValidator
 
 NZ_TZ = ZoneInfo("Pacific/Auckland")

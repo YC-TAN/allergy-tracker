@@ -10,17 +10,19 @@ Note    - Keep severityLevel as Enum to preserve the meaning of the number.
         - Must manually update if severityLevel values change
 """
 
+from datetime import UTC, datetime
 from enum import Enum
 from typing import Literal
-from sqlmodel import SQLModel, Field
+from uuid import UUID, uuid4
+
 from pydantic import field_validator
 from sqlalchemy import Integer, String
 from sqlalchemy.dialects.postgresql import JSONB
-from datetime import datetime, timezone
-from uuid import UUID, uuid4
+from sqlmodel import Field, SQLModel
+
+from app.utils.date_utils import NotFutureDate
 
 from .locations_literal import Valid_locations
-from app.utils.date_utils import NotFutureDate
 
 
 class SeverityLevel(int, Enum):
@@ -74,13 +76,12 @@ class Entry(EntryBase, table=True):
     __tablename__ = "entries"
     id: UUID = Field(default_factory=uuid4, primary_key=True)
     user_id: UUID # from auth token
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class EntryUpsert(EntryBase):
     """Payload model for creating / updating a new allergy entry."""
-    pass
 
 
 # class EntryUpdate(EntryBase):

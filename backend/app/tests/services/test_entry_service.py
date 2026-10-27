@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from app.services.entry_service import get_entries_range
-from app.tests.utils import create_existing_entry, TEST_USER_ID, FIXED_TODAY
+from app.tests.utils import FIXED_TODAY, TEST_USER_ID, create_existing_entry
 
 
 def test_last_7_days_ending_today(session):

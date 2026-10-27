@@ -1,17 +1,17 @@
-from fastapi import Header
-import jwt
-from jwt import PyJWKClient
-from uuid import UUID
 from functools import lru_cache
-from .config import get_settings
+from uuid import UUID
 
+import jwt
+from fastapi import Header
+from jwt import PyJWKClient
 
 from app.errors.app_error import (
+    InvalidSubjectError,
     InvalidTokenError,
-    InvalidSubjectError, 
-    MissingTokenError
+    MissingTokenError,
 )
 
+from .config import get_settings
 
 settings = get_settings()
 

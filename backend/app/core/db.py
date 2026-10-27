@@ -6,7 +6,9 @@ SQLModel.metadata.create_all(engine) is not required here as the db is created v
 
 """
 from functools import lru_cache
-from sqlmodel import create_engine, Session
+
+from sqlmodel import Session, create_engine
+
 from .config import get_settings
 
 

@@ -1,12 +1,12 @@
 from datetime import date
 from typing import get_args
-from sqlmodel import Session
 from uuid import UUID, uuid4
+
 from sqlalchemy import text
+from sqlmodel import Session
 
-from app.schemas.locations_literal import Valid_locations
 from app.schemas.entry import Entry
-
+from app.schemas.locations_literal import Valid_locations
 
 TEST_USER_ID = uuid4()
 FIXED_TODAY = date(2026, 8, 1)

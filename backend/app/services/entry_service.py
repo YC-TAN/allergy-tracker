@@ -3,10 +3,10 @@
 from datetime import timedelta
 from uuid import UUID
 
-from app.schemas.entry import Entry
 from app.core.deps import SessionDep
-from app.utils.date_utils import get_today_NZT
 from app.repository import entry as entry_repo
+from app.schemas.entry import Entry
+from app.utils.date_utils import get_today_NZT
 
 
 def get_entries_range(session: SessionDep, user_id: UUID, days: int) -> list[Entry]:

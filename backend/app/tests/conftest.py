@@ -1,16 +1,16 @@
-import pytest
 import os
 import subprocess
 from pathlib import Path
 from unittest.mock import patch
-from sqlmodel import create_engine, Session
+
+import pytest
 from fastapi.testclient import TestClient
+from sqlmodel import Session, create_engine
 
-from app.main import app
-from app.core.db import get_session
 from app.core.auth import get_current_user_id
-from app.tests.utils import create_test_user, TEST_USER_ID, FIXED_TODAY
-
+from app.core.db import get_session
+from app.main import app
+from app.tests.utils import FIXED_TODAY, TEST_USER_ID, create_test_user
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 TEST_DB_URL = os.environ["TEST_DB_URL"]

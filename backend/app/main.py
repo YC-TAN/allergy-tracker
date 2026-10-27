@@ -1,11 +1,12 @@
 import logging
-from fastapi import FastAPI, APIRouter
+
+from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import pollen_forecast, internal, entry
-from .core.logging_config import setup_logging
-from .core.exception_handlers import register_exception_handlers
 from .core.config import get_settings
+from .core.exception_handlers import register_exception_handlers
+from .core.logging_config import setup_logging
+from .routers import entry, internal, pollen_forecast
 
 setup_logging()
 

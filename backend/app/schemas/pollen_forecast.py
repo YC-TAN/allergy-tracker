@@ -6,10 +6,13 @@ How     - Plant list will be stored in db using JSONB, with pollen level as fiel
 Adopting ELT (Extract, Load, Transform), collect first, transform later 
 """
 
-from sqlmodel import SQLModel, Field
-from sqlalchemy.dialects.postgresql import JSONB
-from datetime import date as date_type, datetime, timezone
+from datetime import UTC, datetime
+from datetime import date as date_type
 from uuid import UUID, uuid4
+
+from sqlalchemy.dialects.postgresql import JSONB
+from sqlmodel import Field, SQLModel
+
 
 class PollenForecastBase(SQLModel):
     date: date_type
@@ -22,7 +25,7 @@ class PollenForecastBase(SQLModel):
 class PollenForecast(PollenForecastBase, table=True):
     __tablename__ = "daily_pollen_forecasts"
     id: UUID = Field(default_factory=uuid4, primary_key=True)
-    checked_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    checked_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 class PollenForecastPublic(PollenForecastBase):
     pass

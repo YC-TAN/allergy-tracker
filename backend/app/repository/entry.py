@@ -1,10 +1,11 @@
-from datetime import date, datetime, timezone
-from sqlmodel import select
-from sqlalchemy.dialects.postgresql import insert as pg_insert
+from datetime import UTC, date, datetime
 from uuid import UUID
 
-from app.schemas.entry import Entry, EntryUpsert
+from sqlalchemy.dialects.postgresql import insert as pg_insert
+from sqlmodel import select
+
 from app.core.deps import SessionDep
+from app.schemas.entry import Entry, EntryUpsert
 
 
 def get_entry_by_date(
@@ -55,7 +56,7 @@ def upsert_entry(
             "notes": stmt.excluded.notes,
             "location": stmt.excluded.location,
             "honey": stmt.excluded.honey,
-            "updated_at": datetime.now(timezone.utc)
+            "updated_at": datetime.now(UTC)
         }).returning(Entry)
 
     # session.refresh() is not needed here as it is for plain ORM pattern to handle SQLModel object expiry
