@@ -5,7 +5,7 @@
  */
 import { Chip, Typography } from "@mui/material";
 
-import { SymptomSchema, type Symptom } from "../../schemas";
+import { SymptomSchema, type Symptom } from "../../schemas/entry";
 import type React from "react";
 import BaseCard from "../ui/BaseCard";
 import CardTitle from "../ui/CardTitle";

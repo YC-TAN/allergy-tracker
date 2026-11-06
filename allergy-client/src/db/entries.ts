@@ -8,7 +8,7 @@ import {
   type EntryLocal,
   type EntryResponse,
   type PushedRef,
-} from "../schemas";
+} from "../schemas/entry";
 
 export const getLocalEntry = async (
   date: string,

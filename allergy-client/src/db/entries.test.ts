@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { getLocalEntry, upsertLocalEntry } from "./entries";
 import { db } from "./client";
 import { getTodayDate } from "../utils/dates";
-import { EntryLocalSchema, type EntryInput, ENTRY_LOCAL_SCHEMA_VERSION } from "../schemas";
+import { EntryLocalSchema, type EntryInput, ENTRY_LOCAL_SCHEMA_VERSION } from "../schemas/entry";
 
 const today = getTodayDate();
 

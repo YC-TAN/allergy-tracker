@@ -5,7 +5,7 @@
  */
 import { Box, ButtonBase, Typography } from "@mui/material";
 
-import { SeverityRating, type SeverityRatingType } from "../../schemas";
+import { SeverityRating, type SeverityRatingType } from "../../schemas/entry";
 import { SeverityLabel } from "../../schemas/labels";
 import BaseCard from "../ui/BaseCard";
 import CardTitle from "../ui/CardTitle";

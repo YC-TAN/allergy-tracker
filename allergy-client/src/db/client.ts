@@ -7,7 +7,7 @@
  * IndexedDB is not persist, sync backend for persist data
  */
 import Dexie, { type EntityTable } from "dexie";
-import type { EntryLocal } from "../schemas";
+import type { EntryLocal } from "../schemas/entry";
 
 /**
  * Create new IndexedDB with name "allergy-tracker" and assert the instance as a Dexie object

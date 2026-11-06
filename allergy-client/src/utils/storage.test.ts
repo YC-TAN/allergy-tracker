@@ -7,7 +7,7 @@ import {
   clearSettings,
 } from "./storage";
 import { getTodayDate } from "./dates";
-import { type EntryInput } from "../schemas";
+import { type EntryInput } from "../schemas/entry";
 
 const today: string = getTodayDate();
 const test_entry_key: string = "test_allergy_entries";

@@ -7,7 +7,7 @@ import {
   type MigrateResponse,
   type EntryResponse,
   type EntryInput,
-} from '../schemas/index';
+} from '../schemas/entry';
 
 const baseUrl = "/entries";
 

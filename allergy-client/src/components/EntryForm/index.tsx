@@ -17,7 +17,7 @@ import {
   type Symptom,
   type Entry, 
   type EntryInput,
-} from "../../schemas";
+} from "../../schemas/entry";
 import { useEntryMutation } from "../../hooks/useEntryMutation";
 import { useSettings } from "../../hooks/useSettings";
 import SeverityCard from "./SeverityCard";

@@ -11,7 +11,7 @@ import {
   saveRemoteEntries,
 } from "../db/entries";
 import useNotificationStore from "../stores/useNotificationStore";
-import { type PushedRef, type EntryInput, EntrySchema } from "../schemas";
+import { type PushedRef, type EntryInput, EntrySchema } from "../schemas/entry";
 import useSyncStore from "../stores/useSyncStore";
 import useAuthStore from "../stores/useAuthStore";
 

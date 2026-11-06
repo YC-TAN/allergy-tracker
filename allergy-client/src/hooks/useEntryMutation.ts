@@ -11,7 +11,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { upsertLocalEntry } from "../db/entries";
 import { getTodayDate } from "../utils/dates";
-import type { EntryInput } from "../schemas";
+import type { EntryInput } from "../schemas/entry";
 import { useNotificationActions } from "../stores/useNotificationStore";
 import { useIsSignedIn } from "../stores/useAuthStore";
 import { syncEntries } from "../services/sync";

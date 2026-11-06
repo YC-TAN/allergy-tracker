@@ -9,7 +9,7 @@ import {
   EntryLocalSchema,
   type EntryLocal,
   type EntryInput,
-} from "../schemas/index";
+} from "../schemas/entry";
 import {
   SettingsSchema,
   type Settings,

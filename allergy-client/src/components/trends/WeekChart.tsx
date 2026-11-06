@@ -1,5 +1,5 @@
 import { SeverityLabel } from "../../schemas/labels";
-import type { SeverityRatingType } from "../../schemas";
+import type { SeverityRatingType } from "../../schemas/entry";
 import { getRelativeDays } from "../../utils/dates";
 import BaseCard from "../ui/BaseCard";
 import { BarChart } from "@mui/x-charts";

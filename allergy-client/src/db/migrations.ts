@@ -1,6 +1,6 @@
 import { db } from "./client";
 import { loadAll } from "../utils/storage";
-import { EntryLocalSchema } from "../schemas";
+import { EntryLocalSchema } from "../schemas/entry";
 
 
 const MIGRATION_KEY = "legacy-localstorage-to-dexie-v1";

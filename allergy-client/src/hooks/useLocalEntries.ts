@@ -1,7 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { getTodayDate } from "../utils/dates";
 import { getLocalEntriesByDates, getLocalEntry } from "../db/entries";
-import type { EntryLocal } from "../schemas";
+import type { EntryLocal } from "../schemas/entry";
 
 // One day. undefined = loading, null = no entry, Entry = logged
 export const useEntry = (date: string = getTodayDate()): EntryLocal | undefined | null => {

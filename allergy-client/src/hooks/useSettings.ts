@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getSettings, setSettings } from "../utils/storage";
-import type { Settings, SettingsInput } from "../schemas";
+import type { Settings, SettingsInput } from "../schemas/entry";
 import { useNotificationActions } from "../stores/useNotificationStore";
 
 interface UseSettingsReturn {

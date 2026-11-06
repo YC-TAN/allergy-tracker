@@ -4,7 +4,7 @@
  * Used to display a user-friendly severity string.
  */
 
-import { SeverityRating, type SeverityRatingType } from "./index";
+import { SeverityRating, type SeverityRatingType } from "./entry";
 
 export const SeverityLabel: Record<SeverityRatingType, string> = {
   [SeverityRating.NoSymptoms]: "No Symptoms",
