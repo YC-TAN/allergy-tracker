@@ -1,4 +1,4 @@
-// ---- Pollen schema and type
+/* Pollen schema and type **/
 import { z } from "zod";
 
 export const PollenRiskLevelSchema = z.enum([
