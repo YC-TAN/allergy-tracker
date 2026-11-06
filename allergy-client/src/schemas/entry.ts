@@ -1,18 +1,9 @@
 /**
- * This file defines the data schemas and types for the allergy tracking application.
+ * This file defines the data schemas and types for the allergy tracking entries.
  * It includes definitions for symptom severity ratings, symptom types, and the structure
- * of allergy entries. These schemas are used for data validation and type safety
- * throughout the application, leveraging Zod for runtime validation.
- * Zod is preferred because TypeScript doesn't exist at runtime.
- *
- * 18/06/2026 Added PollenDataSchema,
- * Uses overall pollen level considering it's level is a prediction based on historical data and
- * it is highly dependant on weather (rain, wind, temperature)
- *
- * How weather affect pollen level:
- * - Warm, sunny, dry: high pollen count
- * - Rain: lower pollen count
- * - Wind: disperses pollen over long distances
+ * of allergy entries. 
+ * 
+ * Zod is used because TypeScript doesn't exist at runtime.
  *
  * 23/06/2026 Update EntrySchema
  * Add fields:
@@ -28,7 +19,8 @@
 
 import { z } from "zod";
 import { getTodayDate } from "../utils/dates";
-import nzLocations from "../data/locations.json";
+
+export const ENTRY_LOCAL_SCHEMA_VERSION = 2;
 
 export const SeverityRating = {
   NoSymptoms: 0,
@@ -57,18 +49,6 @@ export const SymptomSchema = z.enum([
 
 export type Symptom = z.infer<typeof SymptomSchema>;
 
-export const ENTRY_LOCAL_SCHEMA_VERSION = 2;
-const clearSymptomsIfNoSymptoms = <
-  T extends { severity: number; symptoms: string[] },
->(
-  data: T,
-): T => {
-  if (data.severity === 0) {
-    return { ...data, symptoms: [] };
-  }
-  return data;
-};
-
 export const EntrySchema = z.object({
   // use arrow function getTodayDate so that it is called fresh each time
   date: z.iso
@@ -84,6 +64,17 @@ export const EntrySchema = z.object({
   location: z.string().default("Christchurch Central"),
 });
 
+const clearSymptomsIfNoSymptoms = <
+  T extends { severity: number; symptoms: string[] },
+>(
+  data: T,
+): T => {
+  if (data.severity === 0) {
+    return { ...data, symptoms: [] };
+  }
+  return data;
+};
+
 export const EntryLocalSchema = EntrySchema.extend({
   _synced: z.boolean().default(false),
   _revision: z.number().int().nonnegative().default(0),
@@ -98,9 +89,9 @@ export const EntryResponseSchema = EntrySchema.extend({
 }).transform(clearSymptomsIfNoSymptoms);
 
 export type Entry = z.infer<typeof EntrySchema>;
-// z.input<> - to allow fields with default value to be optional in forms, can be omitted before parsing
+// NOTE: z.input<> - to allow fields with default value to be optional in forms, can be omitted before parsing
 export type EntryInput = z.input<typeof EntryLocalSchema>;
-//TODO add constraint to input: cannot record for older than 3 days (in case of incorrect memory)
+// TODO: add constraint to input if allow update previous record - cannot record for older than 3 days (in case of incorrect memory)
 export type EntryLocal = z.infer<typeof EntryLocalSchema>;
 export type EntryResponse = z.infer<typeof EntryResponseSchema>;
 
@@ -110,43 +101,3 @@ export const MigrateResponseSchema = z.object({
 });
 
 export type MigrateResponse = z.infer<typeof MigrateResponseSchema>;
-
-// ---- Settings
-
-const allLabels = Object.values(nzLocations).flatMap((regions) =>
-  Object.values(regions).flat(),
-) as [string, ...string[]];
-
-export const SettingsSchema = z.object({
-  notify_time: z
-    .string()
-    .regex(/^\d{2}:\d{2}$/)
-    .default("20:00"), // HH:MM, 8pm
-  notify: z.boolean().default(false),
-  location: z.enum(allLabels).default("Christchurch Central"),
-});
-
-export type Settings = z.infer<typeof SettingsSchema>;
-export type SettingsInput = z.input<typeof SettingsSchema>;
-
-// ---- Pollen schema and type
-export const PollenRiskLevelSchema = z.enum([
-  "imminent",
-  "high",
-  "moderate",
-  "low",
-]);
-export type PollenRiskLevel = z.infer<typeof PollenRiskLevelSchema>;
-
-export const PollenForecastSchema = z.object({
-  date: z.string(), // ISO date 'YYYY-MM-DD'
-  location: z.string(),
-  imminent: z.array(z.string()),
-  low: z.array(z.string()),
-  moderate: z.array(z.string()),
-  high: z.array(z.string()),
-});
-
-export type PollenForecast = z.infer<typeof PollenForecastSchema>;
-
-export type PushedRef = { date: string; _revision: number };
