@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { usePollenForecast } from "../../hooks/usePollenForecast";
 import { useSettings } from "../../hooks/useSettings";
-import type { PollenRiskLevel, PollenForecast } from "../../schemas";
+import type { PollenRiskLevel, PollenForecast } from "../../schemas/pollen";
 import { ApiError } from "../../lib/error";
 import BaseCard from "../ui/BaseCard";
 import ProgressBox from "../ui/ProgressBox";

@@ -1,5 +1,5 @@
 import apiFetch from '../lib/api';
-import { PollenForecastSchema, type PollenForecast } from '../schemas';
+import { PollenForecastSchema, type PollenForecast } from '../schemas/pollen';
 
 const baseUrl = "/pollen_forecast";
 
