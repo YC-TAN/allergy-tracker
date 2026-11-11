@@ -95,6 +95,15 @@ export type EntryInput = z.input<typeof EntryLocalSchema>;
 export type EntryLocal = z.infer<typeof EntryLocalSchema>;
 export type EntryResponse = z.infer<typeof EntryResponseSchema>;
 
+export const toWire = (e: EntryLocal): Entry => EntrySchema.parse(e);
+
+export const fromServer = (r: EntryResponse): EntryLocal => ({
+  ...EntrySchema.parse(r),
+  _synced: 1,
+  _revision: 0,
+  _v: ENTRY_LOCAL_SCHEMA_VERSION,
+});
+
 export const MigrateResponseSchema = z.object({
   synced: z.array(z.string()),
   failed: z.array(z.string()), // dates as ISO strings, e.g. "2026-08-14"
