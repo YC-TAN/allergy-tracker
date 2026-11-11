@@ -50,7 +50,7 @@ export const SymptomSchema = z.enum([
 export type Symptom = z.infer<typeof SymptomSchema>;
 
 export const EntrySchema = z.object({
-  // use arrow function getTodayDate so that it is called fresh each time
+  // NOTE: use arrow function getTodayDate so that it is called fresh each time
   date: z.iso
     .date()
     .default(() => getTodayDate())
@@ -76,7 +76,7 @@ const clearSymptomsIfNoSymptoms = <
 };
 
 export const EntryLocalSchema = EntrySchema.extend({
-  _synced: z.boolean().default(false),
+  _synced: z.union([z.literal(0), z.literal(1)]).default(0),
   _revision: z.number().int().nonnegative().default(0),
   _v: z.literal(ENTRY_LOCAL_SCHEMA_VERSION).default(ENTRY_LOCAL_SCHEMA_VERSION),
 }).transform(clearSymptomsIfNoSymptoms);
