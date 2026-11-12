@@ -39,21 +39,22 @@ export const SeveritySchema = z.union([
 
 export type SeverityRatingType = z.infer<typeof SeveritySchema>;
 
+// -- Symptoms --
 export const SYMPTOMS = ['eyes','nose','throat','energy','headache','other'] as const
 export const SymptomSchema = z.enum(SYMPTOMS);
 
 export type Symptom = z.infer<typeof SymptomSchema>;
 
-export const EntrySchema = z.object({
-  // NOTE: use arrow function getTodayDate so that it is called fresh each time
+// -- Entries
+const EntrySchema = z.object({
   date: z.iso
     .date()
     .default(() => getTodayDate())
     .refine((val) => val <= getTodayDate(), {
       message: "Entry date cannot be in the future",
-    }), 
+    }),
   severity: SeveritySchema,
-  symptoms: z.array(SymptomSchema).default([]).transform((val) => Array.from(new Set(val))),
+  symptoms: z.array(SymptomSchema).default([]),
   notes: z.string().default(""),
   honey: z.boolean().default(false),
   location: z.enum(locationLabel).default("Christchurch Central"),
@@ -61,31 +62,24 @@ export const EntrySchema = z.object({
 .refine((data) => data.severity === 0 || data.symptoms.length > 0, {
   message: "At least one symptom must be selected when severity is greater than none",
   path: ["symptoms"],
-});
-
-const clearSymptomsIfNoSymptoms = <
-  T extends { severity: number; symptoms: string[] },
->(
-  data: T,
-): T => {
-  if (data.severity === 0) {
-    return { ...data, symptoms: [] };
-  }
-  return data;
-};
+})
+.overwrite((data) => ({
+    ...data,
+    symptoms: data.severity === 0 ? [] : Array.from(new Set(data.symptoms)),
+  }));
 
 export const EntryLocalSchema = EntrySchema.extend({
   _synced: z.union([z.literal(0), z.literal(1)]).default(0),
   _revision: z.number().int().nonnegative().default(0),
   _v: z.literal(ENTRY_LOCAL_SCHEMA_VERSION).default(ENTRY_LOCAL_SCHEMA_VERSION),
-}).transform(clearSymptomsIfNoSymptoms);
+});
 
 export const EntryResponseSchema = EntrySchema.extend({
   id: z.uuid(),
   // user_id: z.uuid(),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),
-}).transform(clearSymptomsIfNoSymptoms);
+});
 
 export type Entry = z.infer<typeof EntrySchema>;
 // NOTE: z.input<> - to allow fields with default value to be optional in forms, can be omitted before parsing
