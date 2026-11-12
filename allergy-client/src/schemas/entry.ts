@@ -19,6 +19,7 @@
 
 import { z } from "zod";
 import { getTodayDate } from "../utils/dates";
+import { locationLabel } from "./labels";
 
 export const ENTRY_LOCAL_SCHEMA_VERSION = 2;
 
@@ -61,7 +62,7 @@ export const EntrySchema = z.object({
   symptoms: z.array(SymptomSchema).default([]),
   notes: z.string().default(""),
   honey: z.boolean().default(false),
-  location: z.string().default("Christchurch Central"),
+  location: z.enum(locationLabel).default("Christchurch Central"),
 });
 
 const clearSymptomsIfNoSymptoms = <
