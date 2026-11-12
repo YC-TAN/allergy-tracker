@@ -42,7 +42,7 @@ describe("saveEntry", () => {
   it("returns the parsed entry with defaults filled in", () => {
     const result = saveEntry(mockEntry, test_entry_key);
     expect(result).toMatchObject({ date: today, severity: 2 });
-    expect(result._synced).toBe(false);
+    expect(result._synced).toBe(0);
     expect(result._v).toBe(2);
   });
 

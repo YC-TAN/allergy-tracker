@@ -32,7 +32,7 @@ export const upsertLocalEntry = async (
     const next: EntryLocal = {
       ...parsedEntry,
       _revision: (existing?._revision ?? 0) + 1, // update revision for every edit
-      _synced: false,
+      _synced: 0,
     };
 
     await db.entries.put(next);
@@ -58,7 +58,7 @@ export const clearLocalEntries = async (): Promise<void> => {
 
 export const getUnsyncedLocalEntries = async (): Promise<EntryLocal[]> => {
   const entries = await db.entries
-    .filter((entry) => entry._synced === false)
+    .filter((entry) => entry._synced === 0)
     .toArray();
 
   return entries.map((entry) => EntryLocalSchema.parse(entry));
@@ -75,7 +75,7 @@ export const markLocalEntriesSynced = async (
         .where("date")
         .equals(date)
         .and((cur) => cur._revision === _revision) // same revision since we read it?
-        .modify({ _synced: true });
+        .modify({ _synced: 1 });
     }
   });
 };
@@ -87,7 +87,7 @@ export const saveRemoteEntries = async (remote: EntryResponse[]): Promise<void> 
     const existing = await db.entries.bulkGet(remote.map((r) => r.date));
     const toSave = remote
       .filter((_, i) => !existing[i]) // only dates still missing at write time
-      .map((r) => EntryLocalSchema.parse({ ...r, _synced: true }));
+      .map((r) => EntryLocalSchema.parse({ ...r, _synced: 1 }));
     await db.entries.bulkPut(toSave);
   });
 };

@@ -102,4 +102,4 @@ class MigrateRequest(SQLModel):
 
 class MigrateResponse(SQLModel):
     synced: list[str]
-    failed: list[str]   # dates still unsynced — client keeps these as _synced: false
+    failed: list[str]   # dates still unsynced — client keeps these as _synced: 0

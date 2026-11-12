@@ -57,7 +57,7 @@ export const seedMockEntries = async (): Promise<void> => {
     date: previous7days[index],
     ...entry,
     symptoms: [...entry.symptoms],
-    _synced: true, // set to true during dev so it will not be uploaded to backend
+    _synced: 1, // set to true during dev so it will not be uploaded to backend
   }));
   
   await upsertLocalEntries(entries);

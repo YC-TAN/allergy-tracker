@@ -26,7 +26,7 @@ export const useEntryMutation = (date: string = getTodayNZ()) => {
       await upsertLocalEntry({
         ...input,
         date: date,
-        _synced: false,
+        _synced: 0,
       });
     },
     onSuccess: () => {

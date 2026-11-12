@@ -35,7 +35,7 @@ export const syncEntries = ({ pull = true }: SyncOptions = {}) => {
   return running;
 };
 
-//NOTE: if an upsert happen during sync, local _synced will remain false 
+//NOTE: if an upsert happen during sync, local _synced will remain 0 
 // because the version is different
 // and happen in transaction
 

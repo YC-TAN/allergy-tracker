@@ -40,7 +40,7 @@ describe("UpsertLocalEntry", () => {
     const row = await db.entries.get(saved.date);
 
     expect(row).toEqual(saved);
-    expect(row).toMatchObject({ _synced: false, _v: ENTRY_LOCAL_SCHEMA_VERSION });
+    expect(row).toMatchObject({ _synced: 0, _v: ENTRY_LOCAL_SCHEMA_VERSION });
   });
   it("creates one row per date, saving same date overwrites it", async () => {
     await upsertLocalEntry(input as EntryInput);

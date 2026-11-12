@@ -108,7 +108,7 @@
 //       notes: "",
 //       location: "Christchurch Central",
 //       honey: true,
-//       _synced: false,
+//       _synced: 0,
 //       _revision: 0,
 //       _v: 2,
 //     };
@@ -137,11 +137,11 @@
 //       notes: "",
 //       location: "Christchurch Central",
 //       honey: false,
-//       _synced: true,
+//       _synced: 1,
 //       _revision: 0,
 //       _v: 2,
 //     };
-//     const remoteEntry = { ...localEntry, severity: 3, _synced: true };
+//     const remoteEntry = { ...localEntry, severity: 3, _synced: 1 };
 
 //     vi.spyOn(dexie, "getLocalEntry").mockResolvedValue(localEntry);
 //     const remoteSpy = vi
@@ -164,7 +164,7 @@
 //       notes: "",
 //       location: "Christchurch Central",
 //       honey: true,
-//       _synced: true,
+//       _synced: 1,
 //       _revision: 0,
 //       _v: 2,
 //     };
