@@ -1,46 +1,42 @@
 /** 'en-CA' locale formats as YYYY-MM-DD, same as ISO string
  * using NZ time regardless of device timezone.
  */
-const formatLocalDate = (d: Date): string => {
-  return d.toLocaleDateString("en-CA", { timeZone: "Pacific/Auckland" });
-};
+const NZ_TZ = "Pacific/Auckland";
 
-export const getTodayDate = (): string => {
-  return formatLocalDate(new Date());
-};
+const isoFormatter = new Intl.DateTimeFormat("en-CA", { timeZone: NZ_TZ });
 
-export const getNZTodayDateString = (): string => {
-  return new Date().toLocaleDateString("en-NZ", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "Pacific/Auckland",
-  });
-};
+const longDateFormatter = new Intl.DateTimeFormat("en-NZ", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: NZ_TZ,
+});
 
-export const getNZTodayDayOfWeek = (): string => {
-  return new Date().toLocaleDateString("en-NZ", {
-    weekday: "long",
-    timeZone: "Pacific/Auckland",
-  });
-};
+const weekdayFormatter = new Intl.DateTimeFormat("en-NZ", {
+  weekday: "long",
+  timeZone: NZ_TZ,
+});
 
-export const getLast7Days = (): string[] => {
-  return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() - (6 - i));
-    return formatLocalDate(d);
-  });
-};
+export const formatDateNZ = (d: Date): string => isoFormatter.format(d);
+export const getTodayNZ = (): string => formatDateNZ(new Date());
+
+export const getNZTodayDateString = (): string =>
+  longDateFormatter.format(new Date());
+
+export const getNZTodayDayOfWeek = (): string => weekdayFormatter.format(new Date());
 
 export const getRelativeDays = (
   numOfDays: number = 7,
-  includeToday: boolean = true
+  includeToday: boolean = true,
 ): string[] => {
-  return Array.from({length: numOfDays}, (_, i) => {
-    const d = new Date();
-    const offset = includeToday ? numOfDays - 1- i: numOfDays - i;
-    d.setDate(d.getDate() - offset);
-    return formatLocalDate(d);
-  })
-}
+  const [y, m, d] = getTodayNZ().split("-").map(Number);
+  const lastOffset = includeToday ? 0 : 1; // days back for the final entry
+
+  return Array.from({ length: numOfDays }, (_, i) => {
+    const offset = numOfDays - 1 - i + lastOffset;
+    // Date.UTC handles day underflow (e.g. day 0 or -3 rolls into the previous month)
+    return new Date(Date.UTC(y, m - 1, d - offset)).toISOString().slice(0, 10);
+  });
+};
+
+export const getLast7Days = (): string[] => getRelativeDays(7, true);
