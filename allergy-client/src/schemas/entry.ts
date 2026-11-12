@@ -53,7 +53,7 @@ export const EntrySchema = z.object({
       message: "Entry date cannot be in the future",
     }), 
   severity: SeveritySchema,
-  symptoms: z.array(SymptomSchema).default([]),
+  symptoms: z.array(SymptomSchema).default([]).transform((val) => Array.from(new Set(val))),
   notes: z.string().default(""),
   honey: z.boolean().default(false),
   location: z.enum(locationLabel).default("Christchurch Central"),
