@@ -57,6 +57,10 @@ export const EntrySchema = z.object({
   notes: z.string().default(""),
   honey: z.boolean().default(false),
   location: z.enum(locationLabel).default("Christchurch Central"),
+})
+.refine((data) => data.severity === 0 || data.symptoms.length > 0, {
+  message: "At least one symptom must be selected when severity is greater than none",
+  path: ["symptoms"],
 });
 
 const clearSymptomsIfNoSymptoms = <
