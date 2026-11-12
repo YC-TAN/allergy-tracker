@@ -15,7 +15,7 @@ export type SyncResult =
   | 'session-expired' // signed in on paper, but the token is no longer valid
   | 'skipped' // no sync attempted (yet)
 
-export interface SaveMessageInput {
+export interface MessageInput {
   signedIn: boolean
   online: boolean // navigator.onLine: only a hint
   sync: SyncResult
@@ -25,11 +25,11 @@ export interface SaveMessageInput {
  * Returns the message to show, or null when no snackbar should appear
  * (a permanent rejection is shown by the persistent Today-card notice, AC11).
  */
-export function selectSaveMessage({
+export function selectNotificationMessage({
   signedIn,
   online,
   sync,
-}: SaveMessageInput): string | null {
+}: MessageInput): string | null {
   // signed out, nothing to sync, whatever the other inputs say.
   if (!signedIn) return MSG.localOnly
 
