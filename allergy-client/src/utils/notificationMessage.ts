@@ -9,7 +9,7 @@ export const MSG = {
 } as const
 
 export type SyncResult =
-  | 'confirmed' // server confirmed receipt
+  | 'accepted' // server confirmed receipt
   | 'transient-failure' // network/server error, will retry
   | 'rejected' // server permanently rejected the entry
   | 'session-expired' // signed in on paper, but the token is no longer valid
@@ -34,7 +34,7 @@ export function selectNotificationMessage({
   if (!signedIn) return MSG.localOnly
 
   // A real sync result beats navigator.onLine, which can be wrong.
-  if (sync === 'confirmed') return MSG.synced
+  if (sync === 'accepted') return MSG.synced
   if (sync === 'rejected') return null
 
   // signed in but offline.
