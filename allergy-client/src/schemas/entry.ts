@@ -5,12 +5,12 @@
  *
  * Zod is used because TypeScript doesn't exist at runtime.
  *
- * NOTE: extend() cannot be run after refine() or overwrite() or transform()
+ * NOTE: extend() cannot be run after refine() or overwrite() or transform() on the z.object()
  * transform() is for changing data type
  */
 
 import { z } from "zod";
-// import { getTodayDate } from "../utils/dates";
+import { getTodayDate } from "../utils/dates";
 import { locationLabel } from "./labels";
 
 export const ENTRY_LOCAL_SCHEMA_VERSION = 2;
@@ -45,27 +45,32 @@ export type Symptom = z.infer<typeof SymptomSchema>;
 
 // -- Entries
 const BaseEntrySchema = z.object({
-  date: z.iso.date(),
-  // .default(() => getTodayDate())
-  // .refine((val) => val <= getTodayDate(), {
-  //   message: "Entry date cannot be in the future",
-  // }),
+  date: z.iso
+    .date()
+    .refine((val) => val <= getTodayDate(), {
+      message: "Entry date cannot be in the future",
+    })
+    .default(() => getTodayDate()),
   severity: SeveritySchema,
   symptoms: z.array(SymptomSchema).default([]),
-  notes: z.string().default(""),
+  notes: z.string().default("").refine(n => [...n].length <= 255, 'Max 255 characters'),
   honey: z.boolean().default(false),
   location: z.enum(locationLabel).default("Christchurch Central"),
 });
 
-const sanitizeEntry = <T extends { severity: SeverityRatingType; symptoms: Symptom[] }>(
+const sanitizeEntry = <
+  T extends { severity: SeverityRatingType; symptoms: Symptom[] },
+>(
   data: T,
 ): T => ({
   ...data,
   symptoms: data.severity === 0 ? [] : Array.from(new Set(data.symptoms)),
 });
 
-const validateEntry = (data: { severity: SeverityRatingType; symptoms: Symptom[] }) =>
-  data.severity === 0 || data.symptoms.length > 0;
+const validateEntry = (data: {
+  severity: SeverityRatingType;
+  symptoms: Symptom[];
+}) => data.severity === 0 || data.symptoms.length > 0;
 
 const severityRefinement = {
   message:
