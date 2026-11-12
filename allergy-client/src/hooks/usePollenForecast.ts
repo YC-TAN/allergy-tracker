@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPollenForecast } from '../services/pollenForecast';
 import { ApiError } from '../lib/error';
-import { getTodayDate } from '../utils/dates';
+import { getTodayNZ } from '../utils/dates';
 
 export function usePollenForecast(location: string | undefined, options?: {enabled?: boolean}) {
-    const today = getTodayDate();
+    const today = getTodayNZ();
 
     const result = useQuery({
     queryKey: ['pollen', location, today],

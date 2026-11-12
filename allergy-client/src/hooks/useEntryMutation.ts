@@ -10,13 +10,13 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { upsertLocalEntry } from "../db/entries";
-import { getTodayDate } from "../utils/dates";
+import { getTodayNZ } from "../utils/dates";
 import type { EntryInput } from "../schemas/entry";
 import { useNotificationActions } from "../stores/useNotificationStore";
 import { useIsSignedIn } from "../stores/useAuthStore";
 import { syncEntries } from "../services/sync";
 
-export const useEntryMutation = (date: string = getTodayDate()) => {
+export const useEntryMutation = (date: string = getTodayNZ()) => {
   const { show } = useNotificationActions();
   const isSignedIn = useIsSignedIn();
 

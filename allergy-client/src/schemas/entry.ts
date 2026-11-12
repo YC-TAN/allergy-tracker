@@ -10,7 +10,7 @@
  */
 
 import { z } from "zod";
-import { getTodayDate } from "../utils/dates";
+import { getTodayNZ } from "../utils/dates";
 import { locationLabel } from "./labels";
 
 export const ENTRY_LOCAL_SCHEMA_VERSION = 2;
@@ -47,10 +47,10 @@ export type Symptom = z.infer<typeof SymptomSchema>;
 const BaseEntrySchema = z.object({
   date: z.iso
     .date()
-    .refine((val) => val <= getTodayDate(), {
+    .refine((val) => val <= getTodayNZ(), {
       message: "Entry date cannot be in the future",
     })
-    .default(() => getTodayDate()),
+    .default(() => getTodayNZ()),
   severity: SeveritySchema,
   symptoms: z.array(SymptomSchema).default([]),
   notes: z.string().default("").refine(n => [...n].length <= 255, 'Max 255 characters'),

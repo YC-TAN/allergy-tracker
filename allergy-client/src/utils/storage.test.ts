@@ -6,10 +6,10 @@ import {
   setSettings,
   clearSettings,
 } from "./storage";
-import { getTodayDate } from "./dates";
+import { getTodayNZ } from "./dates";
 import { type EntryInput } from "../schemas/entry";
 
-const today: string = getTodayDate();
+const today: string = getTodayNZ();
 const test_entry_key: string = "test_allergy_entries";
 const test_settings_key: string = "test_settings";
 
