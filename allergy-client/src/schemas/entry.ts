@@ -57,14 +57,14 @@ const BaseEntrySchema = z.object({
   location: z.enum(locationLabel).default("Christchurch Central"),
 });
 
-const sanitizeEntry = <T extends { severity: number; symptoms: Symptom[] }>(
+const sanitizeEntry = <T extends { severity: SeverityRatingType; symptoms: Symptom[] }>(
   data: T,
 ): T => ({
   ...data,
   symptoms: data.severity === 0 ? [] : Array.from(new Set(data.symptoms)),
 });
 
-const validateEntry = (data: { severity: number; symptoms: Symptom[] }) =>
+const validateEntry = (data: { severity: SeverityRatingType; symptoms: Symptom[] }) =>
   data.severity === 0 || data.symptoms.length > 0;
 
 const severityRefinement = {
@@ -86,7 +86,7 @@ export const EntryLocalSchema = BaseEntrySchema.extend({
   .overwrite(sanitizeEntry)
   .refine(validateEntry, severityRefinement);
 
-export const EntryResponseSchema = EntrySchema.extend({
+export const EntryResponseSchema = BaseEntrySchema.extend({
   id: z.uuid(),
   // user_id: z.uuid(),
   created_at: z.iso.datetime(),
