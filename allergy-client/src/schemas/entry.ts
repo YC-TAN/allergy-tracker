@@ -39,14 +39,8 @@ export const SeveritySchema = z.union([
 
 export type SeverityRatingType = z.infer<typeof SeveritySchema>;
 
-export const SymptomSchema = z.enum([
-  "eyes",
-  "nose",
-  "throat",
-  "energy",
-  "headache",
-  "other",
-]);
+export const SYMPTOMS = ['eyes','nose','throat','energy','headache','other'] as const
+export const SymptomSchema = z.enum(SYMPTOMS);
 
 export type Symptom = z.infer<typeof SymptomSchema>;
 
