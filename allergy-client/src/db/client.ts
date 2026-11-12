@@ -21,6 +21,5 @@ export const db = new Dexie("allergy-tracker") as Dexie & {
  * entries table is keyed by date
  */
 db.version(1).stores({
-    entries: "date",
+    entries: "date, _synced",
 });
-
