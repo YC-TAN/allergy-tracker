@@ -33,6 +33,13 @@ const useSyncStore = create<SyncState>((set) => ({
     skip: () => set({ hydrated: true }),
     reset: () =>
       set({ status: "idle", lastSyncedAt: null, hydrated: false, failedEntries: {} }),
+    addFailure: (date, reason) =>
+      set((s) => ({ failedEntries: { ...s.failedEntries, [date]: reason } })),
+    clearFailure: (date) =>
+      set((s) => {
+        const { [date]: _removed, ...rest } = s.failedEntries;
+        return { failedEntries: rest };
+      }),
   },
 }));
 
