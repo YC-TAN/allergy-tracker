@@ -6,6 +6,7 @@ interface SyncState {
   status: SyncStatus;
   lastSyncedAt: number | null;
   hydrated: boolean;
+  failedEntries: Record<string, string>;
   actions: {
     setSyncing: () => void;
     setSuccess: () => void;
@@ -28,9 +29,10 @@ const useSyncStore = create<SyncState>((set) => ({
     setSuccess: () =>
       set({ status: "idle", lastSyncedAt: Date.now(), hydrated: true }),
     setError: () => set({ status: "error", hydrated: true }),
+    setOffline: () => set({ status: "offline" }),
     skip: () => set({ hydrated: true }),
     reset: () =>
-      set({ status: "idle", lastSyncedAt: null, hydrated: false }),
+      set({ status: "idle", lastSyncedAt: null, hydrated: false, failedEntries: {} }),
   },
 }));
 
