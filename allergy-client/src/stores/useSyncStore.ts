@@ -10,8 +10,11 @@ interface SyncState {
     setSyncing: () => void;
     setSuccess: () => void;
     setError: () => void;
+    setOffline: () => void;
     skip: () => void;
     reset: () => void;
+    addFailure: (date: string, reason: string) => void;
+    clearFailure: (date: string) => void;
   };
 }
 
@@ -19,6 +22,7 @@ const useSyncStore = create<SyncState>((set) => ({
   status: "idle",
   lastSyncedAt: null,
   hydrated: false,
+  failedEntries: {},
   actions: {
     setSyncing: () => set({ status: "syncing" }),
     setSuccess: () =>
