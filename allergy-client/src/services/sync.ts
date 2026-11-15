@@ -14,6 +14,7 @@ import useNotificationStore from "../stores/useNotificationStore";
 import { type PushedRef, type EntryInput, EntrySchema } from "../schemas/entry";
 import useSyncStore from "../stores/useSyncStore";
 import useAuthStore from "../stores/useAuthStore";
+import type { SyncResult } from "../utils/notificationMessage";
 
 type SyncOptions = { pull?: boolean };
 
@@ -131,3 +132,8 @@ const pullRecent = async () => {
 //     sync.setSuccess();
 //   } catch (err) { /* unchanged */ }
 // };
+
+// temporarry stub
+export const syncWithServer = async (): Promise<SyncResult> => {
+  return "skipped"
+}
